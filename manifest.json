@@ -1,7 +1,7 @@
 {
-  "name": "聲曜 聲曜 V4.2",
-  "short_name": "聲曜 聲曜 V4.2",
-  "description": "阿布拉.凱工作室專屬：語音轉文字、AI 讀報、摘要與心智圖閉環系統",
+  "name": "AbraKai 聲曜 V4.3",
+  "short_name": "聲曜",
+  "description": "AbraKai 工作室專屬：語音轉文字、讀報閉環與安全 API 路由系統",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -225,7 +225,7 @@
         .modal-box { background: var(--brand-navy); border: 2px solid var(--brand-orange); border-radius: 12px; padding: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;}
     
 
-        /* V4.2 UX Fix｜手機版與 API 管理可讀性修正 */
+        /* V4.3 Mobile First｜手機版與 API 管理可讀性修正 */
         .btn-bright {
             background: linear-gradient(135deg, var(--brand-blue), #38bdf8) !important;
             color: #ffffff !important;
@@ -270,6 +270,53 @@
             #syncBtn, #toggleApiBtn, #toggleProviderGuideBtn { width:100%; }
         }
 
+
+        /* V4.3 Mobile First：頂部專注操作，品牌資訊移至頁尾 */
+        .header-right { display: none !important; }
+        .app-header { justify-content: flex-start; }
+        .studio-footer-brand {
+            display:flex; align-items:center; justify-content:center; gap:14px;
+            max-width:720px; margin:0 auto 14px auto; padding:16px;
+            background:rgba(11,26,58,0.72); border:1px solid rgba(30,136,229,0.25); border-radius:14px;
+        }
+        .studio-footer-logo { width:56px; height:56px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; border:2px solid var(--brand-blue); flex:none; }
+        .studio-footer-name { font-size:16px; font-weight:900; color:#fff; letter-spacing:1px; }
+        .studio-footer-sub { font-size:11px; color:var(--brand-blue); font-weight:900; letter-spacing:1px; margin-top:3px; }
+        .studio-footer-copy { font-size:10px; color:#94a3b8; margin-top:3px; }
+        .footer-disclaimer { max-width:820px; margin:0 auto; opacity:.72; }
+
+        .simple-test-card {
+            background:rgba(0,0,0,0.23); border:1px solid rgba(30,136,229,0.25);
+            border-radius:12px; padding:14px; margin-bottom:16px;
+        }
+        .simple-test-title { font-size:15px; font-weight:900; color:var(--brand-orange); margin-bottom:6px; }
+        .simple-test-desc { font-size:12px; color:#cbd5e1; line-height:1.6; margin-bottom:10px; }
+        .check-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px; margin-top:12px; }
+        .check-item { display:flex; align-items:center; gap:10px; background:rgba(5,10,21,0.55); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; }
+        .check-item strong { display:block; font-size:13px; color:#fff; }
+        .check-item small { display:block; font-size:11px; color:#94a3b8; margin-top:3px; line-height:1.4; }
+        .check-dot { width:13px; height:13px; border-radius:50%; display:inline-block; flex:none; background:#64748b; box-shadow:0 0 0 3px rgba(100,116,139,.18); }
+        .check-dot.pass { background:#22c55e; box-shadow:0 0 10px rgba(34,197,94,.75); }
+        .check-dot.warn { background:#f59e0b; box-shadow:0 0 10px rgba(245,158,11,.7); }
+        .check-dot.fail { background:#ef4444; box-shadow:0 0 10px rgba(239,68,68,.7); }
+        .advanced-details { margin-top:12px; background:rgba(0,0,0,0.25); border:1px dashed rgba(30,136,229,0.32); border-radius:10px; padding:10px; }
+        .advanced-details summary { cursor:pointer; color:#60a5fa; font-size:13px; font-weight:800; }
+        .advanced-body { margin-top:10px; }
+        .install-tip-card { background:rgba(30,136,229,0.12); border:1px solid rgba(30,136,229,0.28); border-radius:10px; padding:12px; margin-top:14px; color:#dbeafe; font-size:12px; line-height:1.6; }
+        @media (max-width:650px) {
+            body { padding:10px 8px; }
+            .app-header { flex-direction:row; align-items:center; padding:14px 12px; }
+            .header-left { width:100%; align-items:flex-start; }
+            .product-logo { width:48px; height:48px; }
+            .product-title { font-size:20px; line-height:1.2; flex-wrap:wrap; }
+            .product-version { font-size:10px; }
+            .product-desc { font-size:12px; }
+            .status-indicator { width:100%; max-width:100%; justify-content:flex-start; }
+            .saas-card { padding:16px; }
+            .card-title { align-items:flex-start; flex-direction:column; }
+            .studio-footer-brand { justify-content:flex-start; }
+        }
+
     </style>
 </head>
 <body>
@@ -293,7 +340,7 @@
                 </svg>
             </div>
             <div class="text-group">
-                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.2 UX Fix</span></div>
+                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.3 Mobile First</span></div>
                 <div class="product-desc" style="color: var(--brand-orange); font-weight: 600;">VoxAura AI Engine</div>
                 <div class="product-desc">本機端智慧語音閉環引擎 | 多模型路由架構</div>
                 <div class="status-indicator" id="sysStatusIndicator">
@@ -352,44 +399,77 @@
         <div id="terminalLogs"></div>
     </div>
 
+
+
+    <div class="saas-card" id="installHelpPanel">
+        <div class="card-title">📲 手機 App 化使用說明</div>
+        <div class="install-tip-card">
+            iPhone 可把本網站加入主畫面，之後就會像 App 一樣從桌面圖示開啟。建議用 Safari 或 Chrome 的分享按鈕，選「加入主畫面」。若尚未出現 App 版全螢幕，先確認已上傳 manifest.json 與 service-worker.js，並重新整理一次。
+        </div>
+        <button type="button" class="btn-bright" onclick="showInstallGuide()">📲 查看加入主畫面步驟</button>
+    </div>
+
     <div class="saas-card" id="apiManagerPanel">
         <div class="card-title">
             <span>⚙️ 智慧路由與 API 金鑰戰情中心</span>
-            <button class="btn-bright btn-small" onclick="toggleApiPanel()" id="toggleApiBtn">收合戰情中心</button>
+            <button type="button" class="btn-bright btn-small" onclick="toggleApiPanel()" id="toggleApiBtn">展開 API Key / 模型設定</button>
         </div>
         
-        <div id="apiPanelContent">
-            <!-- 供應商申請指南：V4.2 預設收合，避免手機版畫面過長 -->
+        <div id="apiPanelContent" style="display:none;">
+            <div class="simple-test-card">
+                <div class="simple-test-title">✅ 一鍵系統檢測</div>
+                <div class="simple-test-desc">一般使用者不用填網址。按下檢測後，系統會自動檢查本機儲存、PWA 安裝條件、API Key 節點與後端連線狀態。</div>
+                <button type="button" class="btn-bright" onclick="runSystemCheck(true)">🔍 開始一鍵檢測</button>
+                <div class="check-grid" id="systemCheckGrid">
+                    <div class="check-item"><span class="check-dot idle" id="checkStorageDot"></span><div><strong>本機儲存</strong><small id="checkStorageText">尚未檢測</small></div></div>
+                    <div class="check-item"><span class="check-dot idle" id="checkPwaDot"></span><div><strong>PWA 安裝條件</strong><small id="checkPwaText">尚未檢測</small></div></div>
+                    <div class="check-item"><span class="check-dot idle" id="checkKeyDot"></span><div><strong>API Key 節點</strong><small id="checkKeyText">尚未檢測</small></div></div>
+                    <div class="check-item"><span class="check-dot idle" id="checkBackendDot"></span><div><strong>正式後端</strong><small id="checkBackendText">展示模式 / 未連接</small></div></div>
+                </div>
+                <details class="advanced-details">
+                    <summary>進階：Cloudflare Worker 後端網址設定</summary>
+                    <div class="advanced-body">
+                        <label style="font-size: 11px; color:#60A5FA;">Cloudflare Worker API URL（方案 B 正式後端）</label>
+                        <input type="url" id="workerEndpoint" placeholder="例如：https://abrakai-voice-api.yourname.workers.dev" autocomplete="off">
+                        <div class="backend-help">正式商業版才需要設定；用途是保護 API Key、處理試用次數、會員授權、AI 派工與用量紀錄。</div>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                            <button type="button" class="btn-outline btn-small" onclick="saveWorkerEndpoint()">💾 儲存後端網址</button>
+                            <button type="button" class="btn-secondary btn-small" onclick="testWorkerEndpoint()">🧪 測試後端</button>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            <!-- 供應商申請指南：V4.3 預設跟隨整個 API 區塊收合 -->
             <div class="provider-guide-row">
                 <div style="font-size: 13px; color: var(--brand-white);">🔥 2026 頂級 AI 供應商開通指南</div>
-                <button class="btn-bright btn-small" onclick="toggleProviderGuide()" id="toggleProviderGuideBtn">展開供應商指南</button>
+                <button type="button" class="btn-bright btn-small" onclick="toggleProviderGuide()" id="toggleProviderGuideBtn">展開供應商指南</button>
             </div>
             <div id="providerGuideHint" class="provider-guide-hint">供應商介紹已預設收合；需要申請 API Key 或比較模型特色時再展開。</div>
             <div class="provider-grid" id="providerGuideGrid" style="display:none;">
                 <div class="provider-card">
                     <div class="provider-name">Agnes AI</div>
                     <div class="provider-desc">推薦一線：全模態、OpenAI 相容、適合語音/文件</div>
-                    <button class="btn-outline btn-small" onclick="window.open('https://platform.agnes-ai.com/', '_blank')">🚀 申請免費金鑰</button>
+                    <button type="button" class="btn-outline btn-small" onclick="window.open('https://platform.agnes-ai.com/', '_blank')">🚀 申請免費金鑰</button>
                 </div>
                 <div class="provider-card">
                     <div class="provider-name">Google Gemini</div>
                     <div class="provider-desc">推薦一線：長上下文、PDF/長文讀報、成本友善</div>
-                    <button class="btn-outline btn-small" onclick="window.open('https://aistudio.google.com/', '_blank')">🚀 申請免費金鑰</button>
+                    <button type="button" class="btn-outline btn-small" onclick="window.open('https://aistudio.google.com/', '_blank')">🚀 申請免費金鑰</button>
                 </div>
                 <div class="provider-card">
                     <div class="provider-name">Anthropic Claude</div>
                     <div class="provider-desc">摘要/結構化與長文語氣修飾優勢</div>
-                    <button class="btn-outline btn-small" onclick="window.open('https://console.anthropic.com/', '_blank')">🚀 申請 API Key</button>
+                    <button type="button" class="btn-outline btn-small" onclick="window.open('https://console.anthropic.com/', '_blank')">🚀 申請 API Key</button>
                 </div>
                 <div class="provider-card">
                     <div class="provider-name">OpenAI</div>
                     <div class="provider-desc">企業標準：穩定通用、語音/文字生態完整</div>
-                    <button class="btn-outline btn-small" onclick="window.open('https://platform.openai.com/', '_blank')">🚀 申請 API Key</button>
+                    <button type="button" class="btn-outline btn-small" onclick="window.open('https://platform.openai.com/', '_blank')">🚀 申請 API Key</button>
                 </div>
                 <div class="provider-card">
                     <div class="provider-name">xAI Grok</div>
                     <div class="provider-desc">即時資訊、高併發與備援節點</div>
-                    <button class="btn-outline btn-small" onclick="window.open('https://console.x.ai/', '_blank')">🚀 申請 API Key</button>
+                    <button type="button" class="btn-outline btn-small" onclick="window.open('https://console.x.ai/', '_blank')">🚀 申請 API Key</button>
                 </div>
             </div>
 
@@ -401,19 +481,11 @@
             <div class="provider-note">
                 <strong>智慧派工原則：</strong>先找任務專職或通用節點，再找備援節點；仍無可用節點時才軟性降級。系統會避免連續使用同一把 Key，並在失敗或 429 時短暫冷卻，降低過熱與額度錯誤。
             </div>
-            <div style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 14px;">
-                <div style="flex: 2; min-width: 240px;">
-                    <label style="font-size: 11px; color:#60A5FA;">Cloudflare Worker API URL（方案 B 正式後端）</label>
-                    <input type="url" id="workerEndpoint" placeholder="例如：https://abrakai-voice-api.yourname.workers.dev" autocomplete="off">
-                    <div class="backend-help">用途：這是方案 B 的正式後端入口，用來保護 API Key、處理試用次數、會員授權、AI 派工與用量紀錄。尚未部署 Worker 時可先留空，系統會使用展示模式。</div>
-                </div>
-                <button class="btn-outline btn-small" style="padding:12px;" onclick="saveWorkerEndpoint()">💾 儲存後端網址</button>
-                <button class="btn-secondary btn-small" style="padding:12px;" onclick="testWorkerEndpoint()">🧪 測試後端</button>
-            </div>
+            <!-- V4.3：後端 URL 已移至「一鍵系統檢測」的進階設定，避免一般使用者誤填。 -->
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <span style="font-size: 14px; font-weight: bold; color: var(--brand-blue);">🛡️ 路由節點配置表</span>
-                <button class="btn-secondary btn-small" onclick="syncLatestModels()" id="syncBtn">🔄 手動同步最新模型 (更新: 2026-07-07)</button>
+                <button type="button" class="btn-secondary btn-small" onclick="syncLatestModels()" id="syncBtn">🔄 手動同步最新模型 (更新: 2026-07-07)</button>
             </div>
 
             <div class="key-table-wrapper">
@@ -469,8 +541,8 @@
                     <input type="password" id="newKey" placeholder="貼上您的金鑰...">
                 </div>
                 <div style="display:flex; align-items:flex-end; padding-bottom: 2px;">
-                    <button class="btn-primary btn-small" style="padding: 12px;" onclick="addApiKey()" id="saveKeyBtn">➕ 新增節點</button>
-                    <button class="btn-outline btn-small" style="padding: 12px; display:none;" onclick="cancelEditKey()" id="cancelEditBtn">取消修改</button>
+                    <button type="button" class="btn-primary btn-small" style="padding: 12px;" onclick="addApiKey()" id="saveKeyBtn">➕ 新增節點</button>
+                    <button type="button" class="btn-outline btn-small" style="padding: 12px; display:none;" onclick="cancelEditKey()" id="cancelEditBtn">取消修改</button>
                     <input type="hidden" id="editingKeyIndex" value="">
                 </div>
             </div>
@@ -491,8 +563,8 @@
             <audio id="audioPlayer" controls style="width: 100%; height: 40px; margin-bottom: 12px; border-radius: 8px;"></audio>
             
             <div style="display: flex; gap: 10px;">
-                <button class="btn-outline btn-small" onclick="downloadAudio()" style="flex:1;">💾 另存音檔</button>
-                <button class="btn-secondary btn-small" onclick="triggerAIAnalysis('audio')" style="flex:2; padding:12px;">🧠 啟動智慧路由解析</button>
+                <button type="button" class="btn-outline btn-small" onclick="downloadAudio()" style="flex:1;">💾 另存音檔</button>
+                <button type="button" class="btn-secondary btn-small" onclick="triggerAIAnalysis('audio')" style="flex:2; padding:12px;">🧠 啟動智慧路由解析</button>
             </div>
         </div>
 
@@ -500,11 +572,11 @@
         
         <div style="font-size: 14px; font-weight:bold; color: var(--brand-blue); margin-bottom: 10px;">📄 讀報器模式 (文件提純)</div>
         <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-            <button class="btn-outline" style="flex: 1;" onclick="document.getElementById('fileUpload').click()">📤 匯入 PDF/Word (由 AI 過濾雜訊)</button>
+            <button type="button" class="btn-outline" style="flex: 1;" onclick="document.getElementById('fileUpload').click()">📤 匯入 PDF/Word (由 AI 過濾雜訊)</button>
             <input type="file" id="fileUpload" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileUpload(event)">
         </div>
         <textarea id="ttsInput" placeholder="請在此貼上文字，或等待 AI 產出報告進行語音播報..."></textarea>
-        <button class="btn-secondary" onclick="startTTS()">▶️ 現場精準播報</button>
+        <button type="button" class="btn-secondary" onclick="startTTS()">▶️ 現場精準播報</button>
     </div>
 
     <div class="saas-card" id="resultArea" style="display: none;">
@@ -516,9 +588,9 @@
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom:16px;">
-            <button class="btn-secondary btn-small" onclick="readReport()">🔊 播報重點</button>
-            <button class="btn-outline btn-small" onclick="downloadReport()">📥 匯出 Markdown</button>
-            <button class="btn-outline btn-small" onclick="shareResult()">📤 分享至 LINE</button>
+            <button type="button" class="btn-secondary btn-small" onclick="readReport()">🔊 播報重點</button>
+            <button type="button" class="btn-outline btn-small" onclick="downloadReport()">📥 匯出 Markdown</button>
+            <button type="button" class="btn-outline btn-small" onclick="shareResult()">📤 分享至 LINE</button>
         </div>
         
         <h4 style="color: var(--brand-orange); margin: 0 0 8px 0; font-size: 16px;">📝 結構化報告 (多語者/摘要)</h4>
@@ -531,8 +603,26 @@
     </div>
 
     <div class="footer">
-        © 2026 阿布拉.凱工作室 ABRA-KAI STUDIO 版權所有<br><br>
-        <span style="opacity: 0.6;">免責聲明：本程式碼由 AI 輔助生成，僅供開發參考。實際部署前請務必於 Sandbox 環境完成壓力測試與邏輯驗證。</span>
+        <div class="studio-footer-brand">
+            <div class="studio-footer-logo" aria-hidden="true">
+                <svg width="46" height="46" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="30" fill="#F8FAFC"/>
+                    <path d="M32 9 L9 28 H15 V54 H26 V40 H38 V54 H49 V28 H55 Z" fill="#0B1A3A"/>
+                    <path d="M18 38 L18 30 L32 19 L46 30 L46 42" stroke="#1E88E5" stroke-width="3" fill="none"/>
+                    <circle cx="18" cy="38" r="4" fill="#FF8A1E"/>
+                    <circle cx="32" cy="19" r="4" fill="#FF8A1E"/>
+                    <circle cx="46" cy="42" r="4" fill="#FF8A1E"/>
+                </svg>
+            </div>
+            <div>
+                <div class="studio-footer-name">阿布拉.凱工作室</div>
+                <div class="studio-footer-sub">ABRA-KAI STUDIO</div>
+                <div class="studio-footer-copy">© 2026 All rights reserved.</div>
+            </div>
+        </div>
+        <div class="footer-disclaimer">
+            免責聲明：本程式由 AI 輔助開發，試用期間不保證第三方 AI 功能、速度、額度或輸出品質穩定；正式部署前請於 Sandbox 完成壓力測試、資安檢查與授權驗證。
+        </div>
     </div>
 
     <!-- 全域進度與系統彈窗 -->
@@ -546,7 +636,7 @@
         <div class="modal-box">
             <h3 style="color: var(--brand-orange); margin-top: 0;" id="modalTitle">系統提示</h3>
             <p style="font-size: 14px; color: var(--brand-light-gray); line-height: 1.5;" id="modalMsg">訊息內容</p>
-            <button class="btn-secondary" style="margin-top: 20px;" onclick="closeModal()">確認</button>
+            <button type="button" class="btn-secondary" style="margin-top: 20px;" onclick="closeModal()">確認</button>
         </div>
     </div>
 
@@ -571,7 +661,17 @@
         };
 
         // 金鑰資料結構
-        let apiKeys = JSON.parse(localStorage.getItem('abrakai_cluster_keys')) || [];
+        let apiKeys = (() => {
+            try {
+                const raw = localStorage.getItem('abrakai_cluster_keys');
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (err) {
+                console.warn('API Key storage parse failed; reset to empty list', err);
+                localStorage.removeItem('abrakai_cluster_keys');
+                return [];
+            }
+        })();
 
         const terminalLogs = document.getElementById('terminalLogs');
         const sysStatusDot = document.getElementById('sysStatusDot');
@@ -697,9 +797,9 @@
                     <td>${badge}</td>
                     <td>${k.key.substring(0,5)}...${k.key.substring(k.key.length-4)}</td>
                     <td style="display:flex; gap:4px;">
-                        <button class="btn-icon" onclick="moveKey(${i},'up')">⬆️</button>
-                        <button class="btn-icon" onclick="moveKey(${i},'down')">⬇️</button>
-                        <button class="btn-icon" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button>
+                        <button type="button" class="btn-icon" onclick="moveKey(${i},'up')">⬆️</button>
+                        <button type="button" class="btn-icon" onclick="moveKey(${i},'down')">⬇️</button>
+                        <button type="button" class="btn-icon" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button>
                     </td>`;
                 tbody.appendChild(tr);
             });
@@ -923,7 +1023,7 @@ mindmap
         };
 
         // ============================================================
-        // V4.2 UX Fix Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
+        // V4.3 Mobile First Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
         // ============================================================
         const providerProfilesV41 = {
             Agnes: { label:'Agnes AI', baseUrl:'https://apihub.agnes-ai.com/v1', strengths:['audio','text','image','video','all'], recommendedTasks:'語音轉錄、影片解析、長文處理、全模態備援', score:{audio:95,text:88,image:90,video:90,code:70,all:85} },
@@ -1126,13 +1226,13 @@ mindmap
                 const isCooling = (k.cooldownUntil || 0) > Date.now();
                 const coolText = isCooling ? `冷卻中 ${Math.ceil((k.cooldownUntil - Date.now())/1000)}s` : '';
                 tr.innerHTML = `
-                    <td><button class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
+                    <td><button type="button" class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
                     <td><strong>#${i+1}</strong></td>
                     <td style="color:var(--brand-orange); font-weight:bold;">${escapeHtmlV41(profile.label || k.provider)}</td>
                     <td>${escapeHtmlV41(k.model)}<div class="key-meta">${escapeHtmlV41(profile.recommendedTasks || '')}</div></td>
                     <td>${taskBadgeV41(k.task)}<div class="route-chip">${coolText || '可派工'}</div></td>
                     <td><code>${maskKeyV41(k.key, revealed)}</code><div class="key-meta">成功 ${k.successCount || 0}｜失敗 ${k.failCount || 0}<br>${escapeHtmlV41(k.lastStatus || '尚未測試')}</div></td>
-                    <td><div class="key-actions"><button class="btn-icon" title="上移" onclick="moveKey(${i},'up')">⬆️</button><button class="btn-icon" title="下移" onclick="moveKey(${i},'down')">⬇️</button><button class="btn-icon" title="顯示/隱藏" onclick="toggleKeyReveal('${k.id}')">${revealed ? '🙈' : '👁️'}</button><button class="btn-icon" title="複製" onclick="copyKey(${i})">📋</button><button class="btn-icon" title="修改" onclick="editKey(${i})">✏️</button><button class="btn-icon" title="測試" onclick="testKey(${i})">🧪</button><button class="btn-icon" title="刪除" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button></div></td>`;
+                    <td><div class="key-actions"><button type="button" class="btn-icon" title="上移" onclick="moveKey(${i},'up')">⬆️</button><button type="button" class="btn-icon" title="下移" onclick="moveKey(${i},'down')">⬇️</button><button type="button" class="btn-icon" title="顯示/隱藏" onclick="toggleKeyReveal('${k.id}')">${revealed ? '🙈' : '👁️'}</button><button type="button" class="btn-icon" title="複製" onclick="copyKey(${i})">📋</button><button type="button" class="btn-icon" title="修改" onclick="editKey(${i})">✏️</button><button type="button" class="btn-icon" title="測試" onclick="testKey(${i})">🧪</button><button type="button" class="btn-icon" title="刪除" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button></div></td>`;
                 tbody.appendChild(tr);
             });
         };
@@ -1248,7 +1348,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.2 UX Fix 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1261,7 +1361,7 @@ mindmap
 
 
         // ============================================================
-        // V4.2 UX Fix｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
+        // V4.3 Mobile First｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
         // ============================================================
         window.toggleProviderGuide = () => {
             const grid = document.getElementById('providerGuideGrid');
@@ -1293,20 +1393,20 @@ mindmap
                                 <div class="key-mobile-provider">#${i + 1} ${escapeHtmlV41(profile.label || k.provider)}</div>
                                 <div class="key-mobile-row">狀態：<span class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</span>｜${coolText}</div>
                             </div>
-                            <button class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button>
+                            <button type="button" class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button>
                         </div>
                         <div class="key-mobile-row">模型：${escapeHtmlV41(k.model)}</div>
                         <div class="key-mobile-row">派工：${taskBadgeV41(k.task)} <span class="key-meta">${escapeHtmlV41(profile.recommendedTasks || '')}</span></div>
                         <div class="key-mobile-row">API Key：<code>${maskKeyV41(k.key, revealed)}</code></div>
                         <div class="key-mobile-row">成功 ${k.successCount || 0}｜失敗 ${k.failCount || 0}｜${escapeHtmlV41(k.lastStatus || '尚未測試')}</div>
                         <div class="key-mobile-actions">
-                            <button class="btn-outline" onclick="toggleKeyReveal('${k.id}')">${revealed ? '隱藏' : '顯示'}</button>
-                            <button class="btn-outline" onclick="copyKey(${i})">複製</button>
-                            <button class="btn-outline" onclick="editKey(${i})">修改</button>
-                            <button class="btn-outline" onclick="testKey(${i})">測試</button>
-                            <button class="btn-outline" onclick="moveKey(${i},'up')">上移</button>
-                            <button class="btn-outline" onclick="moveKey(${i},'down')">下移</button>
-                            <button class="btn-danger" onclick="removeKey(${i})">刪除</button>
+                            <button type="button" class="btn-outline" onclick="toggleKeyReveal('${k.id}')">${revealed ? '隱藏' : '顯示'}</button>
+                            <button type="button" class="btn-outline" onclick="copyKey(${i})">複製</button>
+                            <button type="button" class="btn-outline" onclick="editKey(${i})">修改</button>
+                            <button type="button" class="btn-outline" onclick="testKey(${i})">測試</button>
+                            <button type="button" class="btn-outline" onclick="moveKey(${i},'up')">上移</button>
+                            <button type="button" class="btn-outline" onclick="moveKey(${i},'down')">下移</button>
+                            <button type="button" class="btn-danger" onclick="removeKey(${i})">刪除</button>
                         </div>
                     </div>`;
             }).join('');
@@ -1323,13 +1423,13 @@ mindmap
                     const isCooling = (k.cooldownUntil || 0) > Date.now();
                     const coolText = isCooling ? `冷卻中 ${Math.ceil((k.cooldownUntil - Date.now())/1000)}s` : '';
                     tr.innerHTML = `
-                        <td><button class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
+                        <td><button type="button" class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
                         <td><strong>#${i+1}</strong></td>
                         <td style="color:var(--brand-orange); font-weight:bold;">${escapeHtmlV41(profile.label || k.provider)}</td>
                         <td>${escapeHtmlV41(k.model)}<div class="key-meta">${escapeHtmlV41(profile.recommendedTasks || '')}</div></td>
                         <td>${taskBadgeV41(k.task)}<div class="route-chip">${coolText || '可派工'}</div></td>
                         <td><code>${maskKeyV41(k.key, revealed)}</code><div class="key-meta">成功 ${k.successCount || 0}｜失敗 ${k.failCount || 0}<br>${escapeHtmlV41(k.lastStatus || '尚未測試')}</div></td>
-                        <td><div class="key-actions"><button class="btn-icon" title="上移" onclick="moveKey(${i},'up')">⬆️</button><button class="btn-icon" title="下移" onclick="moveKey(${i},'down')">⬇️</button><button class="btn-icon" title="顯示/隱藏" onclick="toggleKeyReveal('${k.id}')">${revealed ? '🙈' : '👁️'}</button><button class="btn-icon" title="複製" onclick="copyKey(${i})">📋</button><button class="btn-icon" title="修改" onclick="editKey(${i})">✏️</button><button class="btn-icon" title="測試" onclick="testKey(${i})">🧪</button><button class="btn-icon" title="刪除" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button></div></td>`;
+                        <td><div class="key-actions"><button type="button" class="btn-icon" title="上移" onclick="moveKey(${i},'up')">⬆️</button><button type="button" class="btn-icon" title="下移" onclick="moveKey(${i},'down')">⬇️</button><button type="button" class="btn-icon" title="顯示/隱藏" onclick="toggleKeyReveal('${k.id}')">${revealed ? '🙈' : '👁️'}</button><button type="button" class="btn-icon" title="複製" onclick="copyKey(${i})">📋</button><button type="button" class="btn-icon" title="修改" onclick="editKey(${i})">✏️</button><button type="button" class="btn-icon" title="測試" onclick="testKey(${i})">🧪</button><button type="button" class="btn-icon" title="刪除" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button></div></td>`;
                     tbody.appendChild(tr);
                 });
             }
@@ -1355,7 +1455,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.2 UX Fix 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1369,6 +1469,155 @@ mindmap
             renderKeyTable();
             updateModelDropdown();
             checkClusterStatusV41();
+        };
+
+
+        // ============================================================
+        // V4.3 Mobile First｜穩定新增 API Key / 一鍵檢測 / 單一收合按鈕
+        // ============================================================
+        const V43_VERSION_LABEL = 'V4.3 Mobile First';
+        function setCheckStatusV43(name, status, text) {
+            const dot = document.getElementById(`check${name}Dot`);
+            const label = document.getElementById(`check${name}Text`);
+            if(dot) dot.className = `check-dot ${status}`;
+            if(label) label.textContent = text;
+        }
+
+        function normalizeApiKeysV43() {
+            let fixed = [];
+            try {
+                fixed = Array.isArray(apiKeys) ? apiKeys : [];
+            } catch { fixed = []; }
+            apiKeys = fixed.map((k, i) => ({
+                id: k.id || `${Date.now()}_${i}_${Math.random().toString(36).slice(2,7)}`,
+                provider: k.provider || 'Agnes',
+                model: k.model || ((modelCatalog[k.provider || 'Agnes'] || ['agnes-2.0-flash'])[0]),
+                task: k.task || 'all',
+                key: k.key || '',
+                enabled: k.enabled !== false,
+                lastUsedAt: k.lastUsedAt || null,
+                successCount: Number(k.successCount || 0),
+                failCount: Number(k.failCount || 0),
+                lastStatus: k.lastStatus || '尚未測試',
+                cooldownUntil: Number(k.cooldownUntil || 0)
+            })).filter(k => k.key);
+            try { localStorage.setItem('abrakai_cluster_keys', JSON.stringify(apiKeys)); } catch {}
+        }
+
+        window.toggleApiPanel = () => {
+            const content = document.getElementById('apiPanelContent');
+            const btn = document.getElementById('toggleApiBtn');
+            if(!content || !btn) return;
+            const willOpen = content.style.display === 'none' || !content.style.display;
+            content.style.display = willOpen ? 'block' : 'none';
+            btn.textContent = willOpen ? '收合 API Key / 模型設定' : '展開 API Key / 模型設定';
+            btn.classList.add('btn-bright');
+            if(willOpen) setTimeout(() => runSystemCheck(false), 50);
+        };
+
+        window.addApiKey = () => {
+            const providerEl = document.getElementById('newProvider');
+            const modelEl = document.getElementById('newModel');
+            const taskEl = document.getElementById('newTask');
+            const keyEl = document.getElementById('newKey');
+            const editEl = document.getElementById('editingKeyIndex');
+            if(!providerEl || !modelEl || !taskEl || !keyEl || !editEl) return showModal('畫面元件異常', '找不到 API Key 表單欄位，請重新整理頁面後再試。');
+            const provider = providerEl.value;
+            const model = modelEl.value;
+            const task = taskEl.value;
+            const key = keyEl.value.trim();
+            const editIdx = editEl.value;
+            if(!key && editIdx === '') return showModal('尚未貼上 API Key', '請先貼上 API Key，或正式版改由 Cloudflare Worker Secrets 管理。');
+            normalizeApiKeysV43();
+            if(editIdx !== '') {
+                const i = Number(editIdx);
+                if(!apiKeys[i]) return showModal('修改失敗', '找不到要修改的節點，請重新選擇。');
+                apiKeys[i] = { ...apiKeys[i], provider, model, task, key: key || apiKeys[i].key, lastStatus:'已修改，尚未重新測試' };
+                cancelEditKey();
+                logSys(`已修改路由節點 #${i + 1}：[${provider}] ${model} (${task})`, 'SUCCESS');
+            } else {
+                apiKeys.push({ id:`${Date.now()}_${Math.random().toString(36).slice(2,7)}`, provider, model, task, key, enabled:true, lastUsedAt:null, successCount:0, failCount:0, lastStatus:'尚未測試', cooldownUntil:0 });
+                keyEl.value = '';
+                logSys(`新增路由節點：[${provider}] ${model} (${task})`, 'SUCCESS');
+            }
+            try { localStorage.setItem('abrakai_cluster_keys', JSON.stringify(apiKeys)); }
+            catch(err) { return showModal('儲存失敗', `瀏覽器無法寫入本機儲存：${err.message}`); }
+            renderKeyTable();
+            if(typeof checkClusterStatusV41 === 'function') checkClusterStatusV41();
+            runSystemCheck(false);
+            const target = document.getElementById('mobileKeyList') || document.querySelector('.key-table-wrapper');
+            if(target) target.scrollIntoView({ behavior:'smooth', block:'center' });
+            showModal('新增成功', 'API Key 已新增到路由節點。預設為隱藏顯示，需點「顯示」才會看到完整 Key。');
+        };
+
+        window.runSystemCheck = async (showDone = true) => {
+            // 本機儲存
+            try {
+                const t = `test_${Date.now()}`;
+                localStorage.setItem('__abrakai_test__', t);
+                localStorage.removeItem('__abrakai_test__');
+                setCheckStatusV43('Storage', 'pass', '通過：可儲存本機設定');
+            } catch(err) { setCheckStatusV43('Storage', 'fail', '不通過：瀏覽器封鎖本機儲存'); }
+
+            // PWA 檢查
+            const hasManifest = !!document.querySelector('link[rel="manifest"]');
+            const hasSW = 'serviceWorker' in navigator;
+            if(hasManifest && hasSW) setCheckStatusV43('Pwa', 'pass', '通過：可加入主畫面');
+            else if(hasSW) setCheckStatusV43('Pwa', 'warn', '部分通過：缺 manifest 連結');
+            else setCheckStatusV43('Pwa', 'fail', '不通過：瀏覽器不支援 Service Worker');
+
+            // API Key 節點
+            normalizeApiKeysV43();
+            const enabledCount = apiKeys.filter(k => k.enabled).length;
+            if(enabledCount > 0) setCheckStatusV43('Key', 'pass', `通過：${enabledCount} 組啟用節點`);
+            else if(apiKeys.length > 0) setCheckStatusV43('Key', 'warn', `有 ${apiKeys.length} 組節點，但目前皆停用`);
+            else setCheckStatusV43('Key', 'warn', '尚未新增 Key；可使用展示模式');
+
+            // 後端檢查
+            const url = (localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '').replace(/\/$/, '');
+            if(!url) {
+                setCheckStatusV43('Backend', 'warn', '展示模式：尚未設定正式後端');
+            } else {
+                setCheckStatusV43('Backend', 'warn', '檢測中...');
+                try {
+                    const res = await fetch(`${url}/api/health`, { method:'GET' });
+                    const data = await res.json().catch(() => ({}));
+                    if(res.ok && data.ok) setCheckStatusV43('Backend', 'pass', '通過：Worker 後端已連線');
+                    else throw new Error(data.error || `HTTP ${res.status}`);
+                } catch(err) { setCheckStatusV43('Backend', 'fail', `不通過：${err.message}`); }
+            }
+            if(showDone) showModal('一鍵檢測完成', '請看各項亮燈結果：綠燈通過、黃燈提醒、紅燈不通過。');
+        };
+
+        window.showInstallGuide = () => {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            const msg = isIOS
+                ? 'iPhone 操作：打開本頁 → 點瀏覽器的分享按鈕 → 選「加入主畫面」→ 名稱可改成 AbraKai 聲曜 → 按「加入」。Chrome iOS 也可從網址列旁的分享按鈕找到「Add to Home Screen」。若找不到，建議改用 Safari 開啟同一網址。'
+                : 'Android / 桌面操作：打開本頁 → 點瀏覽器選單或網址列旁安裝圖示 → 選「安裝 App」或「加入主畫面」。';
+            showModal('手機 App 化使用方式', msg);
+        };
+
+        window.onload = () => {
+            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
+            normalizeApiKeysV43();
+            if(typeof migrateApiKeysV41 === 'function') migrateApiKeysV41();
+            const workerInput = document.getElementById('workerEndpoint');
+            if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
+            const apiContent = document.getElementById('apiPanelContent');
+            const apiBtn = document.getElementById('toggleApiBtn');
+            if(apiContent) apiContent.style.display = 'none';
+            if(apiBtn) apiBtn.textContent = '展開 API Key / 模型設定';
+            const guideGrid = document.getElementById('providerGuideGrid');
+            const guideHint = document.getElementById('providerGuideHint');
+            const guideBtn = document.getElementById('toggleProviderGuideBtn');
+            if(guideGrid) guideGrid.style.display = 'grid';
+            if(guideHint) guideHint.style.display = 'none';
+            if(guideBtn) guideBtn.style.display = 'none';
+            registerServiceWorkerV41();
+            renderKeyTable();
+            updateModelDropdown();
+            if(typeof checkClusterStatusV41 === 'function') checkClusterStatusV41();
+            runSystemCheck(false);
         };
 
     </script>

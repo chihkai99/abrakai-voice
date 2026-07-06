@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abrakai-voice-cache-v4-1';
+const CACHE_NAME = 'abrakai-voice-cache-v4-3';
 const PRECACHE_URLS = [
   './',
   './index.html',
