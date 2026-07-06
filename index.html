@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AbraKai 聲曜 | 數位語音閉環引擎</title>
+    <title>AbraKai 聲曜 V4.7 | 數位語音閉環引擎</title>
     <meta name="theme-color" content="#0B1A3A">
-    <link rel="manifest" href="./manifest.json">
+    <link rel="manifest" href="./manifest.json?v=4.7">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -225,7 +225,7 @@
         .modal-box { background: var(--brand-navy); border: 2px solid var(--brand-orange); border-radius: 12px; padding: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;}
     
 
-        /* V4.4 API Key Hotfix｜手機版與 API 管理可讀性修正 */
+        /* V4.7 API Panel Root Fix｜手機版與 API 管理可讀性修正 */
         .btn-bright {
             background: linear-gradient(135deg, var(--brand-blue), #38bdf8) !important;
             color: #ffffff !important;
@@ -271,7 +271,7 @@
         }
 
 
-        /* V4.4 API Key Hotfix：頂部專注操作，品牌資訊移至頁尾 */
+        /* V4.7 API Panel Root Fix：頂部專注操作，品牌資訊移至頁尾 */
         .header-right { display: none !important; }
         .app-header { justify-content: flex-start; }
         .studio-footer-brand {
@@ -340,7 +340,7 @@
                 </svg>
             </div>
             <div class="text-group">
-                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.4 API Key Hotfix</span></div>
+                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.7 API Panel Root Fix</span></div>
                 <div class="product-desc" style="color: var(--brand-orange); font-weight: 600;">VoxAura AI Engine</div>
                 <div class="product-desc">本機端智慧語音閉環引擎 | 多模型路由架構</div>
                 <div class="status-indicator" id="sysStatusIndicator">
@@ -407,6 +407,7 @@
             iPhone 可把本網站加入主畫面，之後就會像 App 一樣從桌面圖示開啟。建議用 Safari 或 Chrome 的分享按鈕，選「加入主畫面」。若尚未出現 App 版全螢幕，先確認已上傳 manifest.json 與 service-worker.js，並重新整理一次。
         </div>
         <button type="button" class="btn-bright" onclick="showInstallGuide()">📲 查看加入主畫面步驟</button>
+        <button type="button" class="btn-outline" id="clearCacheBtn" style="margin-top:10px;" onclick="clearAppCacheAndReloadV46()">🔄 清除舊版快取並重新載入</button>
     </div>
 
     <div class="saas-card" id="apiManagerPanel">
@@ -419,7 +420,7 @@
             <div class="simple-test-card">
                 <div class="simple-test-title">✅ 一鍵系統檢測</div>
                 <div class="simple-test-desc">一般使用者不用填網址。按下檢測後，系統會自動檢查本機儲存、PWA 安裝條件、API Key 節點與後端連線狀態。</div>
-                <button type="button" class="btn-bright" onclick="runSystemCheck(true)">🔍 開始一鍵檢測</button>
+                <button type="button" class="btn-bright" id="runSystemCheckBtn" onclick="runSystemCheck(true)">🔍 開始一鍵檢測</button>
                 <div class="check-grid" id="systemCheckGrid">
                     <div class="check-item"><span class="check-dot idle" id="checkStorageDot"></span><div><strong>本機儲存</strong><small id="checkStorageText">尚未檢測</small></div></div>
                     <div class="check-item"><span class="check-dot idle" id="checkPwaDot"></span><div><strong>PWA 安裝條件</strong><small id="checkPwaText">尚未檢測</small></div></div>
@@ -433,13 +434,13 @@
                         <input type="url" id="workerEndpoint" placeholder="例如：https://abrakai-voice-api.yourname.workers.dev" autocomplete="off">
                         <div class="backend-help">正式商業版才需要設定；用途是保護 API Key、處理試用次數、會員授權、AI 派工與用量紀錄。</div>
                         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-                            <button type="button" class="btn-outline btn-small" onclick="saveWorkerEndpoint()">💾 儲存後端網址</button>
-                            <button type="button" class="btn-secondary btn-small" onclick="testWorkerEndpoint()">🧪 測試後端</button>
+                            <button type="button" class="btn-outline btn-small" id="saveWorkerEndpointBtn" onclick="saveWorkerEndpoint()">💾 儲存後端網址</button>
+                            <button type="button" class="btn-secondary btn-small" id="testWorkerBtn" onclick="testWorkerEndpoint()">🧪 測試後端</button>
                         </div>
                     </div>
                 </details>
             </div>
-            <!-- 供應商申請指南：V4.4 預設跟隨整個 API 區塊收合 -->
+            <!-- 供應商申請指南：V4.7 預設跟隨整個 API 區塊收合 -->
             <div class="provider-guide-row">
                 <div style="font-size: 13px; color: var(--brand-white);">🔥 2026 頂級 AI 供應商開通指南</div>
                 <button type="button" class="btn-bright btn-small" onclick="toggleProviderGuide()" id="toggleProviderGuideBtn">展開供應商指南</button>
@@ -481,7 +482,7 @@
             <div class="provider-note">
                 <strong>智慧派工原則：</strong>先找任務專職或通用節點，再找備援節點；仍無可用節點時才軟性降級。系統會避免連續使用同一把 Key，並在失敗或 429 時短暫冷卻，降低過熱與額度錯誤。
             </div>
-            <!-- V4.4：後端 URL 已移至「一鍵系統檢測」的進階設定，避免一般使用者誤填。 -->
+            <!-- V4.7：後端 URL 已移至「一鍵系統檢測」的進階設定，避免一般使用者誤填。 -->
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <span style="font-size: 14px; font-weight: bold; color: var(--brand-blue);">🛡️ 路由節點配置表</span>
@@ -507,6 +508,13 @@
                 </table>
             </div>
             <div id="mobileKeyList" class="mobile-key-list"></div>
+            <div class="api-safe-warning" id="apiStorageControlBox" style="margin-top:12px;">
+                <strong>本機節點資料管理：</strong>若畫面顯示舊版測試殘留的節點數量，請使用下方按鈕清除本機 API 節點資料。此動作只會清除本瀏覽器 localStorage，不會刪除 Agnes、Gemini、OpenAI 等官方後台的 API Key。
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                    <button type="button" class="btn-outline btn-small" id="clearApiKeysBtn">🧹 清除本機 API 節點資料</button>
+                    <button type="button" class="btn-outline btn-small" id="exportApiStateBtn">📋 複製節點診斷資訊</button>
+                </div>
+            </div>
 
             <!-- 新增金鑰表單 -->
             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px dashed var(--glass-border);">
@@ -564,7 +572,7 @@
             
             <div style="display: flex; gap: 10px;">
                 <button type="button" class="btn-outline btn-small" onclick="downloadAudio()" style="flex:1;">💾 另存音檔</button>
-                <button type="button" class="btn-secondary btn-small" onclick="triggerAIAnalysis('audio')" style="flex:2; padding:12px;">🧠 啟動智慧路由解析</button>
+                <button type="button" class="btn-secondary btn-small" onclick="triggerAIAnalysis('audio')" style="flex:2; padding:12px;">🧠 啟動正式 AI 解析</button>
             </div>
         </div>
 
@@ -640,9 +648,12 @@
         </div>
     </div>
 
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    <script>
+        // V4.7 Root Fix: use the already loaded global Mermaid script.
+        var mermaid = window.mermaid;
+        if (mermaid && typeof mermaid.initialize === 'function') {
+            mermaid.initialize({ startOnLoad: false, theme: 'default' });
+        }
 
         // 全域狀態
         let mediaRecorder; let audioChunks = []; let isRecording = false;
@@ -650,7 +661,7 @@
         let currentReportText = "";
         let pieChartInstance = null; let barChartInstance = null;
         let progressInterval;
-        // V4.4 hotfix: module script runs in strict mode; these functions are reassigned later by patch blocks.
+        // V4.7 hotfix: module script runs in strict mode; these functions are reassigned later by patch blocks.
         // Without declarations, browsers stop the whole script at renderKeyTable = ... and all API buttons become inactive.
         let renderKeyTable;
         let runAutoFailoverEngine;
@@ -1027,7 +1038,7 @@ mindmap
         };
 
         // ============================================================
-        // V4.4 API Key Hotfix Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
+        // V4.7 API Panel Root Fix Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
         // ============================================================
         const providerProfilesV41 = {
             Agnes: { label:'Agnes AI', baseUrl:'https://apihub.agnes-ai.com/v1', strengths:['audio','text','image','video','all'], recommendedTasks:'語音轉錄、影片解析、長文處理、全模態備援', score:{audio:95,text:88,image:90,video:90,code:70,all:85} },
@@ -1049,7 +1060,7 @@ mindmap
         const WORKER_ENDPOINT_KEY_V41 = 'abrakai_worker_endpoint';
         const COOLDOWN_MS_V41 = 90 * 1000;
         let revealKeySetV41 = new Set();
-        let rrStateV41 = JSON.parse(localStorage.getItem(RR_KEY_V41) || '{}');
+        let rrStateV41 = (() => { try { return JSON.parse(localStorage.getItem(RR_KEY_V41) || '{}'); } catch { localStorage.removeItem(RR_KEY_V41); return {}; } })();
         let activeAudioStreamV41 = null;
 
         function escapeHtmlV41(str) {
@@ -1104,7 +1115,7 @@ mindmap
         };
         async function registerServiceWorkerV41() {
             if ('serviceWorker' in navigator) {
-                try { const reg = await navigator.serviceWorker.register('./service-worker.js'); logSys(`PWA Service Worker 已註冊：${reg.scope}`, 'SUCCESS'); }
+                try { const reg = await navigator.serviceWorker.register('./service-worker.js?v=4.7'); logSys(`PWA Service Worker 已註冊：${reg.scope}`, 'SUCCESS'); }
                 catch (err) { logSys(`Service Worker 註冊失敗：${err.message}`, 'WARNING'); }
             }
         }
@@ -1352,7 +1363,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.7 API Panel Root Fix 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1365,7 +1376,7 @@ mindmap
 
 
         // ============================================================
-        // V4.4 API Key Hotfix｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
+        // V4.7 API Panel Root Fix｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
         // ============================================================
         window.toggleProviderGuide = () => {
             const grid = document.getElementById('providerGuideGrid');
@@ -1459,7 +1470,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.7 API Panel Root Fix 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1477,9 +1488,9 @@ mindmap
 
 
         // ============================================================
-        // V4.4 API Key Hotfix｜穩定新增 API Key / 一鍵檢測 / 單一收合按鈕
+        // V4.7 API Panel Root Fix｜穩定新增 API Key / 一鍵檢測 / 單一收合按鈕
         // ============================================================
-        const V44_VERSION_LABEL = 'V4.4 API Key Hotfix';
+        const V44_VERSION_LABEL = 'V4.7 API Panel Root Fix';
         function setCheckStatusV43(name, status, text) {
             const dot = document.getElementById(`check${name}Dot`);
             const label = document.getElementById(`check${name}Text`);
@@ -1602,7 +1613,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.7 API Panel Root Fix 初始化...', 'SYSTEM');
             normalizeApiKeysV43();
             if(typeof migrateApiKeysV41 === 'function') migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
@@ -1626,13 +1637,22 @@ mindmap
 
 
 
-        // V4.4 hotfix: reinforce button bindings without opening any preview window.
-        function bindApiButtonsV44() {
+        // V4.7 hotfix: remove duplicate inline onclick handlers before binding.
+        // Cause fixed: V4.7 had both inline onclick and addEventListener on the same button,
+        // so the API panel opened and immediately closed on one tap.
+        function bindApiButtonsV45() {
             const bind = (id, handler) => {
                 const el = document.getElementById(id);
-                if(el && !el.dataset.v44Bound) {
-                    el.addEventListener('click', (event) => { event.preventDefault(); handler(); });
-                    el.dataset.v44Bound = '1';
+                if(!el) return;
+                // Important: inline onclick must be removed, otherwise one tap triggers twice.
+                el.onclick = null;
+                if(!el.dataset.v45Bound) {
+                    el.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        handler();
+                    }, { passive:false });
+                    el.dataset.v45Bound = '1';
                 }
             };
             bind('toggleApiBtn', () => window.toggleApiPanel());
@@ -1641,14 +1661,623 @@ mindmap
             bind('saveWorkerEndpointBtn', () => window.saveWorkerEndpoint());
             bind('testWorkerBtn', () => window.testWorkerEndpoint());
         }
-        const onloadV44Base = window.onload;
+        const onloadV45Base = window.onload;
         window.onload = () => {
-            if(typeof onloadV44Base === 'function') onloadV44Base();
-            bindApiButtonsV44();
-            setTimeout(bindApiButtonsV44, 100);
-            logSys('V4.4 API Key 按鈕事件修補已載入', 'SUCCESS');
+            if(typeof onloadV45Base === 'function') onloadV45Base();
+            bindApiButtonsV45();
+            setTimeout(bindApiButtonsV45, 100);
+            logSys('V4.7 API Key 根因修補已載入', 'SUCCESS');
+        };
+
+
+
+        // ============================================================
+        // V4.7 API Panel Root Fix｜最小必要修補
+        // 1) 強制修正 API 區塊按鈕綁定，避免舊 inline / listener 雙重或失效
+        // 2) iPhone 錄音格式改為優先 audio/mp4，避免 webm 無法播放
+        // 3) 沒有 Cloudflare Worker 後端時，不再產生假會議摘要與假心智圖
+        // 4) 提供一鍵清除舊版 Service Worker / Cache，解決手機一直看到 V4.7
+        // ============================================================
+        const V46_VERSION_LABEL = 'V4.7 API Panel Root Fix';
+        let currentAudioMimeV46 = '';
+        let currentAudioExtV46 = 'webm';
+
+        function getBestAudioMimeV46() {
+            const candidates = [
+                { mime: 'audio/mp4;codecs=mp4a.40.2', ext: 'm4a' },
+                { mime: 'audio/mp4', ext: 'm4a' },
+                { mime: 'audio/webm;codecs=opus', ext: 'webm' },
+                { mime: 'audio/webm', ext: 'webm' },
+                { mime: 'audio/ogg;codecs=opus', ext: 'ogg' },
+                { mime: 'audio/ogg', ext: 'ogg' }
+            ];
+            if (!window.MediaRecorder || typeof MediaRecorder.isTypeSupported !== 'function') {
+                return { mime: '', ext: 'webm' };
+            }
+            return candidates.find(c => MediaRecorder.isTypeSupported(c.mime)) || { mime: '', ext: 'webm' };
+        }
+
+        function extFromMimeV46(mime) {
+            const m = String(mime || '').toLowerCase();
+            if (m.includes('mp4') || m.includes('aac') || m.includes('m4a')) return 'm4a';
+            if (m.includes('ogg')) return 'ogg';
+            if (m.includes('webm')) return 'webm';
+            return currentAudioExtV46 || 'webm';
+        }
+
+        window.clearAppCacheAndReloadV46 = async () => {
+            try {
+                logSys('開始清除舊版快取與 Service Worker...', 'SYSTEM');
+                if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(regs.map(r => r.unregister()));
+                }
+                if ('caches' in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys.map(k => caches.delete(k)));
+                }
+                const base = location.origin + location.pathname;
+                location.replace(`${base}?v=4.7&t=${Date.now()}`);
+            } catch (err) {
+                showModal('清除快取失敗', `請手動關閉分頁後重新開啟。錯誤：${err.message}`);
+            }
+        };
+
+        function hardBindButtonV46(id, handler) {
+            const oldEl = document.getElementById(id);
+            if (!oldEl || !oldEl.parentNode) return;
+            const newEl = oldEl.cloneNode(true);
+            newEl.onclick = null;
+            newEl.removeAttribute('onclick');
+            oldEl.parentNode.replaceChild(newEl, oldEl);
+            newEl.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                handler(event);
+            }, { passive: false });
+        }
+
+        function forceApiPanelV46(open) {
+            const content = document.getElementById('apiPanelContent');
+            const btn = document.getElementById('toggleApiBtn');
+            if (!content || !btn) return;
+            const willOpen = typeof open === 'boolean' ? open : (content.style.display === 'none' || getComputedStyle(content).display === 'none');
+            content.style.display = willOpen ? 'block' : 'none';
+            content.hidden = false;
+            content.setAttribute('aria-hidden', willOpen ? 'false' : 'true');
+            btn.textContent = willOpen ? '收合 API Key / 模型設定' : '展開 API Key / 模型設定';
+            if (willOpen) {
+                logSys('API Key / 模型設定已展開', 'SUCCESS');
+                setTimeout(() => runSystemCheck(false), 30);
+            } else {
+                logSys('API Key / 模型設定已收合', 'INFO');
+            }
+        }
+        window.toggleApiPanel = () => forceApiPanelV46();
+
+        window.toggleRecording = async () => {
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    activeAudioStreamV41 = stream;
+                    const picked = getBestAudioMimeV46();
+                    const options = picked.mime ? { mimeType: picked.mime } : undefined;
+                    mediaRecorder = new MediaRecorder(stream, options);
+                    currentAudioMimeV46 = mediaRecorder.mimeType || picked.mime || '';
+                    currentAudioExtV46 = extFromMimeV46(currentAudioMimeV46);
+                    audioChunks = [];
+                    mediaRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) audioChunks.push(e.data); };
+                    mediaRecorder.onstop = () => {
+                        currentAudioBlob = new Blob(audioChunks, { type: currentAudioMimeV46 || undefined });
+                        const sizeMB = (currentAudioBlob.size / (1024 * 1024)).toFixed(2);
+                        const fileSizeTxt = document.getElementById('fileSizeTxt');
+                        if (fileSizeTxt) fileSizeTxt.textContent = `${sizeMB} MB｜${currentAudioExtV46.toUpperCase()}`;
+                        const player = document.getElementById('audioPlayer');
+                        if (player) {
+                            player.src = URL.createObjectURL(currentAudioBlob);
+                            player.load();
+                        }
+                        const reader = new FileReader();
+                        reader.readAsDataURL(currentAudioBlob);
+                        reader.onloadend = () => {
+                            currentAudioBase64 = String(reader.result || '').split(',')[1] || '';
+                            const preview = document.getElementById('previewArea');
+                            if (preview) preview.style.display = 'block';
+                            logSys(`錄音完成：${sizeMB} MB，格式=${currentAudioMimeV46 || 'browser-default'}`, 'SUCCESS');
+                            if (currentAudioExtV46 === 'webm') {
+                                logSys('提醒：此瀏覽器只支援 WebM 錄音，iPhone 可能無法原生播放；建議改用 Safari 或正式後端轉檔。', 'WARNING');
+                            }
+                            if (preview) preview.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        };
+                    };
+                    mediaRecorder.start();
+                    isRecording = true;
+                    const recordBtn = document.getElementById('recordBtn');
+                    if (recordBtn) {
+                        recordBtn.innerHTML = '🛑 結束錄音並進入預覽';
+                        recordBtn.classList.replace('btn-primary', 'btn-danger');
+                    }
+                    logSys(`啟動麥克風錄音，預計格式：${currentAudioMimeV46 || 'browser-default'}`, 'INFO');
+                } catch (err) {
+                    showModal('權限或格式錯誤', `無法啟動麥克風或錄音格式不支援：${err.message}`);
+                }
+            } else {
+                try {
+                    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+                } catch (err) { logSys(`停止錄音時發生提醒：${err.message}`, 'WARNING'); }
+                if (activeAudioStreamV41) {
+                    activeAudioStreamV41.getTracks().forEach(track => track.stop());
+                    activeAudioStreamV41 = null;
+                    logSys('麥克風串流已釋放', 'INFO');
+                }
+                isRecording = false;
+                const recordBtn = document.getElementById('recordBtn');
+                if (recordBtn) {
+                    recordBtn.innerHTML = '🎤 啟動會議錄音';
+                    recordBtn.classList.replace('btn-danger', 'btn-primary');
+                }
+            }
+        };
+
+        window.downloadAudio = () => {
+            if (!currentAudioBlob) return showModal('尚無音檔', '請先完成錄音。');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(currentAudioBlob);
+            a.download = `AbraKai_Audio_${Date.now()}.${currentAudioExtV46 || extFromMimeV46(currentAudioBlob.type)}`;
+            a.click();
+            logSys('已備份原始音檔', 'INFO');
+        };
+
+        window.triggerAIAnalysis = async (taskType, providedBase64 = null) => {
+            const b64 = providedBase64 || currentAudioBase64;
+            if (!b64) return showModal('尚無資料', '請先完成錄音或匯入文件。');
+            const workerUrl = (localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '').trim().replace(/\/$/, '');
+            if (!workerUrl) {
+                logSys('尚未設定 Cloudflare Worker，已停止正式 AI 解析，避免產生假會議內容。', 'WARNING');
+                return showModal('尚未連接正式 AI 後端', '錄音已成功，但目前沒有設定 Cloudflare Worker API URL，因此系統不能辨識真實會議內容。請先部署 Worker 並設定後端網址；在此之前不再產生模擬摘要或假心智圖，避免誤會。');
+            }
+            showProgress('正式後端 AI 解析中...', 80);
+            const prompt = taskType === 'audio'
+                ? '請分析音檔，辨識講者、萃取重點、產出真實會議摘要與 Mermaid mindmap。格式：===REPORT===\n...\n===MINDMAP===\nmindmap...'
+                : '請提純此文件，刪除雜訊，輸出適合語音播報的純文字與摘要。';
+            try {
+                logSys(`送出正式解析任務至 Worker：${taskType}`, 'SYSTEM');
+                updateIndicator('active', 'Worker 正式解析中');
+                const res = await fetch(`${workerUrl}/api/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ taskType, base64Data: b64, mimeType: currentAudioMimeV46 || currentAudioBlob?.type || '', promptText: prompt })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+                await parseAndRenderOutput(data.text || '', taskType);
+                hideProgress('正式解析完成');
+                updateIndicator('normal', '待命中');
+            } catch (err) {
+                hideProgress('解析失敗');
+                updateIndicator('error', 'Worker 解析失敗');
+                logSys(`Worker 正式解析失敗：${err.message}`, 'ERROR');
+                showModal('正式 AI 解析失敗', `請檢查 Worker 網址、Secrets、CORS 或供應商 API 狀態。錯誤：${err.message}`);
+            }
+        };
+
+        function applyV46UiFixes() {
+            const version = document.querySelector('.product-version');
+            if (version) version.textContent = V46_VERSION_LABEL;
+            const apiContent = document.getElementById('apiPanelContent');
+            const apiBtn = document.getElementById('toggleApiBtn');
+            if (apiContent) {
+                apiContent.style.display = 'none';
+                apiContent.setAttribute('aria-hidden', 'true');
+            }
+            if (apiBtn) apiBtn.textContent = '展開 API Key / 模型設定';
+            hardBindButtonV46('toggleApiBtn', () => forceApiPanelV46());
+            hardBindButtonV46('saveKeyBtn', () => window.addApiKey());
+            hardBindButtonV46('runSystemCheckBtn', () => window.runSystemCheck(true));
+            hardBindButtonV46('saveWorkerEndpointBtn', () => window.saveWorkerEndpoint());
+            hardBindButtonV46('testWorkerBtn', () => window.testWorkerEndpoint());
+            hardBindButtonV46('clearCacheBtn', () => window.clearAppCacheAndReloadV46());
+            const enabledCount = Array.isArray(apiKeys) ? apiKeys.filter(k => k.enabled).length : 0;
+            const totalCount = Array.isArray(apiKeys) ? apiKeys.length : 0;
+            const workerUrl = (localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '').trim();
+            if (workerUrl) updateIndicator('normal', `待命中｜正式後端已設定｜API節點 ${enabledCount}/${totalCount}`);
+            else updateIndicator('normal', `待命中｜尚未連接正式AI後端｜API節點 ${enabledCount}/${totalCount}`);
+            logSys('V4.7 行動版快取、API 面板、iOS 音訊修補已載入', 'SUCCESS');
+        }
+
+        const onloadV46Base = window.onload;
+        window.onload = () => {
+            if (typeof onloadV46Base === 'function') onloadV46Base();
+            applyV46UiFixes();
+            setTimeout(applyV46UiFixes, 150);
         };
 
     </script>
+
+<script>
+(function AbraKaiV47RootFix(){
+    'use strict';
+    const APP_VERSION = 'V4.7 API Panel Root Fix';
+    const STORAGE_KEY = 'abrakai_cluster_keys';
+    const WORKER_KEY = 'abrakai_worker_endpoint';
+    const RR_KEY = 'abrakai_round_robin_state';
+    const DEFAULT_MODELS = {
+        Agnes: ['agnes-2.0-flash', 'agnes-image-2.0-flash', 'agnes-video-2.0'],
+        Gemini: ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'],
+        Claude: ['claude-sonnet-5', 'claude-haiku-4-5', 'claude-opus-4-8'],
+        OpenAI: ['gpt-5.5', 'gpt-5.4-mini', 'gpt-realtime-whisper'],
+        Grok: ['grok-4.3', 'grok-build', 'grok-voice-api']
+    };
+    const PROVIDER_LABELS = {Agnes:'Agnes AI', Gemini:'Google Gemini', Claude:'Anthropic Claude', OpenAI:'OpenAI', Grok:'xAI Grok'};
+    let revealIds = new Set();
+
+    function $(id){ return document.getElementById(id); }
+    function esc(value){ return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+    function log(msg, type='INFO'){
+        try {
+            if (typeof window.logSys === 'function') return window.logSys(msg, type);
+            const terminal = $('terminalLogs');
+            if (!terminal) return;
+            const now = new Date();
+            const t = [now.getHours(), now.getMinutes(), now.getSeconds()].map(n => String(n).padStart(2,'0')).join(':');
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            div.innerHTML = `<span class="log-time">[${t}]</span> <span class="log-type-${esc(type)}">[${esc(type)}]</span> <span class="log-msg">${esc(msg)}</span>`;
+            terminal.appendChild(div);
+            const view = $('terminalView');
+            if (view) view.scrollTop = view.scrollHeight;
+        } catch {}
+    }
+    function modal(title, msg){
+        if (typeof window.showModal === 'function') return window.showModal(title, msg);
+        alert(`${title}\n\n${msg}`);
+    }
+    function setStatus(text, mode='normal'){
+        const dot = $('sysStatusDot');
+        const label = $('sysStatusText');
+        if (dot) {
+            dot.className = 'status-dot';
+            if (mode === 'active') dot.classList.add('active');
+            if (mode === 'error') dot.classList.add('error');
+        }
+        if (label) label.textContent = text;
+    }
+    function safeReadKeys(){
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : [];
+            if (!Array.isArray(parsed)) throw new Error('not array');
+            return parsed.map((k, i) => ({
+                id: String(k.id || `v47_${Date.now()}_${i}_${Math.random().toString(36).slice(2,7)}`),
+                provider: DEFAULT_MODELS[k.provider] ? k.provider : 'Agnes',
+                model: String(k.model || (DEFAULT_MODELS[k.provider] || DEFAULT_MODELS.Agnes)[0]),
+                task: String(k.task || 'all'),
+                key: String(k.key || ''),
+                enabled: Boolean(k.enabled),
+                createdAt: k.createdAt || new Date().toISOString(),
+                updatedAt: k.updatedAt || k.createdAt || new Date().toISOString(),
+                lastStatus: k.lastStatus || 'untested',
+                lastMessage: k.lastMessage || '尚未測試'
+            })).filter(k => k.key.trim());
+        } catch (err) {
+            try { localStorage.removeItem(STORAGE_KEY); } catch {}
+            log('偵測到 API Key 本機資料格式異常，已重置為空節點', 'WARNING');
+            return [];
+        }
+    }
+    function safeSaveKeys(keys){
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
+        try { window.apiKeys = keys; } catch {}
+    }
+    function taskLabel(task){
+        return ({all:'通用輪詢', audio:'語音/會議', text:'長文/文件', image:'圖片/DM', video:'影片', code:'程式/邏輯', fallback:'備援'}[task] || task);
+    }
+    function maskKey(key, reveal){
+        if (!key) return '(空)';
+        if (reveal) return key;
+        if (key.length <= 10) return '••••••';
+        return `${key.slice(0,5)}••••••${key.slice(-4)}`;
+    }
+    function statusBadge(k){
+        if (k.lastStatus === 'pass') return '<span class="badge-task">測試通過</span>';
+        if (k.lastStatus === 'fail') return '<span class="badge-fallback">測試失敗</span>';
+        return '<span class="badge-fallback">未測試</span>';
+    }
+    function updateModelDropdownV47(){
+        const providerEl = $('newProvider');
+        const modelEl = $('newModel');
+        if (!providerEl || !modelEl) return;
+        const provider = DEFAULT_MODELS[providerEl.value] ? providerEl.value : 'Agnes';
+        const current = modelEl.value;
+        modelEl.innerHTML = DEFAULT_MODELS[provider].map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('');
+        if (DEFAULT_MODELS[provider].includes(current)) modelEl.value = current;
+    }
+    function renderKeys(){
+        const keys = safeReadKeys();
+        safeSaveKeys(keys);
+        const tbody = $('keyTableBody');
+        const list = $('mobileKeyList');
+        const enabledCount = keys.filter(k => k.enabled).length;
+        const passCount = keys.filter(k => k.lastStatus === 'pass').length;
+        const workerUrl = (localStorage.getItem(WORKER_KEY) || '').trim();
+        if (tbody) {
+            tbody.innerHTML = keys.length ? keys.map((k, i) => {
+                const revealed = revealIds.has(k.id);
+                return `<tr>
+                    <td><button type="button" class="btn-icon v47-key-action" data-action="toggle" data-index="${i}" title="啟用/停用">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
+                    <td><strong>#${i+1}</strong></td>
+                    <td style="color:var(--brand-orange); font-weight:bold;">${esc(PROVIDER_LABELS[k.provider] || k.provider)}</td>
+                    <td>${esc(k.model)}</td>
+                    <td><span class="badge-task">${esc(taskLabel(k.task))}</span></td>
+                    <td><code>${esc(maskKey(k.key, revealed))}</code><br>${statusBadge(k)}</td>
+                    <td><div class="key-actions">
+                        <button type="button" class="btn-icon v47-key-action" data-action="up" data-index="${i}" title="上移">⬆️</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="down" data-index="${i}" title="下移">⬇️</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="reveal" data-index="${i}" title="顯示/隱藏">${revealed ? '🙈' : '👁️'}</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="copy" data-index="${i}" title="複製">📋</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="edit" data-index="${i}" title="修改">✏️</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="test" data-index="${i}" title="測試">🧪</button>
+                        <button type="button" class="btn-icon v47-key-action" data-action="delete" data-index="${i}" style="background:var(--danger-red);" title="刪除">🗑️</button>
+                    </div></td>
+                </tr>`;
+            }).join('') : '<tr><td colspan="7" style="color:#94a3b8;">尚未新增 API Key。本機測試模式為 0 筆節點；正式商業版請使用 Cloudflare Worker Secrets。</td></tr>';
+        }
+        if (list) {
+            list.innerHTML = keys.length ? keys.map((k, i) => {
+                const revealed = revealIds.has(k.id);
+                return `<div class="key-mobile-card">
+                    <div class="key-mobile-row"><strong>#${i+1} ${esc(PROVIDER_LABELS[k.provider] || k.provider)}</strong><span>${k.enabled ? '🟢 啟用' : '⚪ 停用'}｜${k.lastStatus === 'pass' ? '✅ 通過' : k.lastStatus === 'fail' ? '❌ 失敗' : '🟡 未測試'}</span></div>
+                    <div class="key-mobile-row">模型：${esc(k.model)}</div>
+                    <div class="key-mobile-row">任務：${esc(taskLabel(k.task))}</div>
+                    <div class="key-mobile-row">API Key：<code>${esc(maskKey(k.key, revealed))}</code></div>
+                    <div class="key-mobile-row" style="color:#94a3b8;">狀態：${esc(k.lastMessage || '尚未測試')}</div>
+                    <div class="key-mobile-actions">
+                        <button type="button" class="btn-outline v47-key-action" data-action="toggle" data-index="${i}">${k.enabled ? '停用' : '啟用'}</button>
+                        <button type="button" class="btn-outline v47-key-action" data-action="reveal" data-index="${i}">${revealed ? '隱藏' : '顯示'}</button>
+                        <button type="button" class="btn-outline v47-key-action" data-action="copy" data-index="${i}">複製</button>
+                        <button type="button" class="btn-outline v47-key-action" data-action="edit" data-index="${i}">修改</button>
+                        <button type="button" class="btn-outline v47-key-action" data-action="test" data-index="${i}">測試</button>
+                        <button type="button" class="btn-danger v47-key-action" data-action="delete" data-index="${i}">刪除</button>
+                    </div>
+                </div>`;
+            }).join('') : '<div class="provider-guide-hint">目前沒有本機 API Key 節點。點「展開 API Key / 模型設定」後可新增；正式版建議把 Key 放在 Cloudflare Worker Secrets。</div>';
+        }
+        setStatus(workerUrl ? `待命中｜正式後端已設定｜本機節點 ${keys.length}｜通過 ${passCount}` : `待命中｜未連正式後端｜本機節點 ${keys.length}｜啟用 ${enabledCount}｜通過 ${passCount}`, workerUrl ? 'normal' : 'normal');
+        const keyText = $('checkKeyText');
+        if (keyText) keyText.textContent = keys.length ? `本機節點 ${keys.length} 筆；通過測試 ${passCount} 筆` : '尚未新增本機節點';
+        return keys;
+    }
+    function setPanel(open){
+        const content = $('apiPanelContent');
+        const btn = $('toggleApiBtn');
+        if (!content) return;
+        const willOpen = typeof open === 'boolean' ? open : content.style.display === 'none' || getComputedStyle(content).display === 'none';
+        content.style.display = willOpen ? 'block' : 'none';
+        content.setAttribute('aria-hidden', willOpen ? 'false' : 'true');
+        if (btn) {
+            btn.textContent = willOpen ? '收合 API Key / 模型設定' : '展開 API Key / 模型設定';
+            btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        }
+        log(willOpen ? 'API Key / 模型設定已展開' : 'API Key / 模型設定已收合', willOpen ? 'SUCCESS' : 'INFO');
+        if (willOpen) { updateModelDropdownV47(); renderKeys(); }
+    }
+    function addOrUpdateKey(){
+        const providerEl = $('newProvider'), modelEl = $('newModel'), taskEl = $('newTask'), keyEl = $('newKey'), editEl = $('editingKeyIndex');
+        if (!providerEl || !modelEl || !taskEl || !keyEl || !editEl) return modal('畫面元件異常', '找不到 API Key 表單欄位。請重新整理後再試。');
+        const provider = DEFAULT_MODELS[providerEl.value] ? providerEl.value : 'Agnes';
+        const model = modelEl.value || DEFAULT_MODELS[provider][0];
+        const task = taskEl.value || 'all';
+        const key = keyEl.value.trim();
+        const editIndex = editEl.value === '' ? -1 : Number(editEl.value);
+        const keys = safeReadKeys();
+        if (!key && editIndex < 0) return modal('尚未貼上 API Key', '請先貼上 API Key。正式商業版則建議改由 Cloudflare Worker Secrets 管理。');
+        if (editIndex >= 0 && (!Number.isInteger(editIndex) || !keys[editIndex])) return modal('修改狀態異常', '找不到要修改的 API Key，請重新選擇。');
+        const now = new Date().toISOString();
+        if (editIndex >= 0) {
+            keys[editIndex] = {...keys[editIndex], provider, model, task, key: key || keys[editIndex].key, updatedAt: now, lastStatus: 'untested', lastMessage: '修改後尚未重新測試'};
+            editEl.value = '';
+            const saveBtn = $('saveKeyBtn'); if (saveBtn) saveBtn.textContent = '➕ 新增節點';
+            const cancelBtn = $('cancelEditBtn'); if (cancelBtn) cancelBtn.style.display = 'none';
+            modal('修改成功', 'API Key 節點已更新。完整 Key 仍預設隱藏。');
+            log(`已修改節點 #${editIndex + 1}`, 'SUCCESS');
+        } else {
+            keys.push({id:`v47_${Date.now()}_${Math.random().toString(36).slice(2,8)}`, provider, model, task, key, enabled:true, createdAt:now, updatedAt:now, lastStatus:'untested', lastMessage:'尚未測試'});
+            modal('新增成功', 'API Key 已新增到本機路由節點。完整 Key 預設隱藏，需點「顯示」才會看到。');
+            log(`新增 API Key 節點：${provider} / ${model} / ${taskLabel(task)}`, 'SUCCESS');
+        }
+        keyEl.value = '';
+        safeSaveKeys(keys);
+        setPanel(true);
+        renderKeys();
+        setTimeout(() => { const list = $('mobileKeyList'); if (list) list.scrollIntoView({behavior:'smooth', block:'start'}); }, 120);
+    }
+    function cancelEdit(){
+        const editEl = $('editingKeyIndex'); if (editEl) editEl.value = '';
+        const keyEl = $('newKey'); if (keyEl) keyEl.value = '';
+        const btn = $('saveKeyBtn'); if (btn) btn.textContent = '➕ 新增節點';
+        const cancel = $('cancelEditBtn'); if (cancel) cancel.style.display = 'none';
+        log('已取消 API Key 修改', 'INFO');
+    }
+    async function keyAction(action, index){
+        const keys = safeReadKeys();
+        const k = keys[index];
+        if (!k) return modal('節點不存在', '找不到這一筆 API Key 節點，請重新整理。');
+        if (action === 'toggle') { k.enabled = !k.enabled; k.updatedAt = new Date().toISOString(); }
+        else if (action === 'reveal') { revealIds.has(k.id) ? revealIds.delete(k.id) : revealIds.add(k.id); }
+        else if (action === 'copy') {
+            try { await navigator.clipboard.writeText(k.key); modal('已複製', 'API Key 已複製到剪貼簿。請勿貼到公開網站、截圖或 GitHub。'); }
+            catch { modal('無法自動複製', '此瀏覽器不允許自動複製，請點「顯示」後手動複製。'); }
+        }
+        else if (action === 'edit') {
+            $('newProvider').value = k.provider; updateModelDropdownV47(); $('newModel').value = k.model;
+            $('newTask').value = k.task; $('newKey').value = ''; $('editingKeyIndex').value = String(index);
+            const btn = $('saveKeyBtn'); if (btn) btn.textContent = '💾 儲存修改';
+            const cancel = $('cancelEditBtn'); if (cancel) cancel.style.display = 'inline-flex';
+            setPanel(true); $('newKey').placeholder = '不填則保留原 API Key；貼上新 Key 可替換'; $('newKey').scrollIntoView({behavior:'smooth', block:'center'});
+            log(`已載入節點 #${index + 1} 進入修改模式`, 'INFO');
+            return;
+        }
+        else if (action === 'delete') {
+            if (!confirm(`確定刪除第 ${index + 1} 組本機 API Key 節點？\n這只會清除此瀏覽器資料，不會刪除供應商後台的 Key。`)) return;
+            keys.splice(index,1);
+        }
+        else if (action === 'up' && index > 0) { [keys[index-1], keys[index]] = [keys[index], keys[index-1]]; }
+        else if (action === 'down' && index < keys.length - 1) { [keys[index+1], keys[index]] = [keys[index], keys[index+1]]; }
+        else if (action === 'test') {
+            await testOneKey(index);
+            return;
+        }
+        safeSaveKeys(keys);
+        renderKeys();
+    }
+    async function testOneKey(index){
+        const keys = safeReadKeys();
+        const k = keys[index];
+        if (!k) return;
+        if (!k.enabled) return modal('節點停用中', '請先啟用此 API Key，再進行測試。');
+        const workerUrl = (localStorage.getItem(WORKER_KEY) || '').trim().replace(/\/$/, '');
+        if (!workerUrl) {
+            k.lastStatus = 'untested';
+            k.lastMessage = '尚未設定 Cloudflare Worker，無法從前端安全測試真實 Key';
+            safeSaveKeys(keys); renderKeys();
+            return modal('尚未連接正式後端', '為了避免 API Key 外流，正式測試需要先設定 Cloudflare Worker。前端不會直接呼叫供應商 API。');
+        }
+        try {
+            log(`測試節點 #${index + 1}：${k.provider} / ${k.model}`, 'INFO');
+            const res = await fetch(`${workerUrl}/api/test-provider`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({provider:k.provider, model:k.model})});
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+            k.lastStatus = 'pass'; k.lastMessage = 'Worker 測試通過';
+            log(`節點 #${index + 1} 測試通過`, 'SUCCESS');
+        } catch (err) {
+            k.lastStatus = 'fail'; k.lastMessage = err.message || '測試失敗';
+            log(`節點 #${index + 1} 測試失敗：${k.lastMessage}`, 'ERROR');
+        }
+        safeSaveKeys(keys); renderKeys();
+    }
+    function clearKeys(){
+        if (!confirm('確定清除本瀏覽器內所有 API Key 節點資料？\n此動作不會刪除 Agnes/Gemini/OpenAI 官方後台的 Key。')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(RR_KEY);
+        revealIds.clear();
+        renderKeys();
+        setPanel(true);
+        modal('已清除', '本機 API Key 節點資料已清除。現在應顯示 0 筆節點。');
+        log('已清除本機 API Key 節點資料', 'WARNING');
+    }
+    async function exportState(){
+        const keys = safeReadKeys();
+        const info = {
+            version: APP_VERSION,
+            userAgent: navigator.userAgent,
+            keyCount: keys.length,
+            enabledCount: keys.filter(k=>k.enabled).length,
+            passedCount: keys.filter(k=>k.lastStatus==='pass').length,
+            providers: keys.map(k=>({provider:k.provider, model:k.model, task:k.task, enabled:k.enabled, lastStatus:k.lastStatus})),
+            workerEndpointSet: Boolean((localStorage.getItem(WORKER_KEY) || '').trim())
+        };
+        try { await navigator.clipboard.writeText(JSON.stringify(info, null, 2)); modal('已複製診斷資訊', '節點診斷資訊已複製，但不包含 API Key 原文。'); }
+        catch { modal('診斷資訊', JSON.stringify(info, null, 2)); }
+    }
+    function runSystemCheck(){
+        const keys = safeReadKeys();
+        const workerUrl = (localStorage.getItem(WORKER_KEY) || '').trim();
+        const setCheck = (dotId, textId, ok, text) => {
+            const dot = $(dotId), label = $(textId);
+            if (dot) dot.className = `check-dot ${ok === true ? 'pass' : ok === false ? 'fail' : 'warn'}`;
+            if (label) label.textContent = text;
+        };
+        try { localStorage.setItem('__v47_test__','1'); localStorage.removeItem('__v47_test__'); setCheck('checkStorageDot','checkStorageText',true,'可正常讀寫'); }
+        catch { setCheck('checkStorageDot','checkStorageText',false,'無法讀寫 localStorage'); }
+        setCheck('checkPwaDot','checkPwaText', Boolean('serviceWorker' in navigator), ('serviceWorker' in navigator) ? '瀏覽器支援 Service Worker' : '瀏覽器不支援 Service Worker');
+        setCheck('checkKeyDot','checkKeyText', keys.length ? null : false, keys.length ? `本機節點 ${keys.length} 筆；通過 ${keys.filter(k=>k.lastStatus==='pass').length} 筆` : '目前 0 筆 API Key 節點');
+        setCheck('checkBackendDot','checkBackendText', workerUrl ? null : false, workerUrl ? '已填寫後端網址，請按「測試後端」確認' : '尚未設定 Cloudflare Worker');
+        renderKeys();
+        log('V4.7 一鍵系統檢測完成', 'SUCCESS');
+    }
+    function saveWorker(){
+        const input = $('workerEndpoint');
+        const url = (input?.value || '').trim().replace(/\/$/, '');
+        if (!url) { localStorage.removeItem(WORKER_KEY); modal('已清空', '已清空 Cloudflare Worker 後端網址。'); }
+        else if (!/^https:\/\//i.test(url)) return modal('網址格式錯誤', 'Worker URL 必須以 https:// 開頭。');
+        else { localStorage.setItem(WORKER_KEY, url); modal('已儲存', 'Cloudflare Worker 後端網址已儲存。'); }
+        renderKeys();
+    }
+    async function testWorker(){
+        const input = $('workerEndpoint');
+        const url = ((input?.value || localStorage.getItem(WORKER_KEY) || '').trim()).replace(/\/$/, '');
+        if (!url) return modal('尚未設定', '請先填寫 Cloudflare Worker URL。');
+        try {
+            const res = await fetch(`${url}/api/health`, {cache:'no-store'});
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+            localStorage.setItem(WORKER_KEY, url);
+            modal('後端測試通過', 'Cloudflare Worker /api/health 回應正常。');
+            log('Worker 後端健康檢查通過', 'SUCCESS');
+        } catch (err) {
+            modal('後端測試失敗', `無法連線或健康檢查未通過：${err.message}`);
+            log(`Worker 後端測試失敗：${err.message}`, 'ERROR');
+        }
+        renderKeys();
+    }
+    async function clearCache(){
+        try {
+            if ('serviceWorker' in navigator) {
+                const regs = await navigator.serviceWorker.getRegistrations();
+                await Promise.all(regs.map(r => r.unregister()));
+            }
+            if ('caches' in window) {
+                const names = await caches.keys();
+                await Promise.all(names.map(n => caches.delete(n)));
+            }
+        } catch {}
+        location.href = location.pathname + '?v=4.7&t=' + Date.now();
+    }
+    function applyVersion(){
+        document.title = 'AbraKai 聲曜 V4.7 | 數位語音閉環引擎';
+        const badge = document.querySelector('.product-version'); if (badge) badge.textContent = APP_VERSION;
+        const manifest = document.querySelector('link[rel="manifest"]'); if (manifest) manifest.setAttribute('href','./manifest.json?v=4.7');
+    }
+    function init(){
+        applyVersion();
+        updateModelDropdownV47();
+        const panel = $('apiPanelContent'); if (panel) { panel.style.display='none'; panel.setAttribute('aria-hidden','true'); }
+        const toggle = $('toggleApiBtn'); if (toggle) { toggle.textContent = '展開 API Key / 模型設定'; toggle.setAttribute('aria-expanded','false'); }
+        const workerInput = $('workerEndpoint'); if (workerInput) workerInput.value = localStorage.getItem(WORKER_KEY) || '';
+        renderKeys();
+        log('V4.7 API Panel Root Fix 已完成版本一致性與按鈕根因修補', 'SUCCESS');
+    }
+    document.addEventListener('click', function(e){
+        const target = e.target.closest('button, a');
+        if (!target) return;
+        if (target.id === 'toggleApiBtn') { e.preventDefault(); e.stopImmediatePropagation(); return setPanel(); }
+        if (target.id === 'saveKeyBtn') { e.preventDefault(); e.stopImmediatePropagation(); return addOrUpdateKey(); }
+        if (target.id === 'cancelEditBtn') { e.preventDefault(); e.stopImmediatePropagation(); return cancelEdit(); }
+        if (target.id === 'runSystemCheckBtn') { e.preventDefault(); e.stopImmediatePropagation(); return runSystemCheck(); }
+        if (target.id === 'saveWorkerEndpointBtn') { e.preventDefault(); e.stopImmediatePropagation(); return saveWorker(); }
+        if (target.id === 'testWorkerBtn') { e.preventDefault(); e.stopImmediatePropagation(); return testWorker(); }
+        if (target.id === 'clearApiKeysBtn') { e.preventDefault(); e.stopImmediatePropagation(); return clearKeys(); }
+        if (target.id === 'exportApiStateBtn') { e.preventDefault(); e.stopImmediatePropagation(); return exportState(); }
+        if (target.id === 'clearCacheBtn') { e.preventDefault(); e.stopImmediatePropagation(); return clearCache(); }
+        if (target.classList.contains('v47-key-action')) { e.preventDefault(); e.stopImmediatePropagation(); return keyAction(target.dataset.action, Number(target.dataset.index)); }
+    }, true);
+    document.addEventListener('change', function(e){
+        if (e.target && e.target.id === 'newProvider') updateModelDropdownV47();
+    }, true);
+    window.toggleApiPanel = () => setPanel();
+    window.addApiKey = addOrUpdateKey;
+    window.cancelEditKey = cancelEdit;
+    window.updateModelDropdown = updateModelDropdownV47;
+    window.runSystemCheck = runSystemCheck;
+    window.saveWorkerEndpoint = saveWorker;
+    window.testWorkerEndpoint = testWorker;
+    window.clearAppCacheAndReloadV46 = clearCache;
+    window.clearAppCacheAndReloadV47 = clearCache;
+    window.renderKeyTable = renderKeys;
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+    else init();
+})();
+</script>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V4.4",
+  "name": "AbraKai 聲曜 V4.7",
   "short_name": "聲曜",
-  "description": "AbraKai 工作室專屬：語音轉文字、讀報閉環與安全 API 路由系統",
-  "start_url": "./",
+  "description": "AbraKai 工作室專屬：語音收錄、讀報閉環、安全 API 路由與 API 面板根因修正版",
+  "start_url": "./?v=4.7",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
