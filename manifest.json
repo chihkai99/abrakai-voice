@@ -1,11 +1,12 @@
 {
   "name": "AbraKai 聲曜",
-  "short_name": "AbraKai",
-  "description": "AbraKai 工作室專屬：語音轉文字與讀報閉環系統",
-  "start_url": "./index.html",
+  "short_name": "AbraKai 聲曜",
+  "description": "阿布拉.凱工作室專屬：語音轉文字、AI 讀報、摘要與心智圖閉環系統",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#00f0ff",
+  "background_color": "#0B1A3A",
+  "theme_color": "#0B1A3A",
   "icons": [
     {
       "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjMDBmMGZmIj48Y2lyY2xlIGN4PSI5NiIgY3k9Ijk2IiByPSI5NiIvPjwvc3ZnPg==",
