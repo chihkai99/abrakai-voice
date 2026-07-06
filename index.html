@@ -223,6 +223,53 @@
         /* 系統彈窗 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(3px);}
         .modal-box { background: var(--brand-navy); border: 2px solid var(--brand-orange); border-radius: 12px; padding: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;}
+    
+
+        /* V4.2 UX Fix｜手機版與 API 管理可讀性修正 */
+        .btn-bright {
+            background: linear-gradient(135deg, var(--brand-blue), #38bdf8) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(125, 211, 252, 0.9) !important;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.28);
+        }
+        .btn-bright:hover { box-shadow: 0 0 18px rgba(56, 189, 248, 0.55); }
+        .provider-guide-row { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap; }
+        .provider-guide-hint { font-size:12px; color:#cbd5e1; background:rgba(30,136,229,0.10); border:1px solid rgba(30,136,229,0.25); padding:10px 12px; border-radius:8px; margin-bottom:12px; line-height:1.55; }
+        .backend-help { font-size:12px; color:#cbd5e1; margin-top:6px; line-height:1.55; }
+        .mobile-key-list { display:none; }
+        .key-mobile-card { background:rgba(0,0,0,0.30); border:1px solid rgba(30,136,229,0.35); border-radius:10px; padding:12px; margin-bottom:10px; box-shadow:0 6px 18px rgba(0,0,0,0.20); }
+        .key-mobile-head { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+        .key-mobile-provider { color:var(--brand-orange); font-weight:900; font-size:15px; }
+        .key-mobile-row { font-size:12px; color:#dbeafe; line-height:1.6; word-break:break-word; }
+        .key-mobile-actions { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:6px; margin-top:10px; }
+        .key-mobile-actions button { width:100%; min-width:0; margin-top:0; padding:9px 4px; font-size:12px; }
+        @media (max-width: 760px) {
+            body { padding: 10px 8px; }
+            .app-header { margin: -10px -8px 16px -8px; gap:14px; }
+            .header-right {
+                width:auto;
+                max-width:100%;
+                align-self:flex-start;
+                justify-content:flex-end;
+                flex-direction:row-reverse;
+                gap:12px;
+                border-top:1px solid rgba(255,255,255,0.12);
+                padding-top:14px;
+            }
+            .studio-logo { width:46px !important; height:46px !important; }
+            .studio-name { font-size:14px !important; }
+            .studio-sub { font-size:10px !important; }
+            .studio-copy { font-size:9px !important; }
+            .saas-card { padding:16px; }
+            .card-title { align-items:flex-start; flex-direction:column; }
+            .card-title button { align-self:flex-start; }
+            .provider-grid { grid-template-columns:1fr; }
+            .provider-desc { height:auto; min-height:30px; }
+            .key-table-wrapper { display:none; }
+            .mobile-key-list { display:block; }
+            #syncBtn, #toggleApiBtn, #toggleProviderGuideBtn { width:100%; }
+        }
+
     </style>
 </head>
 <body>
@@ -246,7 +293,7 @@
                 </svg>
             </div>
             <div class="text-group">
-                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.1 Secure Routing</span></div>
+                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.2 UX Fix</span></div>
                 <div class="product-desc" style="color: var(--brand-orange); font-weight: 600;">VoxAura AI Engine</div>
                 <div class="product-desc">本機端智慧語音閉環引擎 | 多模型路由架構</div>
                 <div class="status-indicator" id="sysStatusIndicator">
@@ -308,13 +355,17 @@
     <div class="saas-card" id="apiManagerPanel">
         <div class="card-title">
             <span>⚙️ 智慧路由與 API 金鑰戰情中心</span>
-            <button class="btn-outline btn-small" onclick="toggleApiPanel()" id="toggleApiBtn">收合戰情中心</button>
+            <button class="btn-bright btn-small" onclick="toggleApiPanel()" id="toggleApiBtn">收合戰情中心</button>
         </div>
         
         <div id="apiPanelContent">
-            <!-- 供應商申請指南 -->
-            <div style="font-size: 13px; color: var(--brand-white); margin-bottom: 8px;">🔥 2026 頂級 AI 供應商開通指南</div>
-            <div class="provider-grid">
+            <!-- 供應商申請指南：V4.2 預設收合，避免手機版畫面過長 -->
+            <div class="provider-guide-row">
+                <div style="font-size: 13px; color: var(--brand-white);">🔥 2026 頂級 AI 供應商開通指南</div>
+                <button class="btn-bright btn-small" onclick="toggleProviderGuide()" id="toggleProviderGuideBtn">展開供應商指南</button>
+            </div>
+            <div id="providerGuideHint" class="provider-guide-hint">供應商介紹已預設收合；需要申請 API Key 或比較模型特色時再展開。</div>
+            <div class="provider-grid" id="providerGuideGrid" style="display:none;">
                 <div class="provider-card">
                     <div class="provider-name">Agnes AI</div>
                     <div class="provider-desc">推薦一線：全模態、OpenAI 相容、適合語音/文件</div>
@@ -354,6 +405,7 @@
                 <div style="flex: 2; min-width: 240px;">
                     <label style="font-size: 11px; color:#60A5FA;">Cloudflare Worker API URL（方案 B 正式後端）</label>
                     <input type="url" id="workerEndpoint" placeholder="例如：https://abrakai-voice-api.yourname.workers.dev" autocomplete="off">
+                    <div class="backend-help">用途：這是方案 B 的正式後端入口，用來保護 API Key、處理試用次數、會員授權、AI 派工與用量紀錄。尚未部署 Worker 時可先留空，系統會使用展示模式。</div>
                 </div>
                 <button class="btn-outline btn-small" style="padding:12px;" onclick="saveWorkerEndpoint()">💾 儲存後端網址</button>
                 <button class="btn-secondary btn-small" style="padding:12px;" onclick="testWorkerEndpoint()">🧪 測試後端</button>
@@ -382,6 +434,7 @@
                     </tbody>
                 </table>
             </div>
+            <div id="mobileKeyList" class="mobile-key-list"></div>
 
             <!-- 新增金鑰表單 -->
             <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px dashed var(--glass-border);">
@@ -870,7 +923,7 @@ mindmap
         };
 
         // ============================================================
-        // V4.1 Secure Routing Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
+        // V4.2 UX Fix Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
         // ============================================================
         const providerProfilesV41 = {
             Agnes: { label:'Agnes AI', baseUrl:'https://apihub.agnes-ai.com/v1', strengths:['audio','text','image','video','all'], recommendedTasks:'語音轉錄、影片解析、長文處理、全模態備援', score:{audio:95,text:88,image:90,video:90,code:70,all:85} },
@@ -1195,10 +1248,123 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.1 Secure Routing 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.2 UX Fix 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
+            registerServiceWorkerV41();
+            renderKeyTable();
+            updateModelDropdown();
+            checkClusterStatusV41();
+        };
+
+
+
+        // ============================================================
+        // V4.2 UX Fix｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
+        // ============================================================
+        window.toggleProviderGuide = () => {
+            const grid = document.getElementById('providerGuideGrid');
+            const hint = document.getElementById('providerGuideHint');
+            const btn = document.getElementById('toggleProviderGuideBtn');
+            if(!grid || !btn) return;
+            const willShow = grid.style.display === 'none' || !grid.style.display;
+            grid.style.display = willShow ? 'grid' : 'none';
+            if(hint) hint.style.display = willShow ? 'none' : 'block';
+            btn.textContent = willShow ? '收合供應商指南' : '展開供應商指南';
+        };
+
+        function renderMobileKeyCardsV42() {
+            const list = document.getElementById('mobileKeyList');
+            if(!list) return;
+            if(!apiKeys.length) {
+                list.innerHTML = '<div class="provider-guide-hint">尚未新增 API Key。新增後會出現在這裡與上方路由節點配置表。</div>';
+                return;
+            }
+            list.innerHTML = apiKeys.map((k, i) => {
+                const profile = providerProfilesV41[k.provider] || {};
+                const revealed = revealKeySetV41.has(k.id);
+                const isCooling = (k.cooldownUntil || 0) > Date.now();
+                const coolText = isCooling ? `冷卻中 ${Math.ceil((k.cooldownUntil - Date.now())/1000)}s` : '可派工';
+                return `
+                    <div class="key-mobile-card">
+                        <div class="key-mobile-head">
+                            <div>
+                                <div class="key-mobile-provider">#${i + 1} ${escapeHtmlV41(profile.label || k.provider)}</div>
+                                <div class="key-mobile-row">狀態：<span class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</span>｜${coolText}</div>
+                            </div>
+                            <button class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button>
+                        </div>
+                        <div class="key-mobile-row">模型：${escapeHtmlV41(k.model)}</div>
+                        <div class="key-mobile-row">派工：${taskBadgeV41(k.task)} <span class="key-meta">${escapeHtmlV41(profile.recommendedTasks || '')}</span></div>
+                        <div class="key-mobile-row">API Key：<code>${maskKeyV41(k.key, revealed)}</code></div>
+                        <div class="key-mobile-row">成功 ${k.successCount || 0}｜失敗 ${k.failCount || 0}｜${escapeHtmlV41(k.lastStatus || '尚未測試')}</div>
+                        <div class="key-mobile-actions">
+                            <button class="btn-outline" onclick="toggleKeyReveal('${k.id}')">${revealed ? '隱藏' : '顯示'}</button>
+                            <button class="btn-outline" onclick="copyKey(${i})">複製</button>
+                            <button class="btn-outline" onclick="editKey(${i})">修改</button>
+                            <button class="btn-outline" onclick="testKey(${i})">測試</button>
+                            <button class="btn-outline" onclick="moveKey(${i},'up')">上移</button>
+                            <button class="btn-outline" onclick="moveKey(${i},'down')">下移</button>
+                            <button class="btn-danger" onclick="removeKey(${i})">刪除</button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        renderKeyTable = function renderKeyTableV42() {
+            const tbody = document.getElementById('keyTableBody');
+            if(tbody) {
+                tbody.innerHTML = '';
+                apiKeys.forEach((k, i) => {
+                    const tr = document.createElement('tr');
+                    const profile = providerProfilesV41[k.provider] || {};
+                    const revealed = revealKeySetV41.has(k.id);
+                    const isCooling = (k.cooldownUntil || 0) > Date.now();
+                    const coolText = isCooling ? `冷卻中 ${Math.ceil((k.cooldownUntil - Date.now())/1000)}s` : '';
+                    tr.innerHTML = `
+                        <td><button class="btn-icon" title="啟用/停用" onclick="toggleKeyEnabled(${i})">${k.enabled ? '🟢' : '⚪'}</button><div class="${k.enabled ? 'key-status-enabled' : 'key-status-disabled'}">${k.enabled ? '啟用' : '停用'}</div></td>
+                        <td><strong>#${i+1}</strong></td>
+                        <td style="color:var(--brand-orange); font-weight:bold;">${escapeHtmlV41(profile.label || k.provider)}</td>
+                        <td>${escapeHtmlV41(k.model)}<div class="key-meta">${escapeHtmlV41(profile.recommendedTasks || '')}</div></td>
+                        <td>${taskBadgeV41(k.task)}<div class="route-chip">${coolText || '可派工'}</div></td>
+                        <td><code>${maskKeyV41(k.key, revealed)}</code><div class="key-meta">成功 ${k.successCount || 0}｜失敗 ${k.failCount || 0}<br>${escapeHtmlV41(k.lastStatus || '尚未測試')}</div></td>
+                        <td><div class="key-actions"><button class="btn-icon" title="上移" onclick="moveKey(${i},'up')">⬆️</button><button class="btn-icon" title="下移" onclick="moveKey(${i},'down')">⬇️</button><button class="btn-icon" title="顯示/隱藏" onclick="toggleKeyReveal('${k.id}')">${revealed ? '🙈' : '👁️'}</button><button class="btn-icon" title="複製" onclick="copyKey(${i})">📋</button><button class="btn-icon" title="修改" onclick="editKey(${i})">✏️</button><button class="btn-icon" title="測試" onclick="testKey(${i})">🧪</button><button class="btn-icon" title="刪除" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button></div></td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+            renderMobileKeyCardsV42();
+        };
+
+        const addApiKeyV41Base = window.addApiKey;
+        window.addApiKey = () => {
+            const beforeCount = apiKeys.length;
+            addApiKeyV41Base();
+            if(apiKeys.length > beforeCount) {
+                const target = document.getElementById('mobileKeyList') || document.querySelector('.key-table-wrapper');
+                if(target) target.scrollIntoView({ behavior:'smooth', block:'center' });
+                showModal('新增成功', 'API Key 已加入「路由節點配置表」。手機版會顯示在下方節點卡片；正式商業版建議改放 Cloudflare Worker Secrets。');
+            }
+        };
+
+        const toggleApiPanelBaseV42 = window.toggleApiPanel;
+        window.toggleApiPanel = () => {
+            toggleApiPanelBaseV42();
+            const btn = document.getElementById('toggleApiBtn');
+            if(btn) btn.classList.add('btn-bright');
+        };
+
+        window.onload = () => {
+            logSys('AbraKai V4.2 UX Fix 初始化...', 'SYSTEM');
+            migrateApiKeysV41();
+            const workerInput = document.getElementById('workerEndpoint');
+            if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
+            const guideGrid = document.getElementById('providerGuideGrid');
+            const guideHint = document.getElementById('providerGuideHint');
+            const guideBtn = document.getElementById('toggleProviderGuideBtn');
+            if(guideGrid) guideGrid.style.display = 'none';
+            if(guideHint) guideHint.style.display = 'block';
+            if(guideBtn) guideBtn.textContent = '展開供應商指南';
             registerServiceWorkerV41();
             renderKeyTable();
             updateModelDropdown();
