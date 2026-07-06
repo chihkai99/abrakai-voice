@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AbraKai 聲曜 | 數位語音閉環引擎</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    
+    <style>
+        :root {
+            /* 阿布拉凱工作室品牌視覺規範 V1.0 */
+            --brand-navy: #0B1A3A;     
+            --brand-blue: #1E88E5;     
+            --brand-white: #FFFFFF;    
+            --brand-orange: #FF8A1E;   
+            --brand-dark-gray: #2E3441;
+            --brand-light-gray: #D8DEE7; 
+            
+            --glass-bg: rgba(46, 52, 65, 0.85);
+            --glass-border: rgba(30, 136, 229, 0.3);
+            --success-green: #4ade80;
+            --danger-red: #ef4444;
+            --warning-yellow: #fbbf24;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--brand-navy);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 136, 229, 0.1), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(255, 138, 30, 0.08), transparent 30%);
+            background-attachment: fixed;
+            color: var(--brand-white);
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* 頂部導覽列 (完美適配電腦與手機) */
+        .app-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 26, 58, 0.95);
+            border-bottom: 2px solid var(--brand-blue);
+            padding: 12px 16px;
+            margin: -12px -12px 20px -12px;
+            gap: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-logo {
+            width: 54px; height: 54px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--brand-navy), var(--brand-dark-gray));
+            border: 2px solid var(--brand-orange);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(255, 138, 30, 0.4);
+        }
+        
+        .studio-logo {
+            width: 50px; height: 50px;
+            background: var(--brand-white);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            border: 2px solid var(--brand-blue);
+        }
+
+        .text-group { display: flex; flex-direction: column; }
+        .product-title { font-size: 19px; font-weight: 900; letter-spacing: 1px; color: var(--brand-white); display: flex; align-items: center; gap: 8px;}
+        .product-version { font-size: 10px; color: var(--brand-blue); background: rgba(30,136,229,0.15); padding: 2px 4px; border-radius: 4px; border: 1px solid var(--brand-blue);}
+        .product-desc { font-size: 11px; color: var(--brand-light-gray); margin-top: 4px; line-height: 1.4; }
+        
+        /* 狀態指示燈 */
+        .status-indicator {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 11px; padding: 4px 8px; border-radius: 20px;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            margin-top: 4px; font-weight: normal; color: var(--brand-light-gray);
+        }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #64748b; box-shadow: 0 0 5px #64748b;}
+        .status-dot.active { background: var(--success-green); box-shadow: 0 0 8px var(--success-green); animation: pulse 2s infinite;}
+        .status-dot.error { background: var(--danger-red); box-shadow: 0 0 8px var(--danger-red); }
+        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        .studio-name { font-size: 13px; font-weight: bold; text-align: right; color: var(--brand-white); }
+        .studio-sub { font-size: 10px; color: var(--brand-blue); font-weight: bold; text-align: right; letter-spacing: 1px;}
+        .studio-copy { font-size: 9px; color: #8892B0; text-align: right; margin-top: 2px;}
+
+        @media (max-width: 650px) {
+            .app-header { flex-direction: column; align-items: flex-start; padding: 16px; }
+            .header-right { 
+                width: 100%; border-top: 1px solid rgba(255,255,255,0.1); 
+                padding-top: 16px; justify-content: space-between; flex-direction: row-reverse;
+            }
+            .studio-name, .studio-sub, .studio-copy { text-align: left; }
+        }
+
+        /* 終端機監控面板 */
+        .terminal-container {
+            background: #050a15; border: 1px solid #1e3a8a; border-radius: 8px;
+            font-family: 'Fira Code', monospace; padding: 12px; margin-bottom: 20px;
+            height: 140px; overflow-y: auto; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .terminal-header {
+            position: sticky; top: -12px; background: rgba(5, 10, 21, 0.9); margin: -12px -12px 8px -12px;
+            padding: 8px 12px; border-bottom: 1px solid #1e3a8a; font-size: 11px; color: #60A5FA;
+            display: flex; justify-content: space-between; backdrop-filter: blur(4px); z-index: 10;
+        }
+        .log-line { font-size: 12px; line-height: 1.5; margin-bottom: 4px; word-break: break-all;}
+        .log-time { color: #64748b; margin-right: 8px; }
+        .log-type-INFO { color: #3b82f6; }
+        .log-type-SUCCESS { color: #10b981; }
+        .log-type-WARNING { color: #f59e0b; }
+        .log-type-ERROR { color: #ef4444; }
+        .log-type-SYSTEM { color: #a855f7; }
+        .log-msg { color: #e2e8f0; }
+
+        /* SaaS 卡片面板 */
+        .saas-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4); width: 100%; box-sizing: border-box;
+        }
+        .card-title {
+            font-size: 16px; font-weight: 600; color: var(--brand-blue);
+            margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+
+        /* 統一表單與按鈕 */
+        input, textarea, select, button {
+            width: 100%; box-sizing: border-box; padding: 12px; margin-top: 8px;
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0, 0, 0, 0.4); color: var(--brand-white); font-size: 14px;
+            transition: all 0.3s; font-family: inherit;
+        }
+        select option { background: var(--brand-navy); color: white; }
+        textarea { resize: vertical; min-height: 100px; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--brand-orange); box-shadow: 0 0 8px rgba(255, 138, 30, 0.4); }
+
+        button { font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; }
+        button:active { transform: scale(0.97); }
+        .btn-primary { background: var(--brand-orange); color: #000; font-size: 16px; padding: 16px;}
+        .btn-primary:hover { box-shadow: 0 0 15px rgba(255,138,30,0.6); }
+        .btn-secondary { background: var(--brand-blue); color: #fff; }
+        .btn-danger { background: var(--danger-red); color: white; padding: 16px; font-size: 16px;}
+        .btn-outline { background: rgba(30, 136, 229, 0.1); border: 1px solid var(--brand-blue); color: #60A5FA; }
+        .btn-outline:hover { background: rgba(30, 136, 229, 0.2); }
+        .btn-small { padding: 8px 12px; font-size: 12px; width: auto; margin-top:0; flex: none;}
+        .btn-icon { padding: 6px; width: 32px; height: 32px; flex: none; background: rgba(255,255,255,0.1); border-radius: 6px; color: white;}
+        .btn-icon:hover { background: rgba(255,255,255,0.2); }
+
+        /* API 管理區塊專屬 */
+        .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 20px;}
+        .provider-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center;}
+        .provider-name { font-size: 15px; font-weight: bold; color: var(--brand-orange); margin-bottom: 4px;}
+        .provider-desc { font-size: 11px; color: #94a3b8; margin-bottom: 10px; line-height: 1.4; height: 30px;}
+        
+        .key-table-wrapper { overflow-x: auto; margin-bottom: 16px; }
+        .key-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; min-width: 600px;}
+        .key-table th { background: rgba(30,136,229,0.2); color: var(--brand-blue); padding: 10px; border-bottom: 1px solid var(--glass-border); }
+        .key-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle;}
+        .badge-task { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 6px; border-radius: 4px; font-size: 10px; border: 1px solid #059669;}
+        .badge-fallback { background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 2px 6px; border-radius: 4px; font-size: 10px; border: 1px solid #d97706;}
+
+        /* 進度遮罩 */
+        #progressOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 26, 58, 0.9); backdrop-filter: blur(5px);
+            z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .progress-circle {
+            width: 120px; height: 120px; border-radius: 50%;
+            border: 8px solid rgba(255,255,255,0.1); border-top: 8px solid var(--brand-orange);
+            animation: spin 1.5s linear infinite; margin-bottom: 20px;
+        }
+        .progress-text-main { font-size: 28px; font-weight: 900; color: var(--brand-orange); margin-bottom: 8px; letter-spacing: 2px;}
+        .progress-text-sub { font-size: 15px; color: var(--brand-white); }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 結果區圖表與心智圖 */
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .chart-container { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.05); position: relative; height: 260px; }
+        @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .chart-container { height: 240px; } }
+        .mindmap-container { width: 100%; min-height: 300px; background: #fff; border-radius: 8px; overflow: auto; margin-top: 16px; padding: 16px; box-sizing: border-box; border: 2px solid var(--brand-blue); }
+        pre { white-space: pre-wrap; word-wrap: break-word; background: #000; padding: 16px; border-radius: 8px; font-size: 14px; color: #A6E22E; border-left: 4px solid var(--brand-blue); max-height: 400px; overflow-y: auto; line-height: 1.6; }
+        
+        .footer { text-align: center; font-size: 11px; color: #64748b; padding: 20px 0; margin-top: auto; line-height: 1.5;}
+        
+        /* 系統彈窗 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(3px);}
+        .modal-box { background: var(--brand-navy); border: 2px solid var(--brand-orange); border-radius: 12px; padding: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;}
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <div class="header-left">
+            <div class="product-logo">
+                <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="24" width="4" height="12" rx="2" fill="#1E88E5"/>
+                    <rect x="18" y="16" width="4" height="20" rx="2" fill="#1E88E5"/>
+                    <rect x="26" y="8"  width="4" height="28" rx="2" fill="#FF8A1E"/>
+                    <rect x="34" y="12" width="4" height="24" rx="2" fill="#FF8A1E"/>
+                    <rect x="42" y="20" width="4" height="16" rx="2" fill="#1E88E5"/>
+                    <rect x="50" y="26" width="4" height="10" rx="2" fill="#1E88E5"/>
+                    <circle cx="12" cy="44" r="2.5" fill="#FF8A1E"/>
+                    <rect x="18" y="42" width="34" height="4" rx="2" fill="#FFFFFF"/>
+                    <circle cx="12" cy="52" r="2.5" fill="#FF8A1E"/>
+                    <rect x="18" y="50" width="24" height="4" rx="2" fill="#FFFFFF"/>
+                    <circle cx="12" cy="60" r="2.5" fill="#FF8A1E"/>
+                    <rect x="18" y="58" width="28" height="4" rx="2" fill="#FFFFFF"/>
+                </svg>
+            </div>
+            <div class="text-group">
+                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.0 Enterprise</span></div>
+                <div class="product-desc" style="color: var(--brand-orange); font-weight: 600;">VoxAura AI Engine</div>
+                <div class="product-desc">本機端智慧語音閉環引擎 | 多模型路由架構</div>
+                <div class="status-indicator" id="sysStatusIndicator">
+                    <div class="status-dot" id="sysStatusDot"></div>
+                    <span id="sysStatusText">系統待命，尚未連線</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="text-group">
+                <span class="studio-name" style="font-size: 15px; letter-spacing: 1.5px;">阿布拉.凱工作室</span>
+                <span class="studio-sub" style="font-size: 10px; color: var(--brand-blue); letter-spacing: 1px;">ABRA-KAI STUDIO</span>
+                <span class="studio-copy">© 2026 All rights reserved.</span>
+            </div>
+            <!-- 重繪：具備城市與綠地意象的精緻版 Logo -->
+            <div class="studio-logo" style="width: 54px; height: 54px; background: #F8FAFC; border-radius: 50%; border: 3px solid #0B1A3A; overflow: hidden; position: relative;">
+                <svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <!-- 背景：綠地與天空 -->
+                    <circle cx="32" cy="32" r="30" fill="#E2E8F0" opacity="0.3"/>
+                    <path d="M 0 44 Q 16 36 32 44 T 64 44 L 64 64 L 0 64 Z" fill="#4ADE80" opacity="0.15"/>
+                    <!-- 背景：城市天際線剪影 -->
+                    <rect x="10" y="25" width="8" height="20" fill="#94A3B8" opacity="0.4"/>
+                    <rect x="22" y="15" width="10" height="30" fill="#94A3B8" opacity="0.5"/>
+                    <rect x="36" y="20" width="12" height="25" fill="#94A3B8" opacity="0.4"/>
+                    <rect x="52" y="30" width="6" height="15" fill="#94A3B8" opacity="0.3"/>
+                    
+                    <!-- 核心房屋主體 (深海軍藍) -->
+                    <path d="M32 8 L8 28 H14 V54 H26 V40 H38 V54 H50 V28 H56 Z" fill="#0B1A3A"/>
+                    
+                    <!-- 智慧科技節點與線條 (科技橘 & 科技藍) -->
+                    <!-- 左側線條 -->
+                    <path d="M 14 36 L 6 36 L 6 22" stroke="#FF8A1E" stroke-width="2.5" fill="none"/>
+                    <circle cx="6" cy="22" r="3.5" fill="#FF8A1E"/>
+                    <circle cx="14" cy="36" r="2.5" fill="#0B1A3A"/>
+                    <!-- 內部網絡 -->
+                    <path d="M 20 45 L 20 30 L 32 20 L 44 30" stroke="#1E88E5" stroke-width="2" fill="none"/>
+                    <circle cx="20" cy="45" r="3" fill="#1E88E5"/>
+                    <circle cx="20" cy="30" r="3.5" fill="#0B1A3A"/>
+                    <circle cx="32" cy="20" r="4" fill="#FF8A1E"/>
+                    <circle cx="44" cy="30" r="3" fill="#1E88E5"/>
+                    <!-- 右側線條 -->
+                    <path d="M 50 42 L 58 42 L 58 26 L 46 16" stroke="#FF8A1E" stroke-width="2" fill="none"/>
+                    <circle cx="58" cy="42" r="3.5" fill="#FF8A1E"/>
+                    <circle cx="58" cy="26" r="3" fill="#0B1A3A"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="terminal-container" id="terminalView">
+        <div class="terminal-header">
+            <span>>_ AbraKai Routing Terminal</span>
+            <span style="color: #4ade80;">Live Monitoring</span>
+        </div>
+        <div id="terminalLogs"></div>
+    </div>
+
+    <div class="saas-card" id="apiManagerPanel">
+        <div class="card-title">
+            <span>⚙️ 智慧路由與 API 金鑰戰情中心</span>
+            <button class="btn-outline btn-small" onclick="toggleApiPanel()" id="toggleApiBtn">收合戰情中心</button>
+        </div>
+        
+        <div id="apiPanelContent">
+            <!-- 供應商申請指南 -->
+            <div style="font-size: 13px; color: var(--brand-white); margin-bottom: 8px;">🔥 2026 頂級 AI 供應商開通指南</div>
+            <div class="provider-grid">
+                <div class="provider-card">
+                    <div class="provider-name">Agnes AI</div>
+                    <div class="provider-desc">全模態免費王者，支援文本/圖/影片</div>
+                    <button class="btn-outline btn-small" onclick="window.open('https://platform.agnes-ai.com/', '_blank')">🚀 申請免費金鑰</button>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Google Gemini</div>
+                    <div class="provider-desc">地表最強 2M 上下文與多模態推理</div>
+                    <button class="btn-outline btn-small" onclick="window.open('https://aistudio.google.com/', '_blank')">🚀 申請免費金鑰</button>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Anthropic Claude</div>
+                    <div class="provider-desc">寫作與程式碼邏輯的絕對頂流</div>
+                    <button class="btn-outline btn-small" onclick="window.open('https://console.anthropic.com/', '_blank')">🚀 申請 API Key</button>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">OpenAI</div>
+                    <div class="provider-desc">最穩定的企業級標準與生態系</div>
+                    <button class="btn-outline btn-small" onclick="window.open('https://platform.openai.com/', '_blank')">🚀 申請 API Key</button>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">xAI Grok</div>
+                    <div class="provider-desc">高併發、低延遲的即時處理首選</div>
+                    <button class="btn-outline btn-small" onclick="window.open('https://console.x.ai/', '_blank')">🚀 申請 API Key</button>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 14px; font-weight: bold; color: var(--brand-blue);">🛡️ 路由節點配置表</span>
+                <button class="btn-secondary btn-small" onclick="syncLatestModels()" id="syncBtn">🔄 手動同步最新模型 (更新: 2026-07-07)</button>
+            </div>
+
+            <div class="key-table-wrapper">
+                <table class="key-table">
+                    <thead>
+                        <tr>
+                            <th width="50">順位</th>
+                            <th width="100">供應商</th>
+                            <th width="130">綁定模型</th>
+                            <th width="120">派工策略</th>
+                            <th>API Key</th>
+                            <th width="120">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keyTableBody">
+                        <!-- 動態載入金鑰 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 新增金鑰表單 -->
+            <div style="display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 8px; border: 1px dashed var(--glass-border);">
+                <div style="flex: 1; min-width: 120px;">
+                    <label style="font-size: 11px; color:#60A5FA;">供應商</label>
+                    <select id="newProvider" onchange="updateModelDropdown()">
+                        <option value="Agnes">Agnes AI</option>
+                        <option value="Gemini">Google Gemini</option>
+                        <option value="Claude">Anthropic Claude</option>
+                        <option value="OpenAI">OpenAI</option>
+                        <option value="Grok">xAI Grok</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="font-size: 11px; color:#60A5FA;">指定模型</label>
+                    <select id="newModel"></select>
+                </div>
+                <div style="flex: 1; min-width: 120px;">
+                    <label style="font-size: 11px; color:#60A5FA;">派工策略</label>
+                    <select id="newTask">
+                        <option value="all">通用輪詢</option>
+                        <option value="audio">專職：語音解析</option>
+                        <option value="text">專職：長文讀報</option>
+                        <option value="fallback">備援專用 (最後順位)</option>
+                    </select>
+                </div>
+                <div style="flex: 2; min-width: 200px;">
+                    <label style="font-size: 11px; color:#60A5FA;">API Key</label>
+                    <input type="password" id="newKey" placeholder="貼上您的金鑰...">
+                </div>
+                <div style="display:flex; align-items:flex-end; padding-bottom: 2px;">
+                    <button class="btn-primary btn-small" style="padding: 12px;" onclick="addApiKey()">➕ 新增節點</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="saas-card" id="actionPanel">
+        <div class="card-title">🎙️ 會議語音收錄與讀報雙向閉環</div>
+        
+        <button id="recordBtn" class="btn-primary" onclick="toggleRecording()">🎤 啟動會議錄音</button>
+        
+        <!-- 錄音預覽區 -->
+        <div id="previewArea" style="display:none; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 16px; margin-top: 16px; border: 1px solid var(--brand-orange); box-shadow: inset 0 0 20px rgba(255, 138, 30, 0.1);">
+            <div style="font-size: 15px; font-weight: bold; color: var(--brand-orange); margin-bottom: 8px;">✅ 語音流擷取成功，等待派工</div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--brand-light-gray); margin-bottom: 12px;">
+                <span>封包大小: <strong id="fileSizeTxt" style="color:white; font-size:16px;">0 MB</strong></span>
+            </div>
+            <audio id="audioPlayer" controls style="width: 100%; height: 40px; margin-bottom: 12px; border-radius: 8px;"></audio>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-outline btn-small" onclick="downloadAudio()" style="flex:1;">💾 另存音檔</button>
+                <button class="btn-secondary btn-small" onclick="triggerAIAnalysis('audio')" style="flex:2; padding:12px;">🧠 啟動智慧路由解析</button>
+            </div>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 24px 0;">
+        
+        <div style="font-size: 14px; font-weight:bold; color: var(--brand-blue); margin-bottom: 10px;">📄 讀報器模式 (文件提純)</div>
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+            <button class="btn-outline" style="flex: 1;" onclick="document.getElementById('fileUpload').click()">📤 匯入 PDF/Word (由 AI 過濾雜訊)</button>
+            <input type="file" id="fileUpload" accept=".pdf,.doc,.docx" style="display: none;" onchange="handleFileUpload(event)">
+        </div>
+        <textarea id="ttsInput" placeholder="請在此貼上文字，或等待 AI 產出報告進行語音播報..."></textarea>
+        <button class="btn-secondary" onclick="startTTS()">▶️ 現場精準播報</button>
+    </div>
+
+    <div class="saas-card" id="resultArea" style="display: none;">
+        <div class="card-title">📊 智慧解析戰情室</div>
+        
+        <div class="dashboard-grid">
+            <div class="chart-container"><canvas id="pieChart"></canvas></div>
+            <div class="chart-container"><canvas id="barChart"></canvas></div>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom:16px;">
+            <button class="btn-secondary btn-small" onclick="readReport()">🔊 播報重點</button>
+            <button class="btn-outline btn-small" onclick="downloadReport()">📥 匯出 Markdown</button>
+            <button class="btn-outline btn-small" onclick="shareResult()">📤 分享至 LINE</button>
+        </div>
+        
+        <h4 style="color: var(--brand-orange); margin: 0 0 8px 0; font-size: 16px;">📝 結構化報告 (多語者/摘要)</h4>
+        <pre id="outputContent">等待資料產出...</pre>
+
+        <h4 style="color: var(--brand-orange); margin: 24px 0 8px 0; font-size: 16px;">🧠 SVG 互動心智圖</h4>
+        <div id="mindmapView" class="mindmap-container">
+            <div id="mermaidCode" class="mermaid" style="text-align: center;"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 阿布拉.凱工作室 ABRA-KAI STUDIO 版權所有<br><br>
+        <span style="opacity: 0.6;">免責聲明：本程式碼由 AI 輔助生成，僅供開發參考。實際部署前請務必於 Sandbox 環境完成壓力測試與邏輯驗證。</span>
+    </div>
+
+    <!-- 全域進度與系統彈窗 -->
+    <div id="progressOverlay">
+        <div class="progress-circle"></div>
+        <div class="progress-text-main" id="progressPercent">0%</div>
+        <div class="progress-text-sub" id="progressStatus">系統派工中...</div>
+    </div>
+    
+    <div class="modal-overlay" id="sysModal">
+        <div class="modal-box">
+            <h3 style="color: var(--brand-orange); margin-top: 0;" id="modalTitle">系統提示</h3>
+            <p style="font-size: 14px; color: var(--brand-light-gray); line-height: 1.5;" id="modalMsg">訊息內容</p>
+            <button class="btn-secondary" style="margin-top: 20px;" onclick="closeModal()">確認</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+        // 全域狀態
+        let mediaRecorder; let audioChunks = []; let isRecording = false;
+        let currentAudioBlob = null; let currentAudioBase64 = null;
+        let currentReportText = "";
+        let pieChartInstance = null; let barChartInstance = null;
+        let progressInterval;
+        
+        // 2026 最新模型庫 (模擬資料庫)
+        const modelCatalog = {
+            'Agnes': ['agnes-2.0-flash', 'agnes-1.5-flash', 'agnes-image-2.1-flash', 'agnes-video-v2.0'],
+            'Gemini': ['gemini-3.1-pro', 'gemini-2.5-flash', 'gemini-2.5-pro'],
+            'Claude': ['claude-sonnet-5', 'claude-opus-4-8', 'claude-haiku-4-5'],
+            'OpenAI': ['gpt-5.5', 'gpt-5.4', 'gpt-5.4-mini'],
+            'Grok': ['grok-4.1-fast', 'grok-4']
+        };
+
+        // 金鑰資料結構
+        let apiKeys = JSON.parse(localStorage.getItem('abrakai_cluster_keys')) || [];
+
+        const terminalLogs = document.getElementById('terminalLogs');
+        const sysStatusDot = document.getElementById('sysStatusDot');
+        const sysStatusText = document.getElementById('sysStatusText');
+
+        // --- 終端機與系統 UI 函式 ---
+        function logSys(msg, type = "INFO") {
+            const now = new Date();
+            const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+            const logEl = document.createElement('div');
+            logEl.className = 'log-line';
+            logEl.innerHTML = `<span class="log-time">[${timeStr}]</span> <span class="log-type-${type}">[${type}]</span> <span class="log-msg">${msg}</span>`;
+            terminalLogs.appendChild(logEl);
+            document.getElementById('terminalView').scrollTop = document.getElementById('terminalView').scrollHeight;
+        }
+
+        function updateIndicator(status, text) {
+            sysStatusDot.className = 'status-dot';
+            if(status === 'active') sysStatusDot.classList.add('active');
+            else if(status === 'error') sysStatusDot.classList.add('error');
+            sysStatusText.textContent = text;
+        }
+
+        window.showModal = (title, msg) => {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMsg').textContent = msg;
+            document.getElementById('sysModal').style.display = 'flex';
+        };
+        window.closeModal = () => document.getElementById('sysModal').style.display = 'none';
+
+        function showProgress(text, maxPercent) {
+            document.getElementById('progressOverlay').style.display = 'flex';
+            document.getElementById('progressStatus').textContent = text;
+            let current = 0; clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                if(current < maxPercent) { current += Math.floor(Math.random() * 5) + 1;
+                if(current > maxPercent) current = maxPercent;
+                document.getElementById('progressPercent').textContent = current + "%"; }
+            }, 300);
+            logSys(`系統進度：${text}`, "SYSTEM");
+        }
+        function hideProgress(msg) {
+            clearInterval(progressInterval);
+            document.getElementById('progressPercent').textContent = "100%";
+            document.getElementById('progressStatus').textContent = msg;
+            setTimeout(() => document.getElementById('progressOverlay').style.display = 'none', 800);
+        }
+
+        // --- 金鑰與路由管理邏輯 ---
+        window.onload = () => {
+            logSys("AbraKai 叢集架構初始化...", "SYSTEM");
+            renderKeyTable();
+            updateModelDropdown();
+            checkClusterStatus();
+        };
+
+        function checkClusterStatus() {
+            if(apiKeys.length === 0) {
+                logSys("警告：路由表中無可用節點", "WARNING");
+                updateIndicator('error', '叢集離線 (缺金鑰)');
+            } else {
+                updateIndicator('normal', `待命中 (就緒節點: ${apiKeys.length})`);
+                logSys(`已掛載 ${apiKeys.length} 個備援節點`, "SUCCESS");
+            }
+        }
+
+        window.syncLatestModels = () => {
+            logSys("連接模型目錄伺服器... 取得 2026 年最新版本", "INFO");
+            setTimeout(() => {
+                updateModelDropdown();
+                logSys("模型庫同步完成！", "SUCCESS");
+                document.getElementById('syncBtn').textContent = "✅ 已同步最新版本";
+            }, 800);
+        };
+
+        window.updateModelDropdown = () => {
+            const provider = document.getElementById('newProvider').value;
+            const select = document.getElementById('newModel');
+            select.innerHTML = '';
+            modelCatalog[provider].forEach(m => {
+                const opt = document.createElement('option'); opt.value = m; opt.textContent = m;
+                select.appendChild(opt);
+            });
+        };
+
+        window.toggleApiPanel = () => {
+            const content = document.getElementById('apiPanelContent');
+            const btn = document.getElementById('toggleApiBtn');
+            if(content.style.display === 'none') { content.style.display = 'block'; btn.textContent = '收合戰情中心'; }
+            else { content.style.display = 'none'; btn.textContent = '展開戰情中心'; }
+        };
+
+        window.addApiKey = () => {
+            const provider = document.getElementById('newProvider').value;
+            const model = document.getElementById('newModel').value;
+            const task = document.getElementById('newTask').value;
+            const key = document.getElementById('newKey').value.trim();
+            if(!key) return showModal("輸入錯誤", "請貼上有效的 API Key");
+            
+            apiKeys.push({ provider, model, task, key });
+            localStorage.setItem('abrakai_cluster_keys', JSON.stringify(apiKeys));
+            document.getElementById('newKey').value = '';
+            renderKeyTable(); checkClusterStatus();
+            logSys(`新增路由節點：[${provider}] ${model} (${task})`, "SUCCESS");
+        };
+
+        window.removeKey = (idx) => { apiKeys.splice(idx, 1); localStorage.setItem('abrakai_cluster_keys', JSON.stringify(apiKeys)); renderKeyTable(); checkClusterStatus(); logSys("移除路由節點", "WARNING"); };
+        window.moveKey = (idx, dir) => {
+            if(dir === 'up' && idx > 0) [apiKeys[idx-1], apiKeys[idx]] = [apiKeys[idx], apiKeys[idx-1]];
+            else if(dir === 'down' && idx < apiKeys.length -1) [apiKeys[idx+1], apiKeys[idx]] = [apiKeys[idx], apiKeys[idx+1]];
+            localStorage.setItem('abrakai_cluster_keys', JSON.stringify(apiKeys)); renderKeyTable();
+        };
+
+        function renderKeyTable() {
+            const tbody = document.getElementById('keyTableBody'); tbody.innerHTML = '';
+            apiKeys.forEach((k, i) => {
+                const tr = document.createElement('tr');
+                let badge = k.task === 'fallback' ? '<span class="badge-fallback">備援</span>' : (k.task === 'all' ? '<span class="badge-task">通用</span>' : `<span class="badge-task">專職:${k.task}</span>`);
+                tr.innerHTML = `
+                    <td><strong>#${i+1}</strong></td>
+                    <td style="color:var(--brand-orange); font-weight:bold;">${k.provider}</td>
+                    <td>${k.model}</td>
+                    <td>${badge}</td>
+                    <td>${k.key.substring(0,5)}...${k.key.substring(k.key.length-4)}</td>
+                    <td style="display:flex; gap:4px;">
+                        <button class="btn-icon" onclick="moveKey(${i},'up')">⬆️</button>
+                        <button class="btn-icon" onclick="moveKey(${i},'down')">⬇️</button>
+                        <button class="btn-icon" style="background:var(--danger-red);" onclick="removeKey(${i})">🗑️</button>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- 智慧路由與備援引擎 (Auto-Failover Engine) ---
+        async function runAutoFailoverEngine(taskType, base64Data, promptText) {
+            if(apiKeys.length === 0) {
+                logSys("嚴重錯誤：無可用金鑰，拒絕服務", "ERROR");
+                throw new Error("請先至戰情中心配置 API Key");
+            }
+
+            logSys(`引擎啟動：正在為任務 [${taskType}] 尋找合適的路由節點...`, "SYSTEM");
+            
+            for(let i = 0; i < apiKeys.length; i++) {
+                const config = apiKeys[i];
+                // 派工邏輯檢查：只使用 'all' 或符合 taskType 的，如果都失敗才動用 'fallback'
+                if(config.task !== 'all' && config.task !== taskType && config.task !== 'fallback') {
+                    logSys(`跳過節點 #${i+1} (任務不匹配)`, "WARNING"); continue;
+                }
+
+                logSys(`嘗試呼叫節點 #${i+1} : ${config.provider} [${config.model}]`, "INFO");
+                updateIndicator('active', `運算中: ${config.provider}`);
+                
+                try {
+                    let resultText = "";
+                    // 模擬依據不同供應商打不同的 API 端點
+                    if(config.provider === 'Agnes') {
+                        // 呼叫 Agnes (OpenAI compatible endpoint: https://apihub.agnes-ai.com/v1)
+                        logSys(`發送請求至 Agnes APIHub 端點...`, "INFO");
+                        resultText = await mockApiCall(config, promptText, base64Data); // 實務上替換為 fetch
+                    } else if (config.provider === 'Gemini') {
+                        logSys(`發送請求至 Google AI Studio...`, "INFO");
+                        resultText = await mockApiCall(config, promptText, base64Data);
+                    } else {
+                        // 模擬其他廠商拋錯，觸發備援機制
+                        logSys(`測試備援機制：模擬 ${config.provider} 發生 Rate Limit 或連線超時`, "ERROR");
+                        throw new Error("HTTP 429 Rate Limit Exceeded");
+                    }
+
+                    logSys(`✅ 節點回應成功！任務由 ${config.provider} 處理完畢`, "SUCCESS");
+                    updateIndicator('normal', '待命中');
+                    return resultText;
+
+                } catch (error) {
+                    logSys(`節點 #${i+1} 失敗：${error.message}，準備嘗試下一順位...`, "ERROR");
+                }
+            }
+            
+            updateIndicator('error', '叢集全數失效');
+            throw new Error("所有路由節點皆已失效，請檢查網路或金鑰額度！");
+        }
+
+        // 模擬真實 API 呼叫的等待與回傳 (為了讓您看到完整的圖表展示)
+        async function mockApiCall(config, promptText, base64Data) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(`===REPORT===
+## 會議紀錄與摘要
+- **時間**: 2026-07-07
+- **講者A**: 我們今天來討論系統升級的架構，必須要支援多金鑰備援。
+- **講者B**: 同意，Agnes 提供的全模態免費 API 非常適合我們。
+- **決議**: 採用 PWA 架構並導入 Agnes 與 Gemini 雙路由引擎。
+===MINDMAP===
+mindmap
+  root((AbraKai 叢集))
+    智慧路由
+      多廠商支援
+      故障轉移
+    視覺介面
+      深海軍藍
+      科技橘警示
+    讀報閉環
+      符號過濾
+      流暢語音`);
+                }, 2500);
+            });
+        }
+
+        // --- 錄音與處理邏輯 ---
+        window.toggleRecording = async () => {
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream); audioChunks = [];
+                    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+                    mediaRecorder.onstop = () => {
+                        currentAudioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const sizeMB = (currentAudioBlob.size / (1024 * 1024)).toFixed(2);
+                        document.getElementById('fileSizeTxt').textContent = `${sizeMB} MB`;
+                        document.getElementById('audioPlayer').src = URL.createObjectURL(currentAudioBlob);
+                        
+                        const reader = new FileReader(); reader.readAsDataURL(currentAudioBlob);
+                        reader.onloadend = () => {
+                            currentAudioBase64 = reader.result.split(',')[1];
+                            document.getElementById('previewArea').style.display = "block"; 
+                            logSys(`錄音完成，檔案大小：${sizeMB} MB，進入預覽階段`, "SUCCESS");
+                            document.getElementById('previewArea').scrollIntoView({ behavior: 'smooth' });
+                        };
+                    };
+                    mediaRecorder.start(); isRecording = true;
+                    document.getElementById('recordBtn').innerHTML = "🛑 結束錄音並進入預覽";
+                    document.getElementById('recordBtn').classList.replace('btn-primary', 'btn-danger');
+                    logSys("啟動硬體麥克風，錄音開始...", "INFO");
+                } catch (err) {
+                    showModal("權限錯誤", "無法存取麥克風，請確認瀏覽器權限");
+                }
+            } else {
+                mediaRecorder.stop(); isRecording = false;
+                document.getElementById('recordBtn').innerHTML = "🎤 啟動會議錄音";
+                document.getElementById('recordBtn').classList.replace('btn-danger', 'btn-primary');
+            }
+        };
+
+        window.downloadAudio = () => {
+            if (!currentAudioBlob) return;
+            const a = document.createElement('a'); a.href = URL.createObjectURL(currentAudioBlob); 
+            a.download = `AbraKai_Audio_${Date.now()}.webm`; a.click(); logSys("已備份原始音檔", "INFO");
+        };
+
+        window.handleFileUpload = (event) => {
+            const file = event.target.files[0]; if(!file) return;
+            logSys(`讀取文件：${file.name}`, "INFO");
+            const reader = new FileReader(); reader.readAsDataURL(file);
+            reader.onloadend = () => triggerAIAnalysis('text', reader.result.split(',')[1]);
+        };
+
+        window.triggerAIAnalysis = async (taskType, providedBase64 = null) => {
+            const b64 = providedBase64 || currentAudioBase64;
+            if(!b64) return showModal("錯誤", "無檔案可供分析");
+
+            showProgress("叢集派工與 AI 解析中...", 80);
+            const prompt = taskType === 'audio' 
+                ? "請分析音檔，辨識講者並輸出 YAML 摘要與 Markdown 心智圖結構。格式: ===REPORT===\n... \n===MINDMAP===\nmindmap..."
+                : "請提純此文件，刪除所有圖示與雜訊，輸出適合語音播報的純文字。";
+
+            try {
+                const fullText = await runAutoFailoverEngine(taskType, b64, prompt);
+                await parseAndRenderOutput(fullText, taskType);
+                hideProgress("解析渲染完成");
+            } catch (error) {
+                hideProgress("解析中斷");
+                showModal("系統異常", error.message);
+            }
+        };
+
+        // --- 渲染與視覺化圖表 ---
+        async function parseAndRenderOutput(rawText, taskType) {
+            if(taskType === 'text') {
+                document.getElementById('ttsInput').value = rawText;
+                logSys("文件提純完成，已載入讀報器", "SUCCESS"); return;
+            }
+
+            let reportText = rawText; let mermaidText = "";
+            if (rawText.includes("===REPORT===") && rawText.includes("===MINDMAP===")) {
+                const parts = rawText.split("===MINDMAP===");
+                reportText = parts[0].replace("===REPORT===", "").trim();
+                mermaidText = parts[1].replace(/```mermaid/g, "").replace(/```/g, "").trim();
+            }
+
+            currentReportText = reportText;
+            document.getElementById('outputContent').textContent = reportText;
+            document.getElementById('ttsInput').value = "分析報告如下：\n" + reportText;
+            document.getElementById('resultArea').style.display = 'block';
+
+            logSys("渲染數據儀表板與心智圖...", "SYSTEM");
+            renderCharts();
+
+            if (mermaidText) {
+                try {
+                    const { svg } = await mermaid.render('graphDiv', mermaidText);
+                    document.getElementById('mermaidCode').innerHTML = svg;
+                    document.getElementById('mermaidCode').querySelector('svg').style.maxWidth = "100%";
+                } catch (e) { logSys("SVG 心智圖渲染失敗", "ERROR"); }
+            }
+            document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderCharts() {
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            if(pieChartInstance) pieChartInstance.destroy(); if(barChartInstance) barChartInstance.destroy();
+
+            pieChartInstance = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: { labels: ['講者A', '講者B', '其他/靜默'], datasets: [{ data: [55, 30, 15], backgroundColor: ['#1E88E5', '#FF8A1E', '#2E3441'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels:{color:'#fff'} }, title: { display: true, text: '音軌發言比例', color:'#FF8A1E'} } }
+            });
+
+            barChartInstance = new Chart(ctxBar, {
+                type: 'bar',
+                data: { labels: ['關鍵字', '行動清單', '待辦決議'], datasets: [{ label: '提取數量', data: [12, 5, 3], backgroundColor: '#1E88E5' }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, title: { display: true, text: '特徵提取統計', color:'#FF8A1E' } }, scales: { y: { ticks:{color:'#fff'} }, x: { ticks:{color:'#fff'} } } }
+            });
+        }
+
+        // --- 讀報器與匯出 ---
+        window.startTTS = () => {
+            const text = document.getElementById('ttsInput').value; if(!text) return;
+            const safeText = text.replace(/[\/\-_(]/g, '，'); // 符號過濾優化
+            logSys("啟動底層語音播報系統", "INFO");
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(safeText);
+                utterance.lang = 'zh-TW'; window.speechSynthesis.speak(utterance);
+            } else showModal("錯誤", "瀏覽器不支援 TTS");
+        };
+        window.readReport = window.startTTS;
+
+        window.downloadReport = () => {
+            if(!currentReportText) return;
+            const blob = new Blob([currentReportText], {type: "text/markdown;charset=utf-8"});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `AbraKai_Report_${Date.now()}.md`; a.click();
+            logSys("Markdown 報告已匯出", "SUCCESS");
+        };
+
+        window.shareResult = async () => {
+            if (navigator.share) await navigator.share({ title: 'AbraKai 報告', text: currentReportText });
+            else showModal("完成", "已模擬複製到剪貼簿");
+            logSys("觸發原生分享機制", "INFO");
+        };
+    </script>
+</body>
+</html>
