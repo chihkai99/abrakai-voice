@@ -225,7 +225,7 @@
         .modal-box { background: var(--brand-navy); border: 2px solid var(--brand-orange); border-radius: 12px; padding: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;}
     
 
-        /* V4.3 Mobile First｜手機版與 API 管理可讀性修正 */
+        /* V4.4 API Key Hotfix｜手機版與 API 管理可讀性修正 */
         .btn-bright {
             background: linear-gradient(135deg, var(--brand-blue), #38bdf8) !important;
             color: #ffffff !important;
@@ -271,7 +271,7 @@
         }
 
 
-        /* V4.3 Mobile First：頂部專注操作，品牌資訊移至頁尾 */
+        /* V4.4 API Key Hotfix：頂部專注操作，品牌資訊移至頁尾 */
         .header-right { display: none !important; }
         .app-header { justify-content: flex-start; }
         .studio-footer-brand {
@@ -340,7 +340,7 @@
                 </svg>
             </div>
             <div class="text-group">
-                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.3 Mobile First</span></div>
+                <div class="product-title">AbraKai 聲曜 <span class="product-version">V4.4 API Key Hotfix</span></div>
                 <div class="product-desc" style="color: var(--brand-orange); font-weight: 600;">VoxAura AI Engine</div>
                 <div class="product-desc">本機端智慧語音閉環引擎 | 多模型路由架構</div>
                 <div class="status-indicator" id="sysStatusIndicator">
@@ -439,7 +439,7 @@
                     </div>
                 </details>
             </div>
-            <!-- 供應商申請指南：V4.3 預設跟隨整個 API 區塊收合 -->
+            <!-- 供應商申請指南：V4.4 預設跟隨整個 API 區塊收合 -->
             <div class="provider-guide-row">
                 <div style="font-size: 13px; color: var(--brand-white);">🔥 2026 頂級 AI 供應商開通指南</div>
                 <button type="button" class="btn-bright btn-small" onclick="toggleProviderGuide()" id="toggleProviderGuideBtn">展開供應商指南</button>
@@ -481,7 +481,7 @@
             <div class="provider-note">
                 <strong>智慧派工原則：</strong>先找任務專職或通用節點，再找備援節點；仍無可用節點時才軟性降級。系統會避免連續使用同一把 Key，並在失敗或 429 時短暫冷卻，降低過熱與額度錯誤。
             </div>
-            <!-- V4.3：後端 URL 已移至「一鍵系統檢測」的進階設定，避免一般使用者誤填。 -->
+            <!-- V4.4：後端 URL 已移至「一鍵系統檢測」的進階設定，避免一般使用者誤填。 -->
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <span style="font-size: 14px; font-weight: bold; color: var(--brand-blue);">🛡️ 路由節點配置表</span>
@@ -650,6 +650,10 @@
         let currentReportText = "";
         let pieChartInstance = null; let barChartInstance = null;
         let progressInterval;
+        // V4.4 hotfix: module script runs in strict mode; these functions are reassigned later by patch blocks.
+        // Without declarations, browsers stop the whole script at renderKeyTable = ... and all API buttons become inactive.
+        let renderKeyTable;
+        let runAutoFailoverEngine;
         
         // 2026 最新模型庫 (模擬資料庫)
         const modelCatalog = {
@@ -1023,7 +1027,7 @@ mindmap
         };
 
         // ============================================================
-        // V4.3 Mobile First Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
+        // V4.4 API Key Hotfix Patch｜最小必要修改：API Key CRUD / 隱藏顯示 / 複製 / 測試 / Worker 後端 / 輪詢降溫
         // ============================================================
         const providerProfilesV41 = {
             Agnes: { label:'Agnes AI', baseUrl:'https://apihub.agnes-ai.com/v1', strengths:['audio','text','image','video','all'], recommendedTasks:'語音轉錄、影片解析、長文處理、全模態備援', score:{audio:95,text:88,image:90,video:90,code:70,all:85} },
@@ -1348,7 +1352,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1361,7 +1365,7 @@ mindmap
 
 
         // ============================================================
-        // V4.3 Mobile First｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
+        // V4.4 API Key Hotfix｜手機版卡片列表 / 供應商指南預設收合 / 新增後定位
         // ============================================================
         window.toggleProviderGuide = () => {
             const grid = document.getElementById('providerGuideGrid');
@@ -1455,7 +1459,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
             migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
             if(workerInput) workerInput.value = localStorage.getItem(WORKER_ENDPOINT_KEY_V41) || '';
@@ -1473,9 +1477,9 @@ mindmap
 
 
         // ============================================================
-        // V4.3 Mobile First｜穩定新增 API Key / 一鍵檢測 / 單一收合按鈕
+        // V4.4 API Key Hotfix｜穩定新增 API Key / 一鍵檢測 / 單一收合按鈕
         // ============================================================
-        const V43_VERSION_LABEL = 'V4.3 Mobile First';
+        const V44_VERSION_LABEL = 'V4.4 API Key Hotfix';
         function setCheckStatusV43(name, status, text) {
             const dot = document.getElementById(`check${name}Dot`);
             const label = document.getElementById(`check${name}Text`);
@@ -1598,7 +1602,7 @@ mindmap
         };
 
         window.onload = () => {
-            logSys('AbraKai V4.3 Mobile First 初始化...', 'SYSTEM');
+            logSys('AbraKai V4.4 API Key Hotfix 初始化...', 'SYSTEM');
             normalizeApiKeysV43();
             if(typeof migrateApiKeysV41 === 'function') migrateApiKeysV41();
             const workerInput = document.getElementById('workerEndpoint');
@@ -1618,6 +1622,31 @@ mindmap
             updateModelDropdown();
             if(typeof checkClusterStatusV41 === 'function') checkClusterStatusV41();
             runSystemCheck(false);
+        };
+
+
+
+        // V4.4 hotfix: reinforce button bindings without opening any preview window.
+        function bindApiButtonsV44() {
+            const bind = (id, handler) => {
+                const el = document.getElementById(id);
+                if(el && !el.dataset.v44Bound) {
+                    el.addEventListener('click', (event) => { event.preventDefault(); handler(); });
+                    el.dataset.v44Bound = '1';
+                }
+            };
+            bind('toggleApiBtn', () => window.toggleApiPanel());
+            bind('saveKeyBtn', () => window.addApiKey());
+            bind('runSystemCheckBtn', () => window.runSystemCheck(true));
+            bind('saveWorkerEndpointBtn', () => window.saveWorkerEndpoint());
+            bind('testWorkerBtn', () => window.testWorkerEndpoint());
+        }
+        const onloadV44Base = window.onload;
+        window.onload = () => {
+            if(typeof onloadV44Base === 'function') onloadV44Base();
+            bindApiButtonsV44();
+            setTimeout(bindApiButtonsV44, 100);
+            logSys('V4.4 API Key 按鈕事件修補已載入', 'SUCCESS');
         };
 
     </script>
