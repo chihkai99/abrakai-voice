@@ -1,17 +1,18 @@
 {
-  "name": "AbraKai 聲曜 V5.0",
-  "short_name": "聲曜 V5.0",
-  "description": "AbraKai 聲曜：簡潔流程、API Key 呈列管理、AI 逐字稿與文件讀報",
-  "start_url": "./index.html?v=5.0",
+  "name": "AbraKai 聲曜 V5.3",
+  "short_name": "聲曜",
+  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報、模型更新中心與系統監視視窗",
+  "start_url": "./index.html?v=5.3",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
   "theme_color": "#0B1A3A",
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSJub25lIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQwIiBmaWxsPSIjMEIxQTNBIi8+PHJlY3QgeD0iNTQiIHk9IjU4IiB3aWR0aD0iMTIiIGhlaWdodD0iNjAiIHJ4PSI2IiBmaWxsPSIjMUU4OEU1Ii8+PHJlY3QgeD0iNzgiIHk9IjM4IiB3aWR0aD0iMTIiIGhlaWdodD0iODAiIHJ4PSI2IiBmaWxsPSIjRkY4QTFFIi8+PHJlY3QgeD0iMTAyIiB5PSI0OCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjcwIiByeD0iNiIgZmlsbD0iI0ZGOEExRSIvPjxyZWN0IHg9IjEyNiIgeT0iNjgiIHdpZHRoPSIxMiIgaGVpZ2h0PSI1MCIgcng9IjYiIGZpbGw9IiMxRTg4RTUiLz48L3N2Zz4=",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0OCIgcHl0aD0iMCIgZmlsbD0iIzBCMUEzQSIvPjxyZWN0IHg9IjM2IiB5PSIzNiIgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIzMiIgZmlsbD0iIzEyMjg0QSIgc3Ryb2tlPSIjMUU4OEU1IiBzdHJva2Utd2lkdGg9IjgiLz48cmVjdCB4PSI2MCIgeT0iNjgiIHdpZHRoPSIxMiIgaGVpZ2h0PSIzNiIgcng9IjYiIGZpbGw9IiNGRjhBMUUiLz48cmVjdCB4PSI4NCIgeT0iNTIiIHdpZHRoPSIxMiIgaGVpZ2h0PSI1MiIgcng9IjYiIGZpbGw9IiNGRjhBMUUiLz48cmVjdCB4PSIxMDgiIHk9IjUyIiB3aWR0aD0iMTIiIGhlaWdodD0iNTIiIHJ4PSI2IiBmaWxsPSIjRkY4QTFFIi8+PHJlY3QgeD0iMTMyIiB5PSI2OCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjM2IiByeD0iNiIgZmlsbD0iI0ZGOEExRSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iMTIzIiByPSI2IiBmaWxsPSIjMUU4OEU1Ii8+PHJlY3QgeD0iNzIiIHk9IjExOCIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjgiIHJ4PSI0IiBmaWxsPSIjMUU4OEU1Ii8+PGNpcmNsZSBjeD0iMTMyIiBjeT0iMTIzIiByPSI2IiBmaWxsPSIjMUU4OEU1Ii8+PC9zdmc+",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

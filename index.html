@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.0｜簡潔流程與 API Key 管理</title>
-  <link rel="manifest" href="./manifest.json?v=5.0">
+  <title>AbraKai 聲曜 V5.3｜系統監視視窗恢復</title>
+  <link rel="manifest" href="./manifest.json?v=5.3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -30,9 +30,23 @@
     .terminal{height:160px;overflow:auto;background:#050a15;border:1px solid #1e3a8a;border-radius:12px;margin:16px 0 20px;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)}.terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.94);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px}.logs{padding:10px 12px}.log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}.t{color:#64748b}.INFO{color:#3b82f6}.SUCCESS{color:#10b981}.WARNING{color:#f59e0b}.ERROR{color:#ef4444}.SYSTEM{color:#a855f7}
     .preview{border:2px solid var(--brand-orange);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;margin-top:14px}.meta{font-size:14px;line-height:1.7;color:#e2e8f0}.meta strong{font-size:18px;color:#fff}.audio-player{width:100%;height:42px;margin:10px 0;border-radius:12px}.pill-list{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;padding:5px 10px;font-size:12px;color:#dbeafe}.node-list{display:grid;gap:10px;margin-top:12px}.node{border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.26);border-radius:13px;padding:12px}.node-top{display:flex;justify-content:space-between;gap:8px}.node-name{font-weight:900;color:var(--brand-orange)}.node-sub{font-size:12px;color:#bdd8ff;line-height:1.5;margin-top:4px}.key-mask{font-family:'Fira Code',monospace;font-size:12px;color:#cbd5e1;margin:8px 0;word-break:break-all;background:rgba(0,0,0,.25);padding:8px;border-radius:8px}.check-grid{display:grid;gap:10px}.check-item{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);border-radius:12px;padding:10px}.check-dot{width:13px;height:13px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b}.check-dot.ok{background:var(--success);box-shadow:0 0 7px var(--success)}.check-dot.warn{background:var(--warn);box-shadow:0 0 7px var(--warn)}.check-dot.err{background:var(--danger);box-shadow:0 0 7px var(--danger)}
     pre.output{white-space:pre-wrap;word-break:break-word;background:#030712;color:#b6ff62;border-left:4px solid var(--brand-blue);border-radius:12px;padding:14px;max-height:420px;overflow:auto;line-height:1.65;font-size:14px}.mindmap{background:#fff;color:#111;border-radius:12px;border:2px solid var(--brand-blue);padding:12px;overflow:auto;min-height:180px}.footer-brand{margin:24px 0 12px;border-top:1px solid rgba(255,255,255,.13);padding-top:20px;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}.footer-logo{width:58px;height:58px;border-radius:50%;background:#f8fafc;border:3px solid #0B1A3A;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.footer-title{font-weight:900;font-size:20px}.footer-sub{font-size:12px;color:#61a7ff;font-weight:900}.footer-copy{font-size:11px;color:#9aa7bd;margin-top:3px}.disclaimer{font-size:11px;color:#8e9bb3;text-align:center;line-height:1.6;margin-bottom:20px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}.modal-box{background:#0B1A3A;border:2px solid var(--brand-orange);border-radius:16px;max-width:520px;width:100%;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.7)}.modal-title{color:var(--brand-orange);font-size:20px;font-weight:900;text-align:center;margin-bottom:12px}.modal-msg{color:var(--brand-light);line-height:1.7;text-align:left;white-space:pre-wrap}
+    
+    .product-logo{position:relative;overflow:hidden}
+    .product-logo::after{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 35%,rgba(255,138,30,.16),transparent 34%),radial-gradient(circle at 50% 85%,rgba(30,136,229,.16),transparent 30%);pointer-events:none}
+    .logo-svg{display:block;filter:drop-shadow(0 0 10px rgba(30,136,229,.32))}
+    .logo-frame{stroke:#37A8FF;stroke-width:2.6;fill:url(#logoBg);filter:url(#blueGlow)}
+    .wave-bar{transform-box:fill-box;transform-origin:center bottom;animation:waveBounce 1.35s ease-in-out infinite;filter:url(#orangeGlow)}
+    .wave-bar.bar1{animation-delay:-.45s}.wave-bar.bar2{animation-delay:-.2s}.wave-bar.bar3{animation-delay:-.05s}.wave-bar.bar4{animation-delay:-.3s}
+    .text-row{animation:linePulse 2.1s ease-in-out infinite}.text-row.row2{animation-delay:.28s}.text-row.row3{animation-delay:.56s}
+    .text-row .row-dot,.text-row .row-line{filter:url(#blueGlow)}
+    .product-logo:hover .wave-bar,.product-logo:focus-within .wave-bar{animation-duration:.85s}
+    @keyframes waveBounce{0%,100%{transform:scaleY(.68)}25%{transform:scaleY(1.05)}50%{transform:scaleY(1.22)}75%{transform:scaleY(.82)}}
+    @keyframes linePulse{0%,100%{opacity:.72;transform:translateX(0)}50%{opacity:1;transform:translateX(1.5px)}}
+    @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
+
     @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
 
-    /* V5.0 readability overrides: muted functional panels, clear typography */
+    /* V5.2 readability overrides: muted functional panels, clear typography */
     :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
     body{background:#0B1A3A;color:var(--brand-white);}
     .terminal{display:none!important;}
@@ -63,7 +77,7 @@
     @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
 
 
-    /* V5.0 functional color system: darker muted panels + high-contrast text */
+    /* V5.2 functional color system: darker muted panels + high-contrast text */
     :root{
       --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
       --panel-settings:#D5E0EE;   /* A. 系統設定 */
@@ -88,6 +102,14 @@
     .node-name{color:#8A3F00;}
     .node-sub{color:#243B53;}
     .key-mask{background:rgba(15,23,42,.10);color:#0F172A;border:1px solid rgba(15,23,42,.10);}
+
+    .provider-catalog-list{display:grid;gap:10px;margin-top:12px}
+    .provider-catalog-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:rgba(255,255,255,.56);border:1px solid rgba(15,23,42,.14);border-radius:12px;padding:12px;color:#0F172A}
+    .provider-catalog-name{font-weight:900;color:#075985;font-size:16px}
+    .provider-catalog-models{font-size:13px;line-height:1.55;color:#334155;margin-top:4px;word-break:break-word}
+    .provider-catalog-badge{font-size:12px;font-weight:900;border-radius:999px;padding:5px 8px;background:#E0F2FE;color:#075985;white-space:nowrap;border:1px solid rgba(14,116,144,.22)}
+    .model-sync-status{margin-top:10px;font-size:13px;font-weight:800;color:#334155}
+
     .key-summary{background:rgba(15,23,42,.10);border:1px solid rgba(15,23,42,.13);border-radius:12px;padding:10px 12px;margin:10px 0 12px;font-weight:900;color:#0F172A;}
     .check-item{background:rgba(255,255,255,.42);border:1px solid rgba(15,23,42,.15);}
     .pill{background:rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.15);color:#0F172A;font-weight:800;}
@@ -101,16 +123,80 @@
     .btn-primary{background:linear-gradient(135deg,#D97706,#F59E0B);color:#111827;}
     .disclaimer{color:#B6C2D6;}
 
+  
+    /* V5.3 system monitor: always visible for user progress and maintenance tracing */
+    .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
+    .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
+    .monitor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
+    .monitor-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px;color:#D8DEE7;line-height:1.35;}
+    .monitor-chip b{display:block;color:#FFFFFF;font-size:14px;margin-bottom:4px}
+    .monitor-chip .chip-dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#64748b;box-shadow:0 0 7px #64748b;margin-right:6px;vertical-align:middle}
+    .monitor-chip.ok .chip-dot{background:var(--success);box-shadow:0 0 9px var(--success)}
+    .monitor-chip.warn .chip-dot{background:var(--warn);box-shadow:0 0 9px var(--warn)}
+    .monitor-chip.err .chip-dot{background:var(--danger);box-shadow:0 0 9px var(--danger)}
+    .monitor-chip span{font-size:13px;color:#C7D2E6}
+    .terminal{display:block!important;height:180px;overflow:auto;background:#050A15!important;border:1px solid #1E3A8A!important;border-radius:12px;margin:12px 0 0;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)!important;color:#E2E8F0!important}
+    .terminal.hidden{display:none!important}
+    .terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.96);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px;z-index:2}
+    .logs{padding:10px 12px}
+    .log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}
+    .monitor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .monitor-actions button{flex:0 1 auto}
+    @media(max-width:720px){.monitor-grid{grid-template-columns:1fr 1fr}.terminal{height:150px}.monitor-actions button{flex:1 1 120px}}
+
   </style>
 </head>
 <body>
 <header class="app-header">
   <div class="header-inner">
     <div class="product-logo" aria-label="AbraKai 聲曜 Logo">
-      <svg width="38" height="38" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="24" width="4" height="12" rx="2" fill="#1E88E5"/><rect x="18" y="16" width="4" height="20" rx="2" fill="#1E88E5"/><rect x="26" y="8" width="4" height="28" rx="2" fill="#FF8A1E"/><rect x="34" y="12" width="4" height="24" rx="2" fill="#FF8A1E"/><rect x="42" y="20" width="4" height="16" rx="2" fill="#1E88E5"/><rect x="50" y="26" width="4" height="10" rx="2" fill="#1E88E5"/><circle cx="12" cy="44" r="2.5" fill="#FF8A1E"/><rect x="18" y="42" width="34" height="4" rx="2" fill="#FFFFFF"/><circle cx="12" cy="52" r="2.5" fill="#FF8A1E"/><rect x="18" y="50" width="24" height="4" rx="2" fill="#FFFFFF"/><circle cx="12" cy="60" r="2.5" fill="#FF8A1E"/><rect x="18" y="58" width="28" height="4" rx="2" fill="#FFFFFF"/></svg>
+      <svg class="logo-svg" width="42" height="42" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#081326"/>
+            <stop offset="1" stop-color="#12284A"/>
+          </linearGradient>
+          <linearGradient id="barGrad" x1="0" y1="14" x2="0" y2="36" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFD35A"/>
+            <stop offset="1" stop-color="#FF8A1E"/>
+          </linearGradient>
+          <linearGradient id="lineGrad" x1="12" y1="40" x2="50" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#8BD6FF"/>
+            <stop offset="1" stop-color="#37A8FF"/>
+          </linearGradient>
+          <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="orangeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <rect class="logo-frame" x="5" y="5" width="54" height="54" rx="14"/>
+        <rect class="wave-bar bar1" x="17" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
+        <rect class="wave-bar bar2" x="27" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
+        <rect class="wave-bar bar3" x="37" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
+        <rect class="wave-bar bar4" x="47" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
+        <g class="text-row row1">
+          <circle class="row-dot" cx="17" cy="42" r="2.6" fill="url(#lineGrad)"/>
+          <rect class="row-line" x="22" y="40.2" width="25" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
+          <circle class="row-dot" cx="50" cy="42" r="2.6" fill="url(#lineGrad)"/>
+        </g>
+        <g class="text-row row2">
+          <circle class="row-dot" cx="17" cy="49" r="2.6" fill="url(#lineGrad)"/>
+          <rect class="row-line" x="22" y="47.2" width="19" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
+          <circle class="row-dot" cx="50" cy="49" r="2.6" fill="url(#lineGrad)"/>
+        </g>
+        <g class="text-row row3">
+          <circle class="row-dot" cx="17" cy="56" r="2.6" fill="url(#lineGrad)"/>
+          <rect class="row-line" x="22" y="54.2" width="22" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
+          <circle class="row-dot" cx="50" cy="56" r="2.6" fill="url(#lineGrad)"/>
+        </g>
+      </svg>
     </div>
     <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.0 簡潔流程</div></div>
+      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.2 模型更新中心</div></div>
       <div class="sub">VoxAura AI Engine</div>
       <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
       <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
@@ -119,9 +205,27 @@
 </header>
 
 <main class="wrap">
-  <section class="terminal hidden" aria-label="系統終端紀錄">
-    <div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
-    <div id="terminalLogs" class="logs"></div>
+  <section class="card card-monitor" id="monitorPanel" aria-label="系統監視視窗">
+    <h2 class="card-title">
+      <span>🛰️ 系統監視視窗</span>
+      <span class="btn-row" style="flex:0 0 auto;margin:0">
+        <button class="btn-small btn-outline" id="toggleMonitorBtn" type="button">收合紀錄</button>
+        <button class="btn-small btn-gray" id="clearMonitorBtn" type="button">清除紀錄</button>
+      </span>
+    </h2>
+    <div class="monitor-grid">
+      <div class="monitor-chip warn" id="monService"><b><span class="chip-dot"></span>AI 服務</b><span id="monServiceText">等待檢測</span></div>
+      <div class="monitor-chip warn" id="monCatalog"><b><span class="chip-dot"></span>模型清單</b><span id="monCatalogText">等待同步</span></div>
+      <div class="monitor-chip warn" id="monAudio"><b><span class="chip-dot"></span>錄音流程</b><span id="monAudioText">待命</span></div>
+      <div class="monitor-chip warn" id="monReport"><b><span class="chip-dot"></span>成果輸出</b><span id="monReportText">尚未產生</span></div>
+    </div>
+    <div class="section-note" style="background:rgba(255,255,255,.08);color:#DCEBFF;border-color:rgba(148,196,255,.22)">
+      這裡會記錄系統目前狀態、測試結果、錄音進度、模型更新與錯誤原因，方便使用者掌握流程，也方便後續維護追蹤。
+    </div>
+    <section class="terminal" id="terminalView" aria-label="系統終端紀錄">
+      <div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
+      <div id="terminalLogs" class="logs"></div>
+    </section>
   </section>
 
   <section class="card card-notice">
@@ -137,9 +241,15 @@
     <div class="section-note">系統預設會自動連接 AI 服務。一般使用者只需要按「一鍵測試 AI 服務」確認可用狀態；只有管理員或進階使用者才需要管理自帶 API Key。</div>
     <div id="apiPanel" class="hidden">
       <div class="subcard official-backend-card">
-        <h3 class="card-title" style="font-size:16px"><span>🛡️ AI 服務狀態</span></h3>
-        <div class="section-note">請按下方按鈕確認錄音轉文字與文件處理服務是否可用。一般使用者不需要填寫技術網址。</div>
-        <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button><button class="btn-outline" id="toggleDevBackendBtn">⚙️ 管理員設定</button></div>
+        <h3 class="card-title" style="font-size:16px"><span>🛡️ AI 服務與模型更新中心</span></h3>
+        <div class="section-note">系統會先檢查官方 AI 服務，並每日自動更新推薦供應商可用模型；也可手動按鈕立即更新。一般使用者不需要填寫技術網址。</div>
+        <div class="btn-row" style="margin-top:10px">
+          <button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
+          <button class="btn-outline" id="syncModelsBtn">🔄 手動更新模型清單</button>
+          <button class="btn-outline" id="toggleDevBackendBtn">⚙️ 管理員設定</button>
+        </div>
+        <div id="modelSyncStatus" class="model-sync-status">模型清單：尚未同步。</div>
+        <div id="providerCatalogList" class="provider-catalog-list"></div>
         <div id="devBackendPanel" class="hidden" style="margin-top:12px">
           <label for="workerUrlInput">自訂 AI 服務網址（管理員）</label>
           <input id="workerUrlInput" type="url" placeholder="管理員專用，通常不需填寫">
@@ -216,21 +326,24 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.0';
-  const CACHE_BUST = '5.0';
+  const APP_VERSION = 'V5.3';
+  const CACHE_BUST = '5.3';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v50',
-    keys: 'abrakai_voice_api_nodes_v50',
-    lastReport: 'abrakai_voice_last_report_v50'
+    worker: 'abrakai_voice_worker_url_v53',
+    keys: 'abrakai_voice_api_nodes_v53',
+    lastReport: 'abrakai_voice_last_report_v53',
+    catalog: 'abrakai_voice_provider_catalog_v53',
+    catalogMeta: 'abrakai_voice_provider_catalog_meta_v53'
   };
-  const MODEL_CATALOG = {
+  const STATIC_MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
     Gemini:['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-2.5-pro'],
     OpenAI:['gpt-4o-transcribe','gpt-4o-mini-transcribe','gpt-5.5','gpt-5.4-mini'],
     Claude:['claude-sonnet-5','claude-haiku-4-5','claude-opus-4-8'],
     Grok:['grok-4.3','grok-4','grok-voice-api']
   };
+  let MODEL_CATALOG = JSON.parse(JSON.stringify(STATIC_MODEL_CATALOG));
   let mediaRecorder = null;
   let recordStream = null;
   let audioChunks = [];
@@ -248,7 +361,27 @@
   function log(msg, type='INFO'){
     const el = document.createElement('div'); el.className='log';
     el.innerHTML = `<span class="t">[${nowTime()}]</span> <span class="${type}">[${type}]</span> ${escapeHtml(msg)}`;
-    const logs = $('terminalLogs'); logs.appendChild(el); logs.parentElement.scrollTop = logs.parentElement.scrollHeight;
+    const logs = $('terminalLogs'); 
+    if (logs) {
+      logs.appendChild(el); 
+      const terminal = $('terminalView') || logs.parentElement;
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  }
+  function setMonitor(id, text, state='warn'){
+    const box = $(id); const label = $(id + 'Text');
+    if (!box || !label) return;
+    box.className = 'monitor-chip ' + (state === 'ok' ? 'ok' : state === 'err' ? 'err' : 'warn');
+    label.textContent = text;
+  }
+  function refreshMonitorSummary(){
+    const keys = loadKeys();
+    const passed = keys.filter(k => k.testStatus === '通過').length;
+    const meta = getCatalogMeta();
+    setMonitor('monService', getWorkerSource(), passed > 0 ? 'ok' : 'warn');
+    setMonitor('monCatalog', meta?.updatedAt ? ('已同步：' + new Date(meta.updatedAt).toLocaleString()) : '使用內建清單', meta?.updatedAt ? 'ok' : 'warn');
+    setMonitor('monAudio', currentAudioBlob ? '音檔已就緒' : '待錄音 / 待匯入', currentAudioBlob ? 'ok' : 'warn');
+    setMonitor('monReport', currentReportText ? '報告已產生' : '尚未產生', currentReportText ? 'ok' : 'warn');
   }
   function setStatus(text, kind='normal'){
     $('statusText').textContent = text;
@@ -269,6 +402,67 @@
     return new Promise((resolve,reject)=>{ const r = new FileReader(); r.onload=()=>resolve(String(r.result).split(',')[1] || ''); r.onerror=reject; r.readAsDataURL(blob); });
   }
   function fileToText(file){ return new Promise((resolve,reject)=>{ const r = new FileReader(); r.onload=()=>resolve(String(r.result||'')); r.onerror=reject; r.readAsText(file, 'utf-8'); }); }
+
+
+  function loadCatalogFromStorage(){
+    const saved = safeParse(localStorage.getItem(STORAGE.catalog), null);
+    if (saved && typeof saved === 'object') MODEL_CATALOG = {...STATIC_MODEL_CATALOG, ...saved};
+  }
+  function saveCatalog(catalog, meta){
+    if (catalog && typeof catalog === 'object') {
+      MODEL_CATALOG = {...STATIC_MODEL_CATALOG, ...catalog};
+      localStorage.setItem(STORAGE.catalog, JSON.stringify(MODEL_CATALOG));
+      localStorage.setItem(STORAGE.catalogMeta, JSON.stringify(meta || {updatedAt:new Date().toISOString(), source:'local'}));
+    }
+  }
+  function getCatalogMeta(){ return safeParse(localStorage.getItem(STORAGE.catalogMeta), null); }
+  function isSameLocalDate(iso){
+    if(!iso) return false;
+    const a = new Date(iso), b = new Date();
+    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+  }
+  function renderProviderCatalog(){
+    const box = $('providerCatalogList');
+    if(!box) return;
+    const meta = getCatalogMeta();
+    const last = meta?.updatedAt ? new Date(meta.updatedAt).toLocaleString('zh-TW') : '尚未同步';
+    if($('modelSyncStatus')) $('modelSyncStatus').textContent = `模型清單：${last}｜來源：${meta?.source || '系統預設'}`;
+    const order = ['Agnes','Gemini','OpenAI','Claude','Grok'];
+    box.innerHTML = order.map(name => {
+      const models = MODEL_CATALOG[name] || [];
+      return `<div class="provider-catalog-item">
+        <div><div class="provider-catalog-name">${escapeHtml(name)}</div><div class="provider-catalog-models">${models.slice(0,5).map(escapeHtml).join('、') || '待更新'}</div></div>
+        <div class="provider-catalog-badge">${models.length} 模型</div>
+      </div>`;
+    }).join('');
+  }
+  async function syncProviderCatalog(manual=false){
+    const worker = getWorkerUrl();
+    if($('modelSyncStatus')) $('modelSyncStatus').textContent = manual ? '模型清單：手動更新中...' : '模型清單：每日自動更新中...';
+    try{
+      const res = await fetch(worker + '/api/catalog', {cache:'no-store'});
+      const data = await res.json().catch(()=>({}));
+      if(!res.ok || !data.ok) throw new Error(data.error || 'catalog sync failed');
+      saveCatalog(data.catalog || {}, {updatedAt:data.updatedAt || new Date().toISOString(), source:data.source || getWorkerSource()});
+      updateModelDropdown();
+      renderProviderCatalog();
+      if(manual) showModal('模型清單已更新', '已同步推薦供應商目前可用模型清單。');
+      log('模型清單同步完成', 'SUCCESS');
+      return true;
+    }catch(err){
+      renderProviderCatalog();
+      const msg = String(err.message || err);
+      if(manual) showModal('模型清單暫時無法更新', `目前無法連線到 AI 服務，因此先使用系統內建模型清單。\n\n錯誤：${msg}`);
+      log('模型清單同步失敗：' + msg, 'WARNING');
+      return false;
+    }
+  }
+  async function autoSyncCatalogOnceDaily(){
+    loadCatalogFromStorage();
+    renderProviderCatalog();
+    const meta = getCatalogMeta();
+    if(!isSameLocalDate(meta?.updatedAt)) await syncProviderCatalog(false);
+  }
 
   function updateModelDropdown(){
     const provider = $('newProvider').value;
@@ -302,6 +496,7 @@
     const keys = loadKeys(); const passed = keys.filter(k=>k.testStatus==='通過').length;
     const source = getWorkerSource();
     setStatus(`待命中｜${source}｜API Key ${keys.length} 筆｜通過 ${passed} 筆`, 'ok');
+    refreshMonitorSummary();
   }
   function saveKey(){
     const provider = $('newProvider').value, model = $('newModel').value, task = $('newTask').value, key = $('newKey').value.trim(), edit = $('editingKeyIndex').value;
@@ -329,18 +524,25 @@
     const worker = getWorkerUrl(); const keys = loadKeys(); const k = keys[index]; if(!k) return;
     if(!worker) return showModal('AI 服務尚未可用', '目前尚未設定 AI 服務網址，因此系統尚未真正測試供應商服務。\n\n本機 API Key 只代表已儲存在這台手機 / 電腦瀏覽器，不代表 Agnes 或其他供應商已通過實測。');
     try{
-      const res = await fetch(worker + '/api/test-provider', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:k.provider,model:k.model})});
-      const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || '測試失敗');
+      const res = await fetch(worker + '/api/test-provider', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:k.provider,model:k.model}), cache:'no-store'});
+      const data = await res.json().catch(()=>({})); if(!res.ok || !data.ok) throw new Error(data.error || '測試失敗');
       k.testStatus='通過'; saveKeys(keys); renderKeys(); showModal('測試通過', `${k.provider} 已完成連線測試。\n模型：${data.model || k.model}`); log(`${k.provider} 節點測試通過`, 'SUCCESS');
-    }catch(err){ k.testStatus='失敗'; saveKeys(keys); renderKeys(); showModal('測試未通過', String(err.message || err)); log(`${k.provider} 節點測試失敗：${err.message}`, 'ERROR'); }
+    }catch(err){
+      k.testStatus='失敗'; saveKeys(keys); renderKeys();
+      showModal('AI 服務尚未可用', `目前不是 ${k.provider} 連接點錯誤，而是系統 AI 服務尚未連線或尚未部署完成。\n\n請先確認「AI 服務與模型更新中心」的一鍵測試通過後，再測試個別 API Key。\n\n錯誤：${String(err.message || err)}`);
+      log(`${k.provider} 節點測試失敗：${err.message || err}`, 'ERROR');
+    }
   }
 
   async function testWorker(){
     const worker = getWorkerUrl(); if(!worker) return showModal('AI 服務尚未可用','系統尚未設定官方 AI 服務。請管理員完成 AI 服務啟用。');
     try{
       const res = await fetch(worker + '/api/health'); const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || 'health check failed');
-      showModal('服務連線正常', `AI 服務已連線。\n已設定 服務設定：${JSON.stringify(data.configured || {}, null, 2)}`); log('AI 服務測試通過', 'SUCCESS'); updateStatus();
-    }catch(err){ showModal('AI 服務尚未可用', `${getWorkerSource()}目前無法連線或尚未啟用。\n\n一般使用者不用自行填網址；請管理員確認 服務設定，並確認 服務設定。\n\n錯誤：${String(err.message || err)}`); log('AI 服務測試失敗：' + (err.message || err), 'ERROR'); }
+      showModal('服務連線正常', `AI 服務已連線。\n已設定 服務設定：${JSON.stringify(data.configured || {}, null, 2)}`); setMonitor('monService','AI 服務可用','ok'); log('AI 服務測試通過', 'SUCCESS'); updateStatus();
+    }catch(err){
+      showModal('AI 服務尚未可用', `系統服務目前無法連線或尚未啟用。\n\n這通常不是 Agnes、Gemini 或 OpenAI 連接點錯誤，而是官方 Cloudflare Worker 後端尚未部署、網址尚未生效，或目前網路無法連線。\n\n一般使用者不需要自行填網址；請管理員確認服務部署與 Secrets 設定。\n\n錯誤：${String(err.message || err)}`);
+      setMonitor('monService','AI 服務尚未可用','err'); log('AI 服務測試失敗：' + (err.message || err), 'ERROR');
+    }
   }
   function saveWorker(){
     const v = $('workerUrlInput').value.trim().replace(/\/$/,''); if(!v) return showModal('尚未填寫','管理員專用，通常不需填寫。一般使用者可直接使用系統服務。');
@@ -358,9 +560,9 @@
       mediaRecorder.onstop = ()=>{
         const actualMime = mediaRecorder.mimeType || mime || 'audio/webm';
         currentAudioBlob = new Blob(audioChunks, {type:actualMime}); currentAudioMime = currentAudioBlob.type || actualMime; currentAudioName = `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`;
-        setAudioPreview(currentAudioBlob, currentAudioName, currentAudioMime); stopStream(); log('錄音完成，音檔已進入待解析狀態', 'SUCCESS');
+        setAudioPreview(currentAudioBlob, currentAudioName, currentAudioMime); stopStream(); setMonitor('monAudio','錄音完成，待解析','ok'); log('錄音完成，音檔已進入待解析狀態', 'SUCCESS');
       };
-      mediaRecorder.start(); $('recordBtn').textContent='🛑 結束錄音'; $('recordBtn').className='btn-danger'; log('錄音開始', 'INFO');
+      mediaRecorder.start(); $('recordBtn').textContent='🛑 結束錄音'; $('recordBtn').className='btn-danger'; setMonitor('monAudio','錄音中','warn'); log('錄音開始', 'INFO');
     }catch(err){ showModal('錄音失敗','無法啟動麥克風：' + (err.message || err)); log('錄音失敗：' + err.message, 'ERROR'); }
   }
   function stopStream(){ if(recordStream){ recordStream.getTracks().forEach(t=>t.stop()); recordStream=null; } }
@@ -405,7 +607,7 @@
   }
   function guessDocMime(name){ const n=String(name).toLowerCase(); if(n.endsWith('.pdf')) return 'application/pdf'; if(n.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'; if(n.endsWith('.doc')) return 'application/msword'; return 'application/octet-stream'; }
   function renderResult(data, source){
-    const text = data.text || data.report || ''; currentReportText = text; localStorage.setItem(STORAGE.lastReport, text); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = text || '無文字結果'; $('ttsInput').value = text || $('ttsInput').value;
+    const text = data.text || data.report || ''; currentReportText = text; setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, text); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = text || '無文字結果'; $('ttsInput').value = text || $('ttsInput').value;
     $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source;
     renderMindmap(extractMermaid(text)); $('resultArea').scrollIntoView({behavior:'smooth',block:'start'});
   }
@@ -433,6 +635,8 @@
 
   function bind(){
     $('modalOkBtn').addEventListener('click', closeModal); $('sysModal').addEventListener('click', e=>{ if(e.target.id==='sysModal') closeModal(); });
+    $('toggleMonitorBtn').addEventListener('click',()=>{ $('terminalView').classList.toggle('hidden'); $('toggleMonitorBtn').textContent = $('terminalView').classList.contains('hidden') ? '展開紀錄' : '收合紀錄'; log('系統監視視窗切換', 'INFO'); });
+    $('clearMonitorBtn').addEventListener('click',()=>{ $('terminalLogs').innerHTML=''; log('監視紀錄已清除', 'WARNING'); });
     $('toggleInstallGuideBtn').addEventListener('click',()=>{ $('installGuide').classList.toggle('hidden'); $('toggleInstallGuideBtn').textContent = $('installGuide').classList.contains('hidden')?'查看說明':'收合說明'; });
     $('clearCacheBtn').addEventListener('click', clearCacheAndReload);
     $('toggleApiPanelBtn').addEventListener('click',()=>{ $('apiPanel').classList.toggle('hidden'); $('toggleApiPanelBtn').textContent = $('apiPanel').classList.contains('hidden')?'展開設定':'收合設定'; log('設定面板切換', 'INFO'); });
@@ -440,7 +644,7 @@
     $('resetKeysBtn').addEventListener('click',()=>{ if(confirm('確定清除本機 API 節點資料？')){ localStorage.removeItem(STORAGE.keys); renderKeys(); log('已清除 API Key 紀錄', 'WARNING'); } });
     $('nodeList').addEventListener('click', e=>{ const btn=e.target.closest('button[data-action]'); if(!btn) return; nodeAction(btn.dataset.action, Number(btn.dataset.index)); });
     $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 管理員設定':'收合管理員設定'; });
-    $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('runCheckBtn').addEventListener('click', runCheck);
+    $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('syncModelsBtn').addEventListener('click',()=>syncProviderCatalog(true)); $('runCheckBtn').addEventListener('click', runCheck);
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
     $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
@@ -448,9 +652,9 @@
     $('speakBtn').addEventListener('click', speakText); $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
   }
   async function init(){
-    bind(); updateModelDropdown(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus();
-    log('AbraKai 聲曜 V5.0 初始化完成', 'SYSTEM'); log('版本一致性：index / manifest / service-worker / worker / docs = V5.0', 'SUCCESS');
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.0'); log('PWA Service Worker 已註冊 V5.0', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus(); autoSyncCatalogOnceDaily();
+    log('AbraKai 聲曜 V5.3 初始化完成', 'SYSTEM'); log('本版恢復：系統監視視窗、流程節點與維護紀錄', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.3'); log('PWA Service Worker 已註冊 V5.3', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
