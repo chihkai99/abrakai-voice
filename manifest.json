@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V4.8",
-  "short_name": "AbraKai 聲曜",
-  "description": "AbraKai 聲曜 V4.8：會議錄音、舊音檔匯入、正式 AI 後端解析、文件讀報與語音播報。",
-  "start_url": "./index.html?v=4.8",
+  "name": "AbraKai 聲曜 V4.9",
+  "short_name": "聲曜 V4.9",
+  "description": "AbraKai 聲曜：簡潔介面、官方 AI 後端自動模式、錄音轉文字與文件讀報",
+  "start_url": "./index.html?v=4.9",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",

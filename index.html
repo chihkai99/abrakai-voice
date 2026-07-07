@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V4.8｜音檔匯入與正式 AI 後端修正版</title>
-  <link rel="manifest" href="./manifest.json?v=4.8">
+  <title>AbraKai 聲曜 V4.9｜簡潔介面與官方後端自動模式</title>
+  <link rel="manifest" href="./manifest.json?v=4.9">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -31,6 +31,37 @@
     .preview{border:2px solid var(--brand-orange);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;margin-top:14px}.meta{font-size:14px;line-height:1.7;color:#e2e8f0}.meta strong{font-size:18px;color:#fff}.audio-player{width:100%;height:42px;margin:10px 0;border-radius:12px}.pill-list{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;padding:5px 10px;font-size:12px;color:#dbeafe}.node-list{display:grid;gap:10px;margin-top:12px}.node{border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.26);border-radius:13px;padding:12px}.node-top{display:flex;justify-content:space-between;gap:8px}.node-name{font-weight:900;color:var(--brand-orange)}.node-sub{font-size:12px;color:#bdd8ff;line-height:1.5;margin-top:4px}.key-mask{font-family:'Fira Code',monospace;font-size:12px;color:#cbd5e1;margin:8px 0;word-break:break-all;background:rgba(0,0,0,.25);padding:8px;border-radius:8px}.check-grid{display:grid;gap:10px}.check-item{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);border-radius:12px;padding:10px}.check-dot{width:13px;height:13px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b}.check-dot.ok{background:var(--success);box-shadow:0 0 7px var(--success)}.check-dot.warn{background:var(--warn);box-shadow:0 0 7px var(--warn)}.check-dot.err{background:var(--danger);box-shadow:0 0 7px var(--danger)}
     pre.output{white-space:pre-wrap;word-break:break-word;background:#030712;color:#b6ff62;border-left:4px solid var(--brand-blue);border-radius:12px;padding:14px;max-height:420px;overflow:auto;line-height:1.65;font-size:14px}.mindmap{background:#fff;color:#111;border-radius:12px;border:2px solid var(--brand-blue);padding:12px;overflow:auto;min-height:180px}.footer-brand{margin:24px 0 12px;border-top:1px solid rgba(255,255,255,.13);padding-top:20px;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}.footer-logo{width:58px;height:58px;border-radius:50%;background:#f8fafc;border:3px solid #0B1A3A;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.footer-title{font-weight:900;font-size:20px}.footer-sub{font-size:12px;color:#61a7ff;font-weight:900}.footer-copy{font-size:11px;color:#9aa7bd;margin-top:3px}.disclaimer{font-size:11px;color:#8e9bb3;text-align:center;line-height:1.6;margin-bottom:20px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}.modal-box{background:#0B1A3A;border:2px solid var(--brand-orange);border-radius:16px;max-width:520px;width:100%;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.7)}.modal-title{color:var(--brand-orange);font-size:20px;font-weight:900;text-align:center;margin-bottom:12px}.modal-msg{color:var(--brand-light);line-height:1.7;text-align:left;white-space:pre-wrap}
     @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
+
+    /* V4.9 readability overrides: light functional panels, clear typography */
+    :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
+    body{background:#0B1A3A;color:var(--brand-white);}
+    .terminal{display:none!important;}
+    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 20px rgba(2,8,23,.18);}
+    .card-install{background:var(--panel-blue);}
+    .card-api{background:var(--panel-yellow);}
+    .card-audio{background:var(--panel-orange);}
+    .card-reader{background:var(--panel-green);}
+    .card-result{background:var(--panel-purple);}
+    .subcard{background:rgba(255,255,255,.78);border:1px solid rgba(15,23,42,.12);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
+    .card-title{color:#075985;border-bottom:1px solid rgba(15,23,42,.15);}
+    .section-note{background:rgba(255,255,255,.72);border-color:rgba(30,136,229,.28);color:var(--text-main);font-weight:600;}
+    .warning-note{background:#FFF7ED;color:#7C2D12;border-color:#FDBA74;font-weight:700;}
+    label{color:#075985;}
+    input,select,textarea{background:#FFFFFF;color:#0F172A;border:1px solid #94A3B8;}
+    input::placeholder, textarea::placeholder{color:#64748B;}
+    .node,.check-item{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
+    .node-name{color:#C2410C;}.node-sub{color:#334155;}
+    .key-mask{background:#F1F5F9;color:#0F172A;}
+    .pill{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
+    .preview{background:#FFFFFF;color:#0F172A;border-color:#FF8A1E;}
+    .meta{color:#1E293B;}.meta strong{color:#0F172A;}
+    pre.output{background:#0F172A;color:#D9F99D;}
+    .footer-brand{color:#FFFFFF;}
+    .disclaimer{color:#B6C2D6;}
+    .btn-outline{background:#FFFFFF;color:#0369A1;border:1px solid #38BDF8;}
+    .btn-gray{background:#E2E8F0;color:#0F172A;border:1px solid #CBD5E1;}
+    @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
+
   </style>
 </head>
 <body>
@@ -40,7 +71,7 @@
       <svg width="38" height="38" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="24" width="4" height="12" rx="2" fill="#1E88E5"/><rect x="18" y="16" width="4" height="20" rx="2" fill="#1E88E5"/><rect x="26" y="8" width="4" height="28" rx="2" fill="#FF8A1E"/><rect x="34" y="12" width="4" height="24" rx="2" fill="#FF8A1E"/><rect x="42" y="20" width="4" height="16" rx="2" fill="#1E88E5"/><rect x="50" y="26" width="4" height="10" rx="2" fill="#1E88E5"/><circle cx="12" cy="44" r="2.5" fill="#FF8A1E"/><rect x="18" y="42" width="34" height="4" rx="2" fill="#FFFFFF"/><circle cx="12" cy="52" r="2.5" fill="#FF8A1E"/><rect x="18" y="50" width="24" height="4" rx="2" fill="#FFFFFF"/><circle cx="12" cy="60" r="2.5" fill="#FF8A1E"/><rect x="18" y="58" width="28" height="4" rx="2" fill="#FFFFFF"/></svg>
     </div>
     <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V4.8 Audio Import + Backend</div></div>
+      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V4.9 Audio Import + Backend</div></div>
       <div class="sub">VoxAura AI Engine</div>
       <div class="desc">會議錄音、舊音檔匯入、正式 AI 後端解析、讀報播報雙向閉環</div>
       <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
@@ -49,12 +80,12 @@
 </header>
 
 <main class="wrap">
-  <section class="terminal" aria-label="系統終端紀錄">
+  <section class="terminal hidden" aria-label="系統終端紀錄">
     <div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
     <div id="terminalLogs" class="logs"></div>
   </section>
 
-  <section class="card">
+  <section class="card card-install">
     <h2 class="card-title"><span>📱 手機 App 化使用說明</span><button class="btn-small btn-outline" id="toggleInstallGuideBtn">展開</button></h2>
     <div id="installGuide" class="hidden">
       <div class="section-note">iPhone 可把本網站加入主畫面，之後像 App 一樣從桌面圖示開啟。建議使用 Safari 或 Chrome 的分享按鈕，選「加入主畫面」。</div>
@@ -62,21 +93,24 @@
     </div>
   </section>
 
-  <section class="card">
+  <section class="card card-api">
     <h2 class="card-title"><span>⚙️ 智慧路由與 API 金鑰戰情中心</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 API Key / 模型設定</button></h2>
-    <div class="warning-note"><b>正式解析規則：</b>錄音轉文字、PDF/Word 提純、AI 報告產生，必須先連接 Cloudflare Worker 後端。API Key 不應放在公開前端，也不應提交到 GitHub。</div>
+    <div class="section-note"><b>簡潔模式：</b>系統會自動使用官方 AI 後端。一般使用者不用填 Cloudflare Worker URL，也不用理解供應商連接點。只有「自訂供應商 / 開發者模式」才需要手動設定。</div>
     <div id="apiPanel" class="hidden">
-      <div class="card" style="margin:12px 0;background:rgba(0,0,0,.18)">
-        <h3 class="card-title" style="font-size:16px"><span>🛡️ 正式 AI 後端</span></h3>
-        <label for="workerUrlInput">Cloudflare Worker API URL</label>
-        <input id="workerUrlInput" type="url" placeholder="例如：https://abrakai-voice-api.你的帳號.workers.dev">
-        <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存後端網址</button><button class="btn-outline" id="testWorkerBtn">🧪 一鍵測試後端</button></div>
-        <div class="section-note">這個網址只需要設定一次。設定成功後，前端會把錄音檔或文件送到 Worker，由 Worker 使用 Secrets 裡的 API Key 呼叫 AI 供應商。</div>
+      <div class="subcard official-backend-card">
+        <h3 class="card-title" style="font-size:16px"><span>🛡️ 官方 AI 後端</span></h3>
+        <div class="section-note">系統已內建官方後端入口。請直接按「一鍵測試 AI 後端」。若尚未部署或尚未啟用，系統會提示管理員處理，一般使用者不用自行填網址。</div>
+        <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 後端</button><button class="btn-outline" id="toggleDevBackendBtn">⚙️ 開發者設定</button></div>
+        <div id="devBackendPanel" class="hidden" style="margin-top:12px">
+          <label for="workerUrlInput">自訂 Cloudflare Worker API URL（進階）</label>
+          <input id="workerUrlInput" type="url" placeholder="只有自訂部署時才需要填寫">
+          <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存自訂後端網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復官方後端</button></div>
+        </div>
       </div>
 
-      <div class="card" style="margin:12px 0;background:rgba(0,0,0,.18)">
-        <h3 class="card-title" style="font-size:16px"><span>🔑 本機 API 節點紀錄</span></h3>
-        <div class="section-note">此區可記錄您手上的 API Key 與模型配置；正式呼叫仍以 Worker Secrets 為主。若要測試節點，系統會透過 Worker 測試，不會讓前端直接打供應商 API。</div>
+      <div class="subcard api-key-card">
+        <h3 class="card-title" style="font-size:16px"><span>🔑 API Key / 自訂供應商</span></h3>
+        <div class="section-note">系統推薦供應商由官方後端處理；此區主要給進階使用者記錄自帶 API Key 或自訂供應商。正式測試仍會透過後端中介，避免 Key 外流。</div>
         <input type="hidden" id="editingKeyIndex" value="">
         <div class="grid3">
           <div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
@@ -88,7 +122,7 @@
         <div id="nodeList" class="node-list"></div>
       </div>
 
-      <div class="card" style="margin:12px 0;background:rgba(0,0,0,.18)">
+      <div class="subcard check-card">
         <h3 class="card-title" style="font-size:16px"><span>🧪 一鍵系統檢測</span><button class="btn-small btn-outline" id="runCheckBtn">開始檢測</button></h3>
         <div class="check-grid">
           <div class="check-item"><span id="checkStorageDot" class="check-dot"></span><span id="checkStorageText">本機儲存：待測</span></div>
@@ -100,9 +134,9 @@
     </div>
   </section>
 
-  <section class="card" id="audioSection">
+  <section class="card card-audio" id="audioSection">
     <h2 class="card-title"><span>🎙️ 會議語音收錄與音檔解析</span></h2>
-    <div class="section-note">本區負責「聲音 → 文字逐字稿 → 會議報告」。如果上一次已經儲存音檔，下一次可直接按「匯入舊錄音檔」重新解析。</div>
+    <div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
     <div class="btn-row"><button id="recordBtn" class="btn-primary">🎤 啟動會議錄音</button><button id="pickAudioBtn" class="btn-outline">📂 匯入舊錄音檔</button></div>
     <input id="audioFileInput" type="file" accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden">
     <div id="previewArea" class="preview hidden">
@@ -112,15 +146,15 @@
     </div>
   </section>
 
-  <section class="card" id="readerSection">
+  <section class="card card-reader" id="readerSection">
     <h2 class="card-title"><span>📄 文件讀報與語音播報</span></h2>
-    <div class="section-note">本區負責「文字 / PDF / Word → 提純摘要 → 語音播報」。TXT / Markdown 可直接讀取；PDF / Word 若要 AI 提純，需要正式 Worker 後端。</div>
+    <div class="section-note">文字檔可直接朗讀；PDF / Word 可交由 AI 提純成適合播報的內容。</div>
     <div class="btn-row"><button id="pickDocBtn" class="btn-outline">📤 匯入 TXT / PDF / Word</button><button id="speakBtn" class="btn-blue">▶️ 現場精準播報</button></div>
     <input id="docFileInput" type="file" accept=".txt,.md,.pdf,.doc,.docx,application/pdf,text/plain" class="hidden">
     <textarea id="ttsInput" placeholder="可貼上文字、匯入 TXT，或等待 AI 產出報告後播報... 這裡的內容會用手機或電腦瀏覽器內建語音播報。"></textarea>
   </section>
 
-  <section id="resultArea" class="card hidden">
+  <section id="resultArea" class="card card-result hidden">
     <h2 class="card-title"><span>📊 會議解析結果</span></h2>
     <div class="pill-list"><span id="providerPill" class="pill">Provider: -</span><span id="modelPill" class="pill">Model: -</span><span id="sourcePill" class="pill">Source: -</span></div>
     <h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
@@ -142,12 +176,13 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V4.8';
-  const CACHE_BUST = '4.8';
+  const APP_VERSION = 'V4.9';
+  const CACHE_BUST = '4.9';
+  const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v48',
-    keys: 'abrakai_voice_api_nodes_v48',
-    lastReport: 'abrakai_voice_last_report_v48'
+    worker: 'abrakai_voice_worker_url_v49',
+    keys: 'abrakai_voice_api_nodes_v49',
+    lastReport: 'abrakai_voice_last_report_v49'
   };
   const MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
@@ -181,7 +216,8 @@
   }
   function showModal(title, msg){ $('modalTitle').textContent=title; $('modalMsg').textContent=msg; $('sysModal').style.display='flex'; }
   function closeModal(){ $('sysModal').style.display='none'; }
-  function getWorkerUrl(){ return (localStorage.getItem(STORAGE.worker)||'').trim().replace(/\/$/,''); }
+  function getWorkerUrl(){ const override=(localStorage.getItem(STORAGE.worker)||'').trim().replace(/\/$/,''); return override || DEFAULT_WORKER_API_URL; }
+  function getWorkerSource(){ return (localStorage.getItem(STORAGE.worker)||'').trim() ? '自訂後端' : '官方後端'; }
   function readableSize(bytes){ return ((bytes||0)/(1024*1024)).toFixed(2)+' MB'; }
   function getExtForMime(mime){ if(/mp4|m4a/.test(mime)) return 'm4a'; if(/mpeg|mp3/.test(mime)) return 'mp3'; if(/wav/.test(mime)) return 'wav'; if(/webm/.test(mime)) return 'webm'; return 'audio'; }
   function chooseMime(){
@@ -220,9 +256,9 @@
     updateStatus();
   }
   function updateStatus(){
-    const keys = loadKeys(); const enabled = keys.filter(k=>k.enabled!==false).length; const passed = keys.filter(k=>k.testStatus==='通過').length; const worker = getWorkerUrl();
-    if (worker) setStatus(`待命中｜正式後端已設定｜本機節點 ${keys.length}｜通過 ${passed}`, 'ok');
-    else setStatus(`待命中｜尚未連接正式 AI 後端｜本機節點 ${keys.length}｜啟用 ${enabled}`, keys.length?'warn':'normal');
+    const keys = loadKeys(); const passed = keys.filter(k=>k.testStatus==='通過').length;
+    const source = getWorkerSource();
+    setStatus(`待命中｜${source}｜本機節點 ${keys.length}｜通過 ${passed}`, 'ok');
   }
   function saveKey(){
     const provider = $('newProvider').value, model = $('newModel').value, task = $('newTask').value, key = $('newKey').value.trim(), edit = $('editingKeyIndex').value;
@@ -257,16 +293,17 @@
   }
 
   async function testWorker(){
-    const worker = getWorkerUrl(); if(!worker) return showModal('尚未設定後端網址','請先貼上 Cloudflare Worker API URL。');
+    const worker = getWorkerUrl(); if(!worker) return showModal('尚未啟用正式後端','系統尚未設定官方 AI 後端。請管理員完成 Cloudflare Worker 部署。');
     try{
       const res = await fetch(worker + '/api/health'); const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || 'health check failed');
       showModal('後端連線正常', `Worker 已連線。\n已設定 Secrets：${JSON.stringify(data.configured || {}, null, 2)}`); log('Cloudflare Worker 後端測試通過', 'SUCCESS'); updateStatus();
-    }catch(err){ showModal('後端測試失敗', String(err.message || err)); log('Worker 測試失敗：' + err.message, 'ERROR'); }
+    }catch(err){ showModal('AI 後端尚未可用', `${getWorkerSource()}目前無法連線或尚未部署。\n\n一般使用者不用自行填網址；請管理員確認 Cloudflare Worker 是否已部署，並確認 Secrets。\n\n錯誤：${String(err.message || err)}`); log('AI 後端測試失敗：' + (err.message || err), 'ERROR'); }
   }
   function saveWorker(){
-    const v = $('workerUrlInput').value.trim().replace(/\/$/,''); if(!v) return showModal('尚未填寫','請貼上 Cloudflare Worker API URL。');
-    localStorage.setItem(STORAGE.worker, v); log('已儲存正式 AI 後端網址', 'SUCCESS'); updateStatus(); showModal('已儲存','正式 AI 後端網址已儲存。接著請按「一鍵測試後端」。');
+    const v = $('workerUrlInput').value.trim().replace(/\/$/,''); if(!v) return showModal('尚未填寫','只有自訂部署時才需要填寫 Worker URL。一般使用者可直接使用官方後端。');
+    localStorage.setItem(STORAGE.worker, v); log('已儲存自訂 AI 後端網址', 'SUCCESS'); updateStatus(); showModal('已儲存','自訂 AI 後端網址已儲存。接著請按「一鍵測試 AI 後端」。');
   }
+  function clearWorkerOverride(){ localStorage.removeItem(STORAGE.worker); $('workerUrlInput').value=''; updateStatus(); showModal('已恢復官方後端','系統已恢復使用內建官方 AI 後端。'); }
 
   async function startRecording(){
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) return showModal('瀏覽器不支援','目前瀏覽器不支援錄音。iPhone 建議用 Safari 或 Chrome 最新版。');
@@ -342,7 +379,7 @@
   function setCheck(idDot,idText,state,msg){ const d=$(idDot), t=$(idText); d.className='check-dot'+(state===true?' ok':state===false?' err':' warn'); t.textContent=msg; }
   async function runCheck(){
     try{ localStorage.setItem('abrakai_test','1'); localStorage.removeItem('abrakai_test'); setCheck('checkStorageDot','checkStorageText',true,'本機儲存：正常'); }catch{ setCheck('checkStorageDot','checkStorageText',false,'本機儲存：失敗'); }
-    const worker=getWorkerUrl(); if(!worker) setCheck('checkBackendDot','checkBackendText',false,'正式後端：尚未設定 Worker URL'); else { setCheck('checkBackendDot','checkBackendText',null,'正式後端：已填寫，請按一鍵測試後端確認'); }
+    const worker=getWorkerUrl(); if(!worker) setCheck('checkBackendDot','checkBackendText',false,'AI 後端：尚未內建'); else { setCheck('checkBackendDot','checkBackendText',null,`AI 後端：${getWorkerSource()}已帶入，請按一鍵測試確認`); }
     const keys=loadKeys(); setCheck('checkKeyDot','checkKeyText', keys.length>0, keys.length?`API 節點：本機紀錄 ${keys.length} 筆`:'API 節點：沒有本機紀錄');
     setCheck('checkAudioDot','checkAudioText', Boolean(currentAudioBlob), currentAudioBlob?'音檔流程：已有待解析音檔':'音檔流程：尚未錄音或匯入舊音檔');
   }
@@ -359,7 +396,8 @@
     $('newProvider').addEventListener('change', updateModelDropdown); $('saveKeyBtn').addEventListener('click', saveKey); $('cancelEditBtn').addEventListener('click', cancelEdit);
     $('resetKeysBtn').addEventListener('click',()=>{ if(confirm('確定清除本機 API 節點資料？')){ localStorage.removeItem(STORAGE.keys); renderKeys(); log('已清除本機 API 節點資料', 'WARNING'); } });
     $('nodeList').addEventListener('click', e=>{ const btn=e.target.closest('button[data-action]'); if(!btn) return; nodeAction(btn.dataset.action, Number(btn.dataset.index)); });
-    $('saveWorkerBtn').addEventListener('click', saveWorker); $('testWorkerBtn').addEventListener('click', testWorker); $('runCheckBtn').addEventListener('click', runCheck);
+    $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 開發者設定':'收合開發者設定'; });
+    $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('runCheckBtn').addEventListener('click', runCheck);
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
     $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
@@ -368,8 +406,8 @@
   }
   async function init(){
     bind(); updateModelDropdown(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus();
-    log('AbraKai 聲曜 V4.8 初始化完成', 'SYSTEM'); log('版本一致性：index / manifest / service-worker / worker / docs = V4.8', 'SUCCESS');
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=4.8'); log('PWA Service Worker 已註冊 V4.8', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V4.9 初始化完成', 'SYSTEM'); log('版本一致性：index / manifest / service-worker / worker / docs = V4.9', 'SUCCESS');
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=4.9'); log('PWA Service Worker 已註冊 V4.9', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
