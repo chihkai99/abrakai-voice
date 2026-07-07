@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V4.9",
-  "short_name": "聲曜 V4.9",
-  "description": "AbraKai 聲曜：簡潔介面、官方 AI 後端自動模式、錄音轉文字與文件讀報",
-  "start_url": "./index.html?v=4.9",
+  "name": "AbraKai 聲曜 V5.0",
+  "short_name": "聲曜 V5.0",
+  "description": "AbraKai 聲曜：簡潔流程、API Key 呈列管理、AI 逐字稿與文件讀報",
+  "start_url": "./index.html?v=5.0",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",

@@ -1,5 +1,5 @@
-const CACHE_NAME = 'abrakai-cache-v4.9';
-const urlsToCache = ['./index.html?v=4.9','./manifest.json?v=4.9'];
+const CACHE_NAME = 'abrakai-cache-v5.0';
+const urlsToCache = ['./index.html?v=5.0','./manifest.json?v=5.0'];
 self.addEventListener('install', event => { self.skipWaiting(); event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(names => Promise.all(names.filter(n => n !== CACHE_NAME && n.startsWith('abrakai-cache-')).map(n => caches.delete(n)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', event => {
