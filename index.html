@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.3｜系統監視視窗恢復</title>
-  <link rel="manifest" href="./manifest.json?v=5.3">
+  <title>AbraKai 聲曜 V5.4｜監視視窗與模型更新中心</title>
+  <link rel="manifest" href="./manifest.json?v=5.4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -90,6 +90,7 @@
     .terminal{display:none!important;}
     .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 22px rgba(2,8,23,.20);}
     .card-settings{background:var(--panel-settings)!important;}
+    .card-service-center{background:linear-gradient(135deg,#D7E3F3,#C9D9EA)!important;color:#0F172A;}
     .card-notice{background:var(--panel-notice)!important;}
     .card-flow{background:var(--panel-flow)!important;}
     .card-flow-doc{background:var(--panel-flow-doc)!important;}
@@ -124,7 +125,7 @@
     .disclaimer{color:#B6C2D6;}
 
   
-    /* V5.3 system monitor: always visible for user progress and maintenance tracing */
+    /* V5.4 system monitor: always visible for user progress and maintenance tracing */
     .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
     .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
     .monitor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
@@ -236,13 +237,11 @@
     </div>
   </section>
 
-  <section class="card card-settings">
-    <h2 class="card-title"><span>⚙️ 系統設定與 API Key 管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開設定</button></h2>
-    <div class="section-note">系統預設會自動連接 AI 服務。一般使用者只需要按「一鍵測試 AI 服務」確認可用狀態；只有管理員或進階使用者才需要管理自帶 API Key。</div>
-    <div id="apiPanel" class="hidden">
-      <div class="subcard official-backend-card">
-        <h3 class="card-title" style="font-size:16px"><span>🛡️ AI 服務與模型更新中心</span></h3>
-        <div class="section-note">系統會先檢查官方 AI 服務，並每日自動更新推薦供應商可用模型；也可手動按鈕立即更新。一般使用者不需要填寫技術網址。</div>
+
+  <section class="card card-service-center" id="serviceCenterPanel">
+    <h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
+    <div class="section-note">系統會先檢查官方 AI 服務，並每日自動更新推薦供應商可用模型；也可手動立即更新。模型中心放在 API Key 管理之前，讓使用者先知道目前可用服務與推薦模型。</div>
+    <div class="subcard official-backend-card">
         <div class="btn-row" style="margin-top:10px">
           <button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
           <button class="btn-outline" id="syncModelsBtn">🔄 手動更新模型清單</button>
@@ -255,8 +254,13 @@
           <input id="workerUrlInput" type="url" placeholder="管理員專用，通常不需填寫">
           <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存服務網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復系統預設</button></div>
         </div>
-      </div>
+    </div>
+  </section>
 
+ <section class="card card-settings">
+    <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開設定</button></h2>
+    <div class="section-note">這裡只管理自帶 API Key。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
+    <div id="apiPanel" class="hidden">
       <div class="subcard api-key-card">
         <h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
         <div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。若只使用系統服務，這裡可以先不設定。</div>
@@ -326,15 +330,15 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.3';
-  const CACHE_BUST = '5.3';
+  const APP_VERSION = 'V5.4';
+  const CACHE_BUST = '5.4';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v53',
-    keys: 'abrakai_voice_api_nodes_v53',
-    lastReport: 'abrakai_voice_last_report_v53',
-    catalog: 'abrakai_voice_provider_catalog_v53',
-    catalogMeta: 'abrakai_voice_provider_catalog_meta_v53'
+    worker: 'abrakai_voice_worker_url_v54',
+    keys: 'abrakai_voice_api_nodes_v54',
+    lastReport: 'abrakai_voice_last_report_v54',
+    catalog: 'abrakai_voice_provider_catalog_v54',
+    catalogMeta: 'abrakai_voice_provider_catalog_meta_v54'
   };
   const STATIC_MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
@@ -653,8 +657,8 @@
   }
   async function init(){
     bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.3 初始化完成', 'SYSTEM'); log('本版恢復：系統監視視窗、流程節點與維護紀錄', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.3'); log('PWA Service Worker 已註冊 V5.3', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.4 初始化完成', 'SYSTEM'); log('本版整合：系統監視視窗、AI 服務檢測、每日/手動模型更新中心', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.4'); log('PWA Service Worker 已註冊 V5.4', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
