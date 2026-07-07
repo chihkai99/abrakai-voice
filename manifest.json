@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.6",
+  "name": "AbraKai 聲曜 V5.7",
   "short_name": "聲曜",
-  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報、模型更新中心、系統監視視窗與API Key 測試分流",
-  "start_url": "./index.html?v=5.6",
+  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報、模型更新中心、系統監視視窗、註冊試用、寬限期與自帶 API Key 優先授權模式",
+  "start_url": "./index.html?v=5.7",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
