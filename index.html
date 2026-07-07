@@ -1,411 +1,276 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.8｜安全介面、API 引導與 BYOK 輪替模式</title>
-  <link rel="manifest" href="./manifest.json?v=5.7">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <style>
-    :root {
-      --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
-      --brand-white:#FFFFFF; --brand-light:#D8DEE7; --brand-panel:rgba(46,52,65,.88);
-      --glass-border:rgba(30,136,229,.35); --success:#4ade80; --danger:#ef4444; --warn:#fbbf24;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;padding:0;background:var(--brand-navy);color:var(--brand-white);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-image:radial-gradient(circle at 10% 10%,rgba(30,136,229,.13),transparent 34%),radial-gradient(circle at 90% 90%,rgba(255,138,30,.10),transparent 34%);background-attachment:fixed;}
-    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 32px;}
-    .app-header{position:sticky;top:0;z-index:50;background:rgba(11,26,58,.96);border-bottom:2px solid var(--brand-blue);box-shadow:0 4px 18px rgba(0,0,0,.5);backdrop-filter:blur(10px)}
-    .header-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px;}
-    .product-logo{width:64px;height:64px;border-radius:16px;border:2px solid var(--brand-orange);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 0 18px rgba(255,138,30,.28);background:linear-gradient(135deg,#081326,#17233b)}
-    .titlebox{min-width:0;flex:1}.titleline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.title{font-size:25px;font-weight:900;letter-spacing:.5px}.version{font-size:12px;color:#73b8ff;border:1px solid var(--brand-blue);background:rgba(30,136,229,.13);border-radius:6px;padding:3px 8px;font-weight:800}.sub{font-size:14px;color:var(--brand-orange);font-weight:800;margin-top:3px}.desc{font-size:13px;color:var(--brand-light);margin-top:5px;line-height:1.5}.status-pill{display:flex;align-items:center;gap:8px;margin-top:8px;width:100%;max-width:620px;border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.45);border-radius:999px;padding:8px 12px;color:var(--brand-light);font-size:13px}.dot{width:12px;height:12px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b;flex:0 0 auto}.dot.ok{background:var(--success);box-shadow:0 0 9px var(--success)}.dot.warn{background:var(--warn);box-shadow:0 0 9px var(--warn)}.dot.err{background:var(--danger);box-shadow:0 0 9px var(--danger)}
-    .card{background:var(--brand-panel);border:1px solid var(--glass-border);border-radius:16px;padding:18px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.34)}
-    .card-title{font-weight:900;color:var(--brand-blue);font-size:19px;margin:0 0 14px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}.card-title span{min-width:0}.section-note{line-height:1.7;color:#d6e3f7;background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:12px;padding:12px;margin:10px 0}.warning-note{line-height:1.7;color:#ffe4bd;background:rgba(255,138,30,.12);border:1px solid rgba(255,138,30,.35);border-radius:12px;padding:12px;margin:10px 0}
-    button,input,select,textarea{font-family:inherit;font-size:15px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.38);color:white;padding:12px;width:100%;outline:none} input:focus,select:focus,textarea:focus{border-color:var(--brand-orange);box-shadow:0 0 0 3px rgba(255,138,30,.18)} label{display:block;color:#77bfff;font-size:13px;font-weight:800;margin:10px 0 6px} textarea{min-height:150px;resize:vertical;line-height:1.55}
-    button{border:none;cursor:pointer;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;transition:.16s transform,.16s filter}.btn-primary{background:linear-gradient(135deg,#ff8a1e,#ffb25f);color:#111}.btn-blue{background:linear-gradient(135deg,#1E88E5,#36c9ff);color:#fff}.btn-outline{background:rgba(30,136,229,.12);border:1px solid var(--brand-blue);color:#9ed1ff}.btn-danger{background:linear-gradient(135deg,#ef4444,#ff7a7a);color:#fff}.btn-gray{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff}.btn-small{width:auto;padding:8px 11px;font-size:13px;border-radius:10px;display:inline-flex}.btn-row{display:flex;gap:10px;flex-wrap:wrap}.btn-row > button{flex:1 1 150px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-    .terminal{height:160px;overflow:auto;background:#050a15;border:1px solid #1e3a8a;border-radius:12px;margin:16px 0 20px;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)}.terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.94);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px}.logs{padding:10px 12px}.log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}.t{color:#64748b}.INFO{color:#3b82f6}.SUCCESS{color:#10b981}.WARNING{color:#f59e0b}.ERROR{color:#ef4444}.SYSTEM{color:#a855f7}
-    .preview{border:2px solid var(--brand-orange);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;margin-top:14px}.meta{font-size:14px;line-height:1.7;color:#e2e8f0}.meta strong{font-size:18px;color:#fff}.audio-player{width:100%;height:42px;margin:10px 0;border-radius:12px}.pill-list{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;padding:5px 10px;font-size:12px;color:#dbeafe}.node-list{display:grid;gap:10px;margin-top:12px}.node{border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.26);border-radius:13px;padding:12px}.node-top{display:flex;justify-content:space-between;gap:8px}.node-name{font-weight:900;color:var(--brand-orange)}.node-sub{font-size:12px;color:#bdd8ff;line-height:1.5;margin-top:4px}.key-mask{font-family:'Fira Code',monospace;font-size:12px;color:#cbd5e1;margin:8px 0;word-break:break-all;background:rgba(0,0,0,.25);padding:8px;border-radius:8px}.check-grid{display:grid;gap:10px}.check-item{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);border-radius:12px;padding:10px}.check-dot{width:13px;height:13px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b}.check-dot.ok{background:var(--success);box-shadow:0 0 7px var(--success)}.check-dot.warn{background:var(--warn);box-shadow:0 0 7px var(--warn)}.check-dot.err{background:var(--danger);box-shadow:0 0 7px var(--danger)}
-    pre.output{white-space:pre-wrap;word-break:break-word;background:#030712;color:#b6ff62;border-left:4px solid var(--brand-blue);border-radius:12px;padding:14px;max-height:420px;overflow:auto;line-height:1.65;font-size:14px}.mindmap{background:#fff;color:#111;border-radius:12px;border:2px solid var(--brand-blue);padding:12px;overflow:auto;min-height:180px}.footer-brand{margin:24px 0 12px;border-top:1px solid rgba(255,255,255,.13);padding-top:20px;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}.footer-logo{width:58px;height:58px;border-radius:50%;background:#f8fafc;border:3px solid #0B1A3A;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.footer-title{font-weight:900;font-size:20px}.footer-sub{font-size:12px;color:#61a7ff;font-weight:900}.footer-copy{font-size:11px;color:#9aa7bd;margin-top:3px}.disclaimer{font-size:11px;color:#8e9bb3;text-align:center;line-height:1.6;margin-bottom:20px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}.modal-box{background:#0B1A3A;border:2px solid var(--brand-orange);border-radius:16px;max-width:520px;width:100%;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.7)}.modal-title{color:var(--brand-orange);font-size:20px;font-weight:900;text-align:center;margin-bottom:12px}.modal-msg{color:var(--brand-light);line-height:1.7;text-align:left;white-space:pre-wrap}
-    
-    .product-logo{position:relative;overflow:hidden}
-    .product-logo::after{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 35%,rgba(255,138,30,.16),transparent 34%),radial-gradient(circle at 50% 85%,rgba(30,136,229,.16),transparent 30%);pointer-events:none}
-    .logo-svg{display:block;filter:drop-shadow(0 0 10px rgba(30,136,229,.32))}
-    .logo-frame{stroke:#37A8FF;stroke-width:2.6;fill:url(#logoBg);filter:url(#blueGlow)}
-    .wave-bar{transform-box:fill-box;transform-origin:center bottom;animation:waveBounce 1.35s ease-in-out infinite;filter:url(#orangeGlow)}
-    .wave-bar.bar1{animation-delay:-.45s}.wave-bar.bar2{animation-delay:-.2s}.wave-bar.bar3{animation-delay:-.05s}.wave-bar.bar4{animation-delay:-.3s}
-    .text-row{animation:linePulse 2.1s ease-in-out infinite}.text-row.row2{animation-delay:.28s}.text-row.row3{animation-delay:.56s}
-    .text-row .row-dot,.text-row .row-line{filter:url(#blueGlow)}
-    .product-logo:hover .wave-bar,.product-logo:focus-within .wave-bar{animation-duration:.85s}
-    @keyframes waveBounce{0%,100%{transform:scaleY(.68)}25%{transform:scaleY(1.05)}50%{transform:scaleY(1.22)}75%{transform:scaleY(.82)}}
-    @keyframes linePulse{0%,100%{opacity:.72;transform:translateX(0)}50%{opacity:1;transform:translateX(1.5px)}}
-    @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="#0B1A3A" name="theme-color"/>
+<title>AbraKai 聲曜 V5.9｜行動首頁優先與設定持久化模式</title>
+<link href="./manifest.json?v=5.7" rel="manifest"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
 
-    @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
-
-    /* V5.8 readability overrides: muted functional panels, clear typography */
-    :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
-    body{background:#0B1A3A;color:var(--brand-white);}
-    .terminal{display:none!important;}
-    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 20px rgba(2,8,23,.18);}
-    .card-install{background:var(--panel-blue);}
-    .card-api{background:var(--panel-yellow);}
-    .card-audio{background:var(--panel-orange);}
-    .card-reader{background:var(--panel-green);}
-    .card-result{background:var(--panel-purple);}
-    .subcard{background:rgba(255,255,255,.78);border:1px solid rgba(15,23,42,.12);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
-    .card-title{color:#075985;border-bottom:1px solid rgba(15,23,42,.15);}
-    .section-note{background:rgba(255,255,255,.72);border-color:rgba(30,136,229,.28);color:var(--text-main);font-weight:600;}
-    .warning-note{background:#FFF7ED;color:#7C2D12;border-color:#FDBA74;font-weight:700;}
-    label{color:#075985;}
-    input,select,textarea{background:#FFFFFF;color:#0F172A;border:1px solid #94A3B8;}
-    input::placeholder, textarea::placeholder{color:#64748B;}
-    .node,.check-item{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
-    .node-name{color:#C2410C;}.node-sub{color:#334155;}
-    .key-mask{background:#F1F5F9;color:#0F172A;}
-    .pill{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
-    .preview{background:#FFFFFF;color:#0F172A;border-color:#FF8A1E;}
-    .meta{color:#1E293B;}.meta strong{color:#0F172A;}
-    pre.output{background:#0F172A;color:#D9F99D;}
-    .footer-brand{color:#FFFFFF;}
-    .disclaimer{color:#B6C2D6;}
-    .btn-outline{background:#FFFFFF;color:#0369A1;border:1px solid #38BDF8;}
-    .btn-gray{background:#E2E8F0;color:#0F172A;border:1px solid #CBD5E1;}
-    @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
-
-
-    /* V5.8 functional color system: darker muted panels + high-contrast text */
-    :root{
-      --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
-      --panel-settings:#D5E0EE;   /* A. 系統設定 */
-      --panel-notice:#E7D8B8;     /* B. 系統公告 */
-      --panel-flow:#D4E4DA;       /* C. 使用者流程 */
-      --panel-flow-doc:#D1E1D7;   /* C. 使用者流程 */
-      --panel-output:#DCD3EA;     /* D. 成果呈現 */
-      --sub-panel:#EEF2F6;
-    }
-    .terminal{display:none!important;}
-    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 22px rgba(2,8,23,.20);}
-    .card-settings{background:var(--panel-settings)!important;}
-    .card-service-center{background:linear-gradient(135deg,#D7E3F3,#C9D9EA)!important;color:#0F172A;}
-    .card-notice{background:var(--panel-notice)!important;}
-    .card-flow{background:var(--panel-flow)!important;}
-    .card-flow-doc{background:var(--panel-flow-doc)!important;}
-    .card-output{background:var(--panel-output)!important;}
-    .subcard{background:rgba(238,242,246,.92);border:1px solid rgba(15,23,42,.16);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
-    .section-note{color:var(--text-main);background:rgba(255,255,255,.44);border:1px solid rgba(15,23,42,.12);font-weight:600;}
-    .warning-note{color:#5F3100;background:rgba(255,237,213,.72);border:1px solid rgba(154,93,0,.25);font-weight:700;}
-    .card-title{color:#0B3B66;border-bottom:1px solid rgba(15,23,42,.16);}
-    .node{background:rgba(255,255,255,.50);border:1px solid rgba(15,23,42,.16);}
-    .node-name{color:#8A3F00;}
-    .node-sub{color:#243B53;}
-    .key-mask{background:rgba(15,23,42,.10);color:#0F172A;border:1px solid rgba(15,23,42,.10);}
-
-    .provider-catalog-list{display:grid;gap:10px;margin-top:12px}
-    .provider-catalog-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:rgba(255,255,255,.56);border:1px solid rgba(15,23,42,.14);border-radius:12px;padding:12px;color:#0F172A}
-    .provider-catalog-name{font-weight:900;color:#075985;font-size:16px}
-    .provider-catalog-models{font-size:13px;line-height:1.55;color:#334155;margin-top:4px;word-break:break-word}
-    .provider-catalog-badge{font-size:12px;font-weight:900;border-radius:999px;padding:5px 8px;background:#E0F2FE;color:#075985;white-space:nowrap;border:1px solid rgba(14,116,144,.22)}
-    .model-sync-status{margin-top:10px;font-size:13px;font-weight:800;color:#334155}
-
-    .key-summary{background:rgba(15,23,42,.10);border:1px solid rgba(15,23,42,.13);border-radius:12px;padding:10px 12px;margin:10px 0 12px;font-weight:900;color:#0F172A;}
-    .check-item{background:rgba(255,255,255,.42);border:1px solid rgba(15,23,42,.15);}
-    .pill{background:rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.15);color:#0F172A;font-weight:800;}
-    pre.output{background:#0B1220;color:#D9F99D;border-left:4px solid #2563EB;}
-    input,select,textarea{background:#F8FAFC;color:#0F172A;border:1px solid #94A3B8;}
-    select option{background:#F8FAFC;color:#0F172A;}
-    label{color:#075985;}
-    .btn-outline{background:#F8FAFC;color:#075985;border:1px solid #0284C7;}
-    .btn-gray{background:#CBD5E1;color:#0F172A;border:1px solid #94A3B8;}
-    .btn-blue{background:linear-gradient(135deg,#0F6FBF,#18A7D8);color:#FFFFFF;}
-    .btn-primary{background:linear-gradient(135deg,#D97706,#F59E0B);color:#111827;}
-    .disclaimer{color:#B6C2D6;}
-
-  
-    /* V5.8 system monitor: always visible for user progress and maintenance tracing */
-    .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
-    .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
-    .monitor-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
-    .monitor-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px;color:#D8DEE7;line-height:1.35;}
-    .monitor-chip b{display:block;color:#FFFFFF;font-size:14px;margin-bottom:4px}
-    .monitor-chip .chip-dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#64748b;box-shadow:0 0 7px #64748b;margin-right:6px;vertical-align:middle}
-    .monitor-chip.ok .chip-dot{background:var(--success);box-shadow:0 0 9px var(--success)}
-    .monitor-chip.warn .chip-dot{background:var(--warn);box-shadow:0 0 9px var(--warn)}
-    .monitor-chip.err .chip-dot{background:var(--danger);box-shadow:0 0 9px var(--danger)}
-    .monitor-chip span{font-size:13px;color:#C7D2E6}
-    .terminal{display:block!important;height:180px;overflow:auto;background:#050A15!important;border:1px solid #1E3A8A!important;border-radius:12px;margin:12px 0 0;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)!important;color:#E2E8F0!important}
-    .terminal.hidden{display:none!important}
-    .terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.96);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px;z-index:2}
-    .logs{padding:10px 12px}
-    .log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}
-    .monitor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-    .monitor-actions button{flex:0 1 auto}
-
-    /* V5.8 account lifecycle panel */
-    .card-account{background:linear-gradient(135deg,#E9E5C8,#D8E8D3)!important;color:#0F172A;}
-    .lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
-    .life-box{background:rgba(255,255,255,.58);border:1px solid rgba(15,23,42,.15);border-radius:12px;padding:12px;line-height:1.55}
-    .life-box b{display:block;color:#075985;margin-bottom:4px}
-    .route-box{background:#0F172A;color:#EAF4FF;border-radius:12px;padding:12px;margin-top:10px;line-height:1.65;border:1px solid rgba(96,165,250,.35)}
-    .route-box strong{color:#FBBF24}
-    @media(max-width:720px){.lifecycle-grid{grid-template-columns:1fr}.monitor-grid{grid-template-columns:1fr 1fr}}
-
-    @media(max-width:720px){.monitor-grid{grid-template-columns:1fr 1fr}.terminal{height:150px}.monitor-actions button{flex:1 1 120px}}
-
-  
-  .safe-note{margin-top:10px;padding:12px 14px;border-radius:16px;background:rgba(30,136,229,.08);border:1px solid rgba(30,136,229,.22);font-weight:700;color:#12345a;line-height:1.7}
-  .privacy-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.28);color:#166534;font-size:13px;font-weight:800}
-  .provider-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
-  .provider-guide-card{background:rgba(255,255,255,.74);border:1px solid rgba(11,26,58,.12);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(11,26,58,.06)}
-  .provider-guide-card h4{margin:0 0 6px;color:#0B1A3A;font-size:16px}
-  .provider-guide-card p{margin:0 0 10px;color:#334155;line-height:1.65;font-size:14px}
-  .provider-guide-card a{display:inline-block;text-decoration:none;font-weight:900;color:#0f6ea8;border:1px solid rgba(15,110,168,.28);border-radius:999px;padding:7px 10px;background:#f8fbff;margin-right:6px;margin-bottom:6px}
-  .rotation-policy{margin-top:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(255,138,30,.13),rgba(30,136,229,.10));border:1px solid rgba(255,138,30,.26);line-height:1.7;color:#162238;font-weight:700}
-  .demo-tools{margin-top:10px;padding:12px;border-radius:16px;border:1px dashed rgba(11,26,58,.25);background:rgba(11,26,58,.04)}
-  @media (max-width:760px){.provider-guide-grid{grid-template-columns:1fr}}
-
+/* V5.9 mobile-first workspace: keep daily-use features first, move settings into menu */
+.user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
+.user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
+.workspace-hero{background:linear-gradient(135deg,rgba(232,246,255,.98),rgba(255,248,235,.96));border:1px solid rgba(255,255,255,.65)}
+.workspace-hero .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.compact-status{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.compact-status span{background:rgba(11,26,58,.08);border:1px solid rgba(11,26,58,.12);border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800;color:#123153}
+.secondary-panel{display:none}
+.secondary-panel.panel-open{display:block}
+.card-monitor.panel-open .section-note,.card-monitor.panel-open .terminal{display:block}
+.card-monitor:not(.panel-open) .section-note,.card-monitor:not(.panel-open) .terminal{display:none}
+@media(max-width:720px){
+  header .inner{padding:18px 14px}.title{font-size:28px}.desc{font-size:13px}
+  .wrap{padding:12px}.user-workspace-menu{grid-template-columns:repeat(2,1fr);gap:8px}.user-workspace-menu .menu-btn{font-size:14px;padding:11px 6px}
+  .workspace-hero .hero-actions{grid-template-columns:1fr}.card{margin:12px 0;padding:18px 14px;border-radius:18px}
+  .card-title{font-size:18px}.btn-row{display:grid;grid-template-columns:1fr;gap:10px}.grid3,.lifecycle-grid,.monitor-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <header class="app-header">
-  <div class="header-inner">
-    <div class="product-logo" aria-label="AbraKai 聲曜 Logo">
-      <svg class="logo-svg" width="42" height="42" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="logoBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#081326"/>
-            <stop offset="1" stop-color="#12284A"/>
-          </linearGradient>
-          <linearGradient id="barGrad" x1="0" y1="14" x2="0" y2="36" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FFD35A"/>
-            <stop offset="1" stop-color="#FF8A1E"/>
-          </linearGradient>
-          <linearGradient id="lineGrad" x1="12" y1="40" x2="50" y2="40" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#8BD6FF"/>
-            <stop offset="1" stop-color="#37A8FF"/>
-          </linearGradient>
-          <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.8" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="orangeGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <rect class="logo-frame" x="5" y="5" width="54" height="54" rx="14"/>
-        <rect class="wave-bar bar1" x="17" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar2" x="27" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar3" x="37" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar4" x="47" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
-        <g class="text-row row1">
-          <circle class="row-dot" cx="17" cy="42" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="40.2" width="25" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="42" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-        <g class="text-row row2">
-          <circle class="row-dot" cx="17" cy="49" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="47.2" width="19" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="49" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-        <g class="text-row row3">
-          <circle class="row-dot" cx="17" cy="56" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="54.2" width="22" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="56" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-      </svg>
-    </div>
-    <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.8 安全介面與 API 引導版</div></div>
-      <div class="sub">VoxAura AI Engine</div>
-      <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
-      <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
-    </div>
-  </div>
+<div class="header-inner">
+<div aria-label="AbraKai 聲曜 Logo" class="product-logo">
+<svg aria-hidden="true" class="logo-svg" fill="none" height="42" viewbox="0 0 64 64" width="42" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="logoBg" x1="8" x2="56" y1="8" y2="56">
+<stop stop-color="#081326"></stop>
+<stop offset="1" stop-color="#12284A"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="barGrad" x1="0" x2="0" y1="14" y2="36">
+<stop stop-color="#FFD35A"></stop>
+<stop offset="1" stop-color="#FF8A1E"></stop>
+</lineargradient>
+<lineargradient gradientunits="userSpaceOnUse" id="lineGrad" x1="12" x2="50" y1="40" y2="40">
+<stop stop-color="#8BD6FF"></stop>
+<stop offset="1" stop-color="#37A8FF"></stop>
+</lineargradient>
+<filter height="200%" id="blueGlow" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur" stddeviation="1.8"></fegaussianblur>
+<femerge><femergenode in="blur"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<filter height="200%" id="orangeGlow" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur" stddeviation="1.4"></fegaussianblur>
+<femerge><femergenode in="blur"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+</defs>
+<rect class="logo-frame" height="54" rx="14" width="54" x="5" y="5"></rect>
+<rect class="wave-bar bar1" fill="url(#barGrad)" height="15" rx="3" width="6" x="17" y="20"></rect>
+<rect class="wave-bar bar2" fill="url(#barGrad)" height="23" rx="3" width="6" x="27" y="12"></rect>
+<rect class="wave-bar bar3" fill="url(#barGrad)" height="23" rx="3" width="6" x="37" y="12"></rect>
+<rect class="wave-bar bar4" fill="url(#barGrad)" height="15" rx="3" width="6" x="47" y="20"></rect>
+<g class="text-row row1">
+<circle class="row-dot" cx="17" cy="42" fill="url(#lineGrad)" r="2.6"></circle>
+<rect class="row-line" fill="url(#lineGrad)" height="3.6" rx="1.8" width="25" x="22" y="40.2"></rect>
+<circle class="row-dot" cx="50" cy="42" fill="url(#lineGrad)" r="2.6"></circle>
+</g>
+<g class="text-row row2">
+<circle class="row-dot" cx="17" cy="49" fill="url(#lineGrad)" r="2.6"></circle>
+<rect class="row-line" fill="url(#lineGrad)" height="3.6" rx="1.8" width="19" x="22" y="47.2"></rect>
+<circle class="row-dot" cx="50" cy="49" fill="url(#lineGrad)" r="2.6"></circle>
+</g>
+<g class="text-row row3">
+<circle class="row-dot" cx="17" cy="56" fill="url(#lineGrad)" r="2.6"></circle>
+<rect class="row-line" fill="url(#lineGrad)" height="3.6" rx="1.8" width="22" x="22" y="54.2"></rect>
+<circle class="row-dot" cx="50" cy="56" fill="url(#lineGrad)" r="2.6"></circle>
+</g>
+</svg>
+</div>
+<div class="titlebox">
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9 行動首頁優先版</div></div>
+<div class="sub">VoxAura AI Engine</div>
+<div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
+<div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
+</div>
+</div>
 </header>
-
-<main class="wrap">
-  <section class="card card-monitor" id="monitorPanel" aria-label="系統監視視窗">
-    <h2 class="card-title">
-      <span>🛰️ 系統監視視窗</span>
-      <span class="btn-row" style="flex:0 0 auto;margin:0">
-        <button class="btn-small btn-outline" id="toggleMonitorBtn" type="button">收合紀錄</button>
-        <button class="btn-small btn-gray" id="clearMonitorBtn" type="button">清除紀錄</button>
-      </span>
-    </h2>
-    <div class="monitor-grid">
-      <div class="monitor-chip warn" id="monService"><b><span class="chip-dot"></span>AI 服務</b><span id="monServiceText">等待檢測</span></div>
-      <div class="monitor-chip warn" id="monAccount"><b><span class="chip-dot"></span>帳號授權</b><span id="monAccountText">尚未註冊</span></div>
-      <div class="monitor-chip warn" id="monCatalog"><b><span class="chip-dot"></span>模型清單</b><span id="monCatalogText">等待同步</span></div>
-      <div class="monitor-chip warn" id="monAudio"><b><span class="chip-dot"></span>錄音流程</b><span id="monAudioText">待命</span></div>
-      <div class="monitor-chip warn" id="monReport"><b><span class="chip-dot"></span>成果輸出</b><span id="monReportText">尚未產生</span></div>
-    </div>
-    <div class="section-note" style="background:rgba(255,255,255,.08);color:#DCEBFF;border-color:rgba(148,196,255,.22)">
+<main class="wrap"><nav aria-label="功能選單" class="user-workspace-menu">
+<button class="menu-btn active" data-panel="home" type="button">首頁工作台</button>
+<button class="menu-btn" data-panel="api" type="button">API Key</button>
+<button class="menu-btn" data-panel="account" type="button">帳號授權</button>
+<button class="menu-btn" data-panel="status" type="button">系統狀態</button>
+<button class="menu-btn" data-panel="notice" type="button">公告說明</button>
+<button class="menu-btn" data-panel="admin" type="button">管理員</button>
+</nav><section class="card workspace-hero" id="workspaceHome">
+<h2 class="card-title"><span>🚀 開始使用 AbraKai 聲曜</span></h2>
+<div class="section-note">每天開啟系統會先看到這裡：錄音、匯入音檔、文件讀報與最近成果。系統設定、公告、API Key 與管理員工具已收進下方選單，需要時再開。</div>
+<div class="compact-status"><span id="homeServiceStatus">AI 服務：檢查中</span><span id="homeAccountStatus">帳號：尚未註冊</span><span id="homeApiStatus">API Key：尚未設定</span></div>
+<div class="hero-actions"><button class="btn-primary" onclick="document.getElementById('audioSection').scrollIntoView({behavior:'smooth'})" type="button">🎤 開始錄音 / 匯入音檔</button><button class="btn-blue" onclick="document.getElementById('readerSection').scrollIntoView({behavior:'smooth'})" type="button">📄 文件讀報 / 播報</button></div>
+</section><section class="card card-flow" id="audioSection">
+<h2 class="card-title"><span>🎙️ 使用流程：錄音與舊音檔解析</span></h2>
+<div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
+<div class="btn-row"><button class="btn-primary" id="recordBtn">🎤 啟動會議錄音</button><button class="btn-outline" id="pickAudioBtn">📂 匯入舊錄音檔</button></div>
+<input accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden" id="audioFileInput" type="file"/>
+<div class="preview hidden" id="previewArea">
+<div class="meta"><b style="color:var(--brand-orange)">✅ 音檔已就緒</b><br/>檔名：<span id="audioNameTxt">本次錄音</span><br/>格式：<span id="audioMimeTxt">-</span><br/>大小：<strong id="fileSizeTxt">0 MB</strong></div>
+<audio class="audio-player" controls="" id="audioPlayer"></audio>
+<div class="btn-row"><button class="btn-outline" id="downloadAudioBtn">💾 另存音檔</button><button class="btn-blue" id="analyzeAudioBtn">🧠 錄音轉文字並產生報告</button></div>
+</div>
+</section><section class="card card-flow card-flow-doc" id="readerSection">
+<h2 class="card-title"><span>📄 使用流程：文件讀取與語音播報</span></h2>
+<div class="section-note">文字檔可直接朗讀；PDF / Word 可交由 AI 提純成適合播報的內容。</div>
+<div class="btn-row"><button class="btn-outline" id="pickDocBtn">📤 匯入 TXT / PDF / Word</button><button class="btn-blue" id="speakBtn">▶️ 現場精準播報</button></div>
+<input accept=".txt,.md,.pdf,.doc,.docx,application/pdf,text/plain" class="hidden" id="docFileInput" type="file"/>
+<textarea id="ttsInput" placeholder="可貼上文字、匯入 TXT，或等待 AI 產出報告後播報... 這裡的內容會用手機或電腦瀏覽器內建語音播報。"></textarea>
+</section><section class="card card-output hidden" id="resultArea">
+<h2 class="card-title"><span>📊 成果呈現</span></h2>
+<div class="pill-list"><span class="pill" id="providerPill">服務：-</span><span class="pill" id="modelPill">模型：-</span><span class="pill" id="sourcePill">來源：-</span></div>
+<h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
+<pre class="output" id="outputContent">等待資料產出...</pre>
+<div class="btn-row"><button class="btn-blue" id="readReportBtn">🔊 播報報告</button><button class="btn-outline" id="downloadReportBtn">📥 匯出 Markdown</button><button class="btn-outline" id="shareReportBtn">📤 分享</button></div>
+<h3 style="color:var(--brand-orange)">🧠 互動心智圖</h3>
+<div class="mindmap" id="mindmapView"><div id="mermaidCode">尚未產生心智圖</div></div>
+</section><section class="card card-settings secondary-panel" id="apiKeyPanel">
+<h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
+<div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="hidden" id="apiPanel">
+<div class="subcard api-guide-card">
+<h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
+<div class="section-note">系統會每日嘗試從後端更新各供應商可用模型清單；若供應商暫時無法回應，會先使用內建推薦清單。使用者可依用途建立多組 API Key 節點，系統會優先使用「實測通過」且符合用途的節點。</div>
+<div class="provider-guide-grid" id="providerGuideList">
+<div class="provider-guide-card"><h4>Agnes AI</h4><p>適合文字、一般內容生成與官方 7 天每日 1 次體驗。正式用戶可自行申請 Agnes Key 後加入節點。</p><a href="https://agnes-ai.com/" rel="noopener" target="_blank">前往官方網站</a></div>
+<div class="provider-guide-card"><h4>Google Gemini</h4><p>適合音檔、PDF / 文件理解與多模態任務。申請後把 API Key 加入自己的節點。</p><a href="https://ai.google.dev/gemini-api/docs/api-key" rel="noopener" target="_blank">申請教學</a><a href="https://aistudio.google.com/app/apikey" rel="noopener" target="_blank">建立 Key</a></div>
+<div class="provider-guide-card"><h4>OpenAI</h4><p>適合語音轉文字、文字整理、摘要與通用任務。可依不同用途建立多組節點。</p><a href="https://platform.openai.com/settings/organization/api-keys" rel="noopener" target="_blank">API Keys</a></div>
+<div class="provider-guide-card"><h4>Claude / xAI Grok</h4><p>適合文字、推理、文件摘要或備援節點。實際可用模型以後端同步與正式實測為準。</p><a href="https://platform.claude.com/" rel="noopener" target="_blank">Claude Console</a><a href="https://x.ai/api" rel="noopener" target="_blank">xAI API</a></div>
+</div>
+<div class="rotation-policy">🔁 輪替策略：同一用途若有多組「實測通過」的 API Key，系統會依供應商適性、使用次數與最近使用時間做選擇，避免一直打同一支 Key。這是穩定性與降溫設計，不是用來規避供應商規範或無限制用量。</div>
+</div>
+<div class="subcard api-key-card">
+<h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
+<div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。測試分成「本機格式檢查」與「正式後端實測」：本機通過代表格式與本裝置儲存正常；正式實測代表 Worker 已用這把 Key 向供應商完成連線驗證。若有多組同用途 Key，系統會輪替選用，避免單一 Key 過度集中。</div>
+<input id="editingKeyIndex" type="hidden" value=""/>
+<div class="grid3">
+<div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
+<div><label for="newModel">模型</label><select id="newModel"></select></div>
+<div><label for="newTask">用途</label><select id="newTask"><option value="all">通用</option><option value="audio">語音 / 音檔</option><option value="document">PDF / 文件</option><option value="text">文字 / 讀報</option><option value="fallback">備援</option></select></div>
+</div>
+<label for="newKey">API Key</label><input id="newKey" placeholder="貼上 API Key；修改時不填代表保留原 Key" type="password"/>
+<div class="btn-row" style="margin-top:10px"><button class="btn-primary" id="saveKeyBtn">➕ 新增 / 更新節點</button><button class="btn-gray" id="cancelEditBtn">取消修改</button><button class="btn-danger" id="resetKeysBtn">🧹 清除 API Key 紀錄</button></div>
+<div class="key-summary" id="keySummary">目前尚未載入 API Key 清單。</div>
+<div class="node-list" id="nodeList"></div>
+</div>
+<div class="subcard check-card">
+<h3 class="card-title" style="font-size:16px"><span>🧪 一鍵系統檢測</span><button class="btn-small btn-outline" id="runCheckBtn">開始檢測</button></h3>
+<div class="check-grid">
+<div class="check-item"><span class="check-dot" id="checkStorageDot"></span><span id="checkStorageText">本機儲存：待測</span></div>
+<div class="check-item"><span class="check-dot" id="checkBackendDot"></span><span id="checkBackendText">正式服務：待測</span></div>
+<div class="check-item"><span class="check-dot" id="checkKeyDot"></span><span id="checkKeyText">API 節點：待測</span></div>
+<div class="check-item"><span class="check-dot" id="checkAudioDot"></span><span id="checkAudioText">音檔流程：待測</span></div>
+</div>
+</div>
+</div>
+</section><section class="card card-account secondary-panel" id="accountPanel">
+<h2 class="card-title"><span>🔐 帳號、試用與授權生命週期</span></h2>
+<div class="section-note">使用本系統必須先註冊帳號。每組帳號自註冊日起只有一次 7 天官方 API 試用期，每天 1 次官方 AI 體驗額度；若使用者自己的 API Key 已測試通過，系統立即優先使用自帶 Key，停止消耗官方試用額度。正式授權期與寬限期可反覆循環。</div>
+<div class="safe-note"><span class="privacy-badge">🔒 正式介面原則</span> 正式版不讓使用者手動切換授權狀態；訂閱、寬限期、停止使用都應由會員 / 授權後端自動判斷。下方「測試工具」只供開發驗證流程。</div>
+<div class="btn-row" style="margin-top:10px">
+<button class="btn-primary" id="registerAccountBtn">🪪 建立 / 載入註冊帳號</button>
+<button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
+</div>
+<div class="demo-tools hidden" id="demoToolsPanel">
+<div class="section-note">此區僅為 V5.9 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="btn-row" style="margin-top:10px">
+<button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
+<button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
+<button class="btn-danger" id="mockStopBtn">🛑 模擬停止使用</button>
+</div>
+</div>
+<div class="lifecycle-grid">
+<div class="life-box"><b>帳號狀態</b><span id="accountStateText">尚未註冊</span></div>
+<div class="life-box"><b>官方 API 試用額度</b><span id="trialQuotaText">尚未啟用</span></div>
+<div class="life-box"><b>自帶 API Key</b><span id="byokStateText">尚未設定</span></div>
+</div>
+<div class="route-box" id="routeDecisionBox"><strong>AI 路由判斷：</strong>尚未註冊，請先建立帳號。</div>
+</section><section aria-label="系統監視視窗" class="card card-monitor secondary-panel" id="monitorPanel">
+<h2 class="card-title">
+<span>🛰️ 系統監視視窗</span>
+<span class="btn-row" style="flex:0 0 auto;margin:0">
+<button class="btn-small btn-outline" id="toggleMonitorBtn" type="button">收合紀錄</button>
+<button class="btn-small btn-gray" id="clearMonitorBtn" type="button">清除紀錄</button>
+</span>
+</h2>
+<div class="monitor-grid">
+<div class="monitor-chip warn" id="monService"><b><span class="chip-dot"></span>AI 服務</b><span id="monServiceText">等待檢測</span></div>
+<div class="monitor-chip warn" id="monAccount"><b><span class="chip-dot"></span>帳號授權</b><span id="monAccountText">尚未註冊</span></div>
+<div class="monitor-chip warn" id="monCatalog"><b><span class="chip-dot"></span>模型清單</b><span id="monCatalogText">等待同步</span></div>
+<div class="monitor-chip warn" id="monAudio"><b><span class="chip-dot"></span>錄音流程</b><span id="monAudioText">待命</span></div>
+<div class="monitor-chip warn" id="monReport"><b><span class="chip-dot"></span>成果輸出</b><span id="monReportText">尚未產生</span></div>
+</div>
+<div class="section-note" style="background:rgba(255,255,255,.08);color:#DCEBFF;border-color:rgba(148,196,255,.22)">
       這裡會記錄系統目前狀態、測試結果、錄音進度、模型更新與錯誤原因，方便使用者掌握流程，也方便後續維護追蹤。
     </div>
-    <section class="terminal" id="terminalView" aria-label="系統終端紀錄">
-      <div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
-      <div id="terminalLogs" class="logs"></div>
-    </section>
-  </section>
-
-  <section class="card card-notice">
-    <h2 class="card-title"><span>📢 系統公告與使用提醒</span><button class="btn-small btn-outline" id="toggleInstallGuideBtn">查看說明</button></h2>
-    <div id="installGuide" class="hidden">
-      <div class="section-note">可將本系統加入手機主畫面，之後像 App 一樣從桌面圖示開啟。若畫面未更新，可使用下方按鈕清除舊版快取。</div>
-      <button class="btn-blue" id="clearCacheBtn">🔄 清除舊版快取並重新載入</button>
-    </div>
-  </section>
-
-
-  <section class="card card-service-center" id="serviceCenterPanel">
-    <h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
-    <div class="section-note">系統會先檢查 AI 中介服務，並每日自動更新推薦供應商可用模型；模型中心放在 API Key 管理之前。一般使用者不需要看到或修改後端服務網址，只會看到「系統服務已連線 / 未連線」。官方 官方試用 AI 額度 僅供註冊後 7 天內每日 1 次體驗，正式與寬限使用以使用者自帶 API Key 為主。</div>
-    <div class="safe-note"><span class="privacy-badge">🛡️ 使用者安全提示</span> 後端服務網址不是 API Key，但屬於管理資訊；正式版預設隱藏。真正的 API Key 不會放在 GitHub，也不會顯示在這個欄位。</div>
-    <div class="subcard official-backend-card">
-        <div class="btn-row" style="margin-top:10px">
-          <button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
-          <button class="btn-outline" id="syncModelsBtn">🔄 手動更新模型清單</button>
-          <button class="btn-outline" id="toggleDevBackendBtn">⚙️ 管理員設定</button>
-        </div>
-        <div id="modelSyncStatus" class="model-sync-status">模型清單：尚未同步。</div>
-        <div id="providerCatalogList" class="provider-catalog-list"></div>
-        <div id="devBackendPanel" class="hidden" style="margin-top:12px">
-          <label for="workerUrlInput">AI 服務網址（僅管理員維護）</label>
-          <input id="workerUrlInput" type="password" autocomplete="off" placeholder="正式版預設隱藏；需要更換後端服務時才由管理員貼上">
-          <div class="safe-note">目前一般使用者只需按「一鍵測試 AI 服務」。此欄位不顯示預設 Worker URL，避免把管理資訊誤當成一般設定。</div>
-          <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存服務網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復系統預設</button></div>
-        </div>
-    </div>
-  </section>
-
-
-  <section class="card card-account" id="accountPanel">
-    <h2 class="card-title"><span>🔐 帳號、試用與授權生命週期</span></h2>
-    <div class="section-note">使用本系統必須先註冊帳號。每組帳號自註冊日起只有一次 7 天官方 API 試用期，每天 1 次官方 AI 體驗額度；若使用者自己的 API Key 已測試通過，系統立即優先使用自帶 Key，停止消耗官方試用額度。正式授權期與寬限期可反覆循環。</div>
-    <div class="safe-note"><span class="privacy-badge">🔒 正式介面原則</span> 正式版不讓使用者手動切換授權狀態；訂閱、寬限期、停止使用都應由會員 / 授權後端自動判斷。下方「測試工具」只供開發驗證流程。</div>
-    <div class="btn-row" style="margin-top:10px">
-      <button class="btn-primary" id="registerAccountBtn">🪪 建立 / 載入註冊帳號</button>
-      <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
-    </div>
-    <div id="demoToolsPanel" class="demo-tools hidden">
-      <div class="section-note">此區僅為 V5.8 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
-      <div class="btn-row" style="margin-top:10px">
-        <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
-        <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
-        <button class="btn-danger" id="mockStopBtn">🛑 模擬停止使用</button>
-      </div>
-    </div>
-    <div class="lifecycle-grid">
-      <div class="life-box"><b>帳號狀態</b><span id="accountStateText">尚未註冊</span></div>
-      <div class="life-box"><b>官方 API 試用額度</b><span id="trialQuotaText">尚未啟用</span></div>
-      <div class="life-box"><b>自帶 API Key</b><span id="byokStateText">尚未設定</span></div>
-    </div>
-    <div class="route-box" id="routeDecisionBox"><strong>AI 路由判斷：</strong>尚未註冊，請先建立帳號。</div>
-  </section>
-
- <section class="card card-settings">
-    <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開設定</button></h2>
-    <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-    <div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.8 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
-    <div id="apiPanel" class="hidden">
-
-      <div class="subcard api-guide-card">
-        <h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
-        <div class="section-note">系統會每日嘗試從後端更新各供應商可用模型清單；若供應商暫時無法回應，會先使用內建推薦清單。使用者可依用途建立多組 API Key 節點，系統會優先使用「實測通過」且符合用途的節點。</div>
-        <div class="provider-guide-grid" id="providerGuideList">
-          <div class="provider-guide-card"><h4>Agnes AI</h4><p>適合文字、一般內容生成與官方 7 天每日 1 次體驗。正式用戶可自行申請 Agnes Key 後加入節點。</p><a href="https://agnes-ai.com/" target="_blank" rel="noopener">前往官方網站</a></div>
-          <div class="provider-guide-card"><h4>Google Gemini</h4><p>適合音檔、PDF / 文件理解與多模態任務。申請後把 API Key 加入自己的節點。</p><a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">申請教學</a><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">建立 Key</a></div>
-          <div class="provider-guide-card"><h4>OpenAI</h4><p>適合語音轉文字、文字整理、摘要與通用任務。可依不同用途建立多組節點。</p><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank" rel="noopener">API Keys</a></div>
-          <div class="provider-guide-card"><h4>Claude / xAI Grok</h4><p>適合文字、推理、文件摘要或備援節點。實際可用模型以後端同步與正式實測為準。</p><a href="https://platform.claude.com/" target="_blank" rel="noopener">Claude Console</a><a href="https://x.ai/api" target="_blank" rel="noopener">xAI API</a></div>
-        </div>
-        <div class="rotation-policy">🔁 輪替策略：同一用途若有多組「實測通過」的 API Key，系統會依供應商適性、使用次數與最近使用時間做選擇，避免一直打同一支 Key。這是穩定性與降溫設計，不是用來規避供應商規範或無限制用量。</div>
-      </div>
-
-      <div class="subcard api-key-card">
-        <h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
-        <div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。測試分成「本機格式檢查」與「正式後端實測」：本機通過代表格式與本裝置儲存正常；正式實測代表 Worker 已用這把 Key 向供應商完成連線驗證。若有多組同用途 Key，系統會輪替選用，避免單一 Key 過度集中。</div>
-        <input type="hidden" id="editingKeyIndex" value="">
-        <div class="grid3">
-          <div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
-          <div><label for="newModel">模型</label><select id="newModel"></select></div>
-          <div><label for="newTask">用途</label><select id="newTask"><option value="all">通用</option><option value="audio">語音 / 音檔</option><option value="document">PDF / 文件</option><option value="text">文字 / 讀報</option><option value="fallback">備援</option></select></div>
-        </div>
-        <label for="newKey">API Key</label><input id="newKey" type="password" placeholder="貼上 API Key；修改時不填代表保留原 Key">
-        <div class="btn-row" style="margin-top:10px"><button class="btn-primary" id="saveKeyBtn">➕ 新增 / 更新節點</button><button class="btn-gray" id="cancelEditBtn">取消修改</button><button class="btn-danger" id="resetKeysBtn">🧹 清除 API Key 紀錄</button></div>
-        <div id="keySummary" class="key-summary">目前尚未載入 API Key 清單。</div>
-        <div id="nodeList" class="node-list"></div>
-      </div>
-
-      <div class="subcard check-card">
-        <h3 class="card-title" style="font-size:16px"><span>🧪 一鍵系統檢測</span><button class="btn-small btn-outline" id="runCheckBtn">開始檢測</button></h3>
-        <div class="check-grid">
-          <div class="check-item"><span id="checkStorageDot" class="check-dot"></span><span id="checkStorageText">本機儲存：待測</span></div>
-          <div class="check-item"><span id="checkBackendDot" class="check-dot"></span><span id="checkBackendText">正式服務：待測</span></div>
-          <div class="check-item"><span id="checkKeyDot" class="check-dot"></span><span id="checkKeyText">API 節點：待測</span></div>
-          <div class="check-item"><span id="checkAudioDot" class="check-dot"></span><span id="checkAudioText">音檔流程：待測</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="card card-flow" id="audioSection">
-    <h2 class="card-title"><span>🎙️ 使用流程：錄音與舊音檔解析</span></h2>
-    <div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
-    <div class="btn-row"><button id="recordBtn" class="btn-primary">🎤 啟動會議錄音</button><button id="pickAudioBtn" class="btn-outline">📂 匯入舊錄音檔</button></div>
-    <input id="audioFileInput" type="file" accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden">
-    <div id="previewArea" class="preview hidden">
-      <div class="meta"><b style="color:var(--brand-orange)">✅ 音檔已就緒</b><br>檔名：<span id="audioNameTxt">本次錄音</span><br>格式：<span id="audioMimeTxt">-</span><br>大小：<strong id="fileSizeTxt">0 MB</strong></div>
-      <audio id="audioPlayer" class="audio-player" controls></audio>
-      <div class="btn-row"><button class="btn-outline" id="downloadAudioBtn">💾 另存音檔</button><button class="btn-blue" id="analyzeAudioBtn">🧠 錄音轉文字並產生報告</button></div>
-    </div>
-  </section>
-
-  <section class="card card-flow card-flow-doc" id="readerSection">
-    <h2 class="card-title"><span>📄 使用流程：文件讀取與語音播報</span></h2>
-    <div class="section-note">文字檔可直接朗讀；PDF / Word 可交由 AI 提純成適合播報的內容。</div>
-    <div class="btn-row"><button id="pickDocBtn" class="btn-outline">📤 匯入 TXT / PDF / Word</button><button id="speakBtn" class="btn-blue">▶️ 現場精準播報</button></div>
-    <input id="docFileInput" type="file" accept=".txt,.md,.pdf,.doc,.docx,application/pdf,text/plain" class="hidden">
-    <textarea id="ttsInput" placeholder="可貼上文字、匯入 TXT，或等待 AI 產出報告後播報... 這裡的內容會用手機或電腦瀏覽器內建語音播報。"></textarea>
-  </section>
-
-  <section id="resultArea" class="card card-output hidden">
-    <h2 class="card-title"><span>📊 成果呈現</span></h2>
-    <div class="pill-list"><span id="providerPill" class="pill">服務：-</span><span id="modelPill" class="pill">模型：-</span><span id="sourcePill" class="pill">來源：-</span></div>
-    <h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
-    <pre id="outputContent" class="output">等待資料產出...</pre>
-    <div class="btn-row"><button id="readReportBtn" class="btn-blue">🔊 播報報告</button><button id="downloadReportBtn" class="btn-outline">📥 匯出 Markdown</button><button id="shareReportBtn" class="btn-outline">📤 分享</button></div>
-    <h3 style="color:var(--brand-orange)">🧠 互動心智圖</h3>
-    <div id="mindmapView" class="mindmap"><div id="mermaidCode">尚未產生心智圖</div></div>
-  </section>
-
-  <section class="footer-brand">
-    <div class="footer-logo"><svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8 L8 28 H14 V54 H26 V40 H38 V54 H50 V28 H56 Z" fill="#0B1A3A"/><path d="M20 45 L20 30 L32 20 L44 30" stroke="#1E88E5" stroke-width="2" fill="none"/><circle cx="32" cy="20" r="4" fill="#FF8A1E"/><circle cx="20" cy="45" r="3" fill="#1E88E5"/><circle cx="44" cy="30" r="3" fill="#1E88E5"/></svg></div>
-    <div><div class="footer-title">阿布拉.凱工作室</div><div class="footer-sub">ABRA-KAI STUDIO</div><div class="footer-copy">© 2026 All rights reserved.</div></div>
-  </section>
-  <div class="disclaimer">免責聲明：AI 逐字稿與摘要可能受音質、服務狀態、模型限制與網路狀態影響；正式商用前請完成服務啟用、權限控管與測試。</div>
-</main>
-
-<div id="sysModal" class="modal" role="dialog" aria-modal="true"><div class="modal-box"><div id="modalTitle" class="modal-title">系統提示</div><div id="modalMsg" class="modal-msg"></div><button id="modalOkBtn" class="btn-blue" style="margin-top:18px">確認</button></div></div>
-
+<section aria-label="系統終端紀錄" class="terminal" id="terminalView">
+<div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
+<div class="logs" id="terminalLogs"></div>
+</section>
+</section><section class="card card-notice secondary-panel" id="noticePanel">
+<h2 class="card-title"><span>📢 系統公告與使用提醒</span><button class="btn-small btn-outline" id="toggleInstallGuideBtn">查看說明</button></h2>
+<div class="hidden" id="installGuide">
+<div class="section-note">可將本系統加入手機主畫面，之後像 App 一樣從桌面圖示開啟。若畫面未更新，可使用下方按鈕清除舊版快取。</div>
+<button class="btn-blue" id="clearCacheBtn">🔄 清除舊版快取並重新載入</button>
+</div>
+</section><section class="card card-service-center secondary-panel" id="serviceCenterPanel">
+<h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
+<div class="section-note">系統會先檢查 AI 中介服務，並每日自動更新推薦供應商可用模型；模型中心放在 API Key 管理之前。一般使用者不需要看到或修改後端服務網址，只會看到「系統服務已連線 / 未連線」。官方 官方試用 AI 額度 僅供註冊後 7 天內每日 1 次體驗，正式與寬限使用以使用者自帶 API Key 為主。</div>
+<div class="safe-note"><span class="privacy-badge">🛡️ 使用者安全提示</span> 後端服務網址不是 API Key，但屬於管理資訊；正式版預設隱藏。真正的 API Key 不會放在 GitHub，也不會顯示在這個欄位。</div>
+<div class="subcard official-backend-card">
+<div class="btn-row" style="margin-top:10px">
+<button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
+<button class="btn-outline" id="syncModelsBtn">🔄 手動更新模型清單</button>
+<button class="btn-outline" id="toggleDevBackendBtn">⚙️ 管理員設定</button>
+</div>
+<div class="model-sync-status" id="modelSyncStatus">模型清單：尚未同步。</div>
+<div class="provider-catalog-list" id="providerCatalogList"></div>
+<div class="hidden" id="devBackendPanel" style="margin-top:12px">
+<label for="workerUrlInput">AI 服務網址（僅管理員維護）</label>
+<input autocomplete="off" id="workerUrlInput" placeholder="正式版預設隱藏；需要更換後端服務時才由管理員貼上" type="password"/>
+<div class="safe-note">目前一般使用者只需按「一鍵測試 AI 服務」。此欄位不顯示預設 Worker URL，避免把管理資訊誤當成一般設定。</div>
+<div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存服務網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復系統預設</button></div>
+</div>
+</div>
+</section><section class="footer-brand">
+<div class="footer-logo"><svg fill="none" height="48" viewbox="0 0 64 64" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M32 8 L8 28 H14 V54 H26 V40 H38 V54 H50 V28 H56 Z" fill="#0B1A3A"></path><path d="M20 45 L20 30 L32 20 L44 30" fill="none" stroke="#1E88E5" stroke-width="2"></path><circle cx="32" cy="20" fill="#FF8A1E" r="4"></circle><circle cx="20" cy="45" fill="#1E88E5" r="3"></circle><circle cx="44" cy="30" fill="#1E88E5" r="3"></circle></svg></div>
+<div><div class="footer-title">阿布拉.凱工作室</div><div class="footer-sub">ABRA-KAI STUDIO</div><div class="footer-copy">© 2026 All rights reserved.</div></div>
+</section><div class="disclaimer">免責聲明：AI 逐字稿與摘要可能受音質、服務狀態、模型限制與網路狀態影響；正式商用前請完成服務啟用、權限控管與測試。</div></main>
+<div aria-modal="true" class="modal" id="sysModal" role="dialog"><div class="modal-box"><div class="modal-title" id="modalTitle">系統提示</div><div class="modal-msg" id="modalMsg"></div><button class="btn-blue" id="modalOkBtn" style="margin-top:18px">確認</button></div></div>
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.8';
+  const APP_VERSION = 'V5.9';
   const CACHE_BUST = '5.8';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v58',
-    keys: 'abrakai_voice_api_nodes_v58',
-    lastReport: 'abrakai_voice_last_report_v58',
-    catalog: 'abrakai_voice_provider_catalog_v58',
-    catalogMeta: 'abrakai_voice_provider_catalog_meta_v58',
-    account: 'abrakai_voice_account_v58',
-    trialUsage: 'abrakai_voice_trial_usage_v58'
+    worker: 'abrakai_voice_worker_url',
+    keys: 'abrakai_voice_api_nodes',
+    lastReport: 'abrakai_voice_last_report',
+    catalog: 'abrakai_voice_provider_catalog',
+    catalogMeta: 'abrakai_voice_provider_catalog_meta',
+    account: 'abrakai_voice_account',
+    trialUsage: 'abrakai_voice_trial_usage',
+    ui: 'abrakai_voice_ui_preferences'
   };
+  const LEGACY_STORAGE_KEYS = {
+    worker:['abrakai_voice_worker_url_v58','abrakai_voice_worker_url_v57','abrakai_voice_worker_url_v56'],
+    keys:['abrakai_voice_api_nodes_v58','abrakai_voice_api_nodes_v57','abrakai_voice_api_keys_v56'],
+    lastReport:['abrakai_voice_last_report_v58','abrakai_voice_last_report_v57'],
+    catalog:['abrakai_voice_provider_catalog_v58','abrakai_voice_provider_catalog_v57'],
+    catalogMeta:['abrakai_voice_provider_catalog_meta_v58','abrakai_voice_provider_catalog_meta_v57'],
+    account:['abrakai_voice_account_v58','abrakai_voice_account_v57'],
+    trialUsage:['abrakai_voice_trial_usage_v58','abrakai_voice_trial_usage_v57']
+  };
+  function migrateLegacyStorage(){
+    Object.entries(LEGACY_STORAGE_KEYS).forEach(([name, keys])=>{
+      const target = STORAGE[name]; if(!target || localStorage.getItem(target)!==null) return;
+      for(const legacy of keys){ const val = localStorage.getItem(legacy); if(val!==null){ localStorage.setItem(target, val); log('已遷移舊版設定：' + name, 'SUCCESS'); break; } }
+    });
+  }
   const STATIC_MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
     Gemini:['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-2.5-pro'],
@@ -453,6 +318,7 @@
     setMonitor('monCatalog', meta?.updatedAt ? ('已同步：' + new Date(meta.updatedAt).toLocaleString()) : '使用內建清單', meta?.updatedAt ? 'ok' : 'warn');
     setMonitor('monAudio', currentAudioBlob ? '音檔已就緒' : '待錄音 / 待匯入', currentAudioBlob ? 'ok' : 'warn');
     setMonitor('monReport', currentReportText ? '報告已產生' : '尚未產生', currentReportText ? 'ok' : 'warn');
+    if(typeof setHomeStatus === 'function') setHomeStatus();
   }
   function setStatus(text, kind='normal'){
     $('statusText').textContent = text;
@@ -486,7 +352,7 @@
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.8 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -704,7 +570,7 @@
     }
     if (!key) return showModal('輸入不足','請先貼上 API Key；若只使用系統服務，可以不用新增。');
     keys.push({provider, model, task, key, enabled:true, visible:false, testStatus:'尚未測試', createdAt:Date.now()});
-    saveKeys(keys); $('newKey').value=''; renderKeys(); log(`新增本機 API 節點：${provider} ${model}`, 'SUCCESS'); showModal('新增成功','已新增 1 筆 API Key 紀錄，可在清單中管理。');
+    saveKeys(keys); $('newKey').value=''; renderKeys(); setHomeStatus(); log(`新增本機 API 節點：${provider} ${model}`, 'SUCCESS'); showModal('新增成功','已新增 1 筆 API Key 紀錄，可在清單中管理。');
   }
   function cancelEdit(){ $('editingKeyIndex').value=''; $('newKey').value=''; $('newKey').placeholder='貼上 API Key；修改時不填代表保留原 Key'; $('saveKeyBtn').textContent='➕ 新增 / 更新節點'; }
   async function nodeAction(action, index){
@@ -892,7 +758,26 @@ ${local.message}`);
     location.href = location.pathname + '?v=' + CACHE_BUST + '&t=' + Date.now();
   }
 
+
+  function setHomeStatus(){
+    const keys=loadKeys(); const verified=keys.filter(k=>k.enabled!==false && k.remoteOk).length;
+    const a=loadAccount();
+    const serviceText=$('monServiceText')?.textContent || '待檢測';
+    if($('homeServiceStatus')) $('homeServiceStatus').textContent='AI 服務：' + serviceText;
+    if($('homeAccountStatus')) $('homeAccountStatus').textContent='帳號：' + (a ? getAccountLabel(a) : '尚未註冊');
+    if($('homeApiStatus')) $('homeApiStatus').textContent='API Key：' + (verified ? `已實測 ${verified} 組` : '尚未實測通過');
+  }
+  function showPanel(name){
+    const panels={api:'apiKeyPanel',account:'accountPanel',status:'monitorPanel',notice:'noticePanel',admin:'serviceCenterPanel'};
+    Object.values(panels).forEach(id=>$(id)?.classList.remove('panel-open'));
+    document.querySelectorAll('.user-workspace-menu .menu-btn').forEach(b=>b.classList.toggle('active', b.dataset.panel===name));
+    if(name==='home'){ document.getElementById('workspaceHome')?.scrollIntoView({behavior:'smooth'}); return; }
+    const target=$(panels[name]); if(target){ target.classList.add('panel-open'); target.scrollIntoView({behavior:'smooth',block:'start'}); }
+    if(name==='api'){ const api=$('apiPanel'); if(api) api.classList.remove('hidden'); }
+  }
+
   function bind(){
+    document.querySelectorAll('.user-workspace-menu .menu-btn').forEach(btn=>btn.addEventListener('click',()=>showPanel(btn.dataset.panel)));
     $('modalOkBtn').addEventListener('click', closeModal); $('sysModal').addEventListener('click', e=>{ if(e.target.id==='sysModal') closeModal(); });
     $('toggleMonitorBtn').addEventListener('click',()=>{ $('terminalView').classList.toggle('hidden'); $('toggleMonitorBtn').textContent = $('terminalView').classList.contains('hidden') ? '展開紀錄' : '收合紀錄'; log('系統監視視窗切換', 'INFO'); });
     $('clearMonitorBtn').addEventListener('click',()=>{ $('terminalLogs').innerHTML=''; log('監視紀錄已清除', 'WARNING'); });
@@ -916,9 +801,9 @@ ${local.message}`);
     $('speakBtn').addEventListener('click', speakText); $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
   }
   async function init(){
-    bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.8 初始化完成', 'SYSTEM'); log('本版修正：安全介面、API 申請引導、模型清單更新、API Key 輪替與授權生命週期', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.8'); log('PWA Service Worker 已註冊 V5.8', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    bind(); migrateLegacyStorage(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
+    log('AbraKai 聲曜 V5.9 初始化完成', 'SYSTEM'); log('本版修正：行動首頁優先、設定收合、API Key 與使用者偏好持久化', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9'); log('PWA Service Worker 已註冊 V5.9', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
