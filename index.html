@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.4｜監視視窗與模型更新中心</title>
-  <link rel="manifest" href="./manifest.json?v=5.4">
+  <title>AbraKai 聲曜 V5.5｜版本一致修正與後端部署檢查</title>
+  <link rel="manifest" href="./manifest.json?v=5.5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
 
     @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
 
-    /* V5.2 readability overrides: muted functional panels, clear typography */
+    /* V5.5 readability overrides: muted functional panels, clear typography */
     :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
     body{background:#0B1A3A;color:var(--brand-white);}
     .terminal{display:none!important;}
@@ -77,7 +77,7 @@
     @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
 
 
-    /* V5.2 functional color system: darker muted panels + high-contrast text */
+    /* V5.5 functional color system: darker muted panels + high-contrast text */
     :root{
       --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
       --panel-settings:#D5E0EE;   /* A. 系統設定 */
@@ -125,7 +125,7 @@
     .disclaimer{color:#B6C2D6;}
 
   
-    /* V5.4 system monitor: always visible for user progress and maintenance tracing */
+    /* V5.5 system monitor: always visible for user progress and maintenance tracing */
     .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
     .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
     .monitor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
@@ -197,7 +197,7 @@
       </svg>
     </div>
     <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.2 模型更新中心</div></div>
+      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.5 一致修正版</div></div>
       <div class="sub">VoxAura AI Engine</div>
       <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
       <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
@@ -330,15 +330,15 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.4';
-  const CACHE_BUST = '5.4';
+  const APP_VERSION = 'V5.5';
+  const CACHE_BUST = '5.5';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v54',
-    keys: 'abrakai_voice_api_nodes_v54',
-    lastReport: 'abrakai_voice_last_report_v54',
-    catalog: 'abrakai_voice_provider_catalog_v54',
-    catalogMeta: 'abrakai_voice_provider_catalog_meta_v54'
+    worker: 'abrakai_voice_worker_url_v55',
+    keys: 'abrakai_voice_api_nodes_v55',
+    lastReport: 'abrakai_voice_last_report_v55',
+    catalog: 'abrakai_voice_provider_catalog_v55',
+    catalogMeta: 'abrakai_voice_provider_catalog_meta_v55'
   };
   const STATIC_MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
@@ -544,7 +544,7 @@
       const res = await fetch(worker + '/api/health'); const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || 'health check failed');
       showModal('服務連線正常', `AI 服務已連線。\n已設定 服務設定：${JSON.stringify(data.configured || {}, null, 2)}`); setMonitor('monService','AI 服務可用','ok'); log('AI 服務測試通過', 'SUCCESS'); updateStatus();
     }catch(err){
-      showModal('AI 服務尚未可用', `系統服務目前無法連線或尚未啟用。\n\n這通常不是 Agnes、Gemini 或 OpenAI 連接點錯誤，而是官方 Cloudflare Worker 後端尚未部署、網址尚未生效，或目前網路無法連線。\n\n一般使用者不需要自行填網址；請管理員確認服務部署與 Secrets 設定。\n\n錯誤：${String(err.message || err)}`);
+      showModal('AI 服務尚未可用', `系統服務目前無法連線或尚未啟用。\n\n這通常不是 Agnes、Gemini 或 OpenAI 連接點錯誤，而是官方 AI 後端尚未部署、網址尚未生效、CORS 尚未設定，或目前網路無法連線。\n\n一般使用者不需要自行填網址；請管理員確認服務部署與 Secrets 設定。\n\n錯誤：${String(err.message || err)}`);
       setMonitor('monService','AI 服務尚未可用','err'); log('AI 服務測試失敗：' + (err.message || err), 'ERROR');
     }
   }
@@ -657,8 +657,8 @@
   }
   async function init(){
     bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.4 初始化完成', 'SYSTEM'); log('本版整合：系統監視視窗、AI 服務檢測、每日/手動模型更新中心', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.4'); log('PWA Service Worker 已註冊 V5.4', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.5 初始化完成', 'SYSTEM'); log('本版修正：版本顯示一致、系統監視視窗、AI 服務檢測、每日/手動模型更新中心', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.5'); log('PWA Service Worker 已註冊 V5.5', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
