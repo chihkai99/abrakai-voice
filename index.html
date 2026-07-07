@@ -5,15 +5,177 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9｜行動首頁優先與設定持久化模式</title>
-<link href="./manifest.json?v=5.7" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.1｜行動首頁優先與品牌風格修復版</title>
+<link href="./manifest.json?v=5.9.1" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
+/* V5.9.1 style restoration: restored V5.8 premium dark-blue brand system, then applied V5.9.1 mobile workspace refinements. */
 
-/* V5.9 mobile-first workspace: keep daily-use features first, move settings into menu */
+    :root {
+      --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
+      --brand-white:#FFFFFF; --brand-light:#D8DEE7; --brand-panel:rgba(46,52,65,.88);
+      --glass-border:rgba(30,136,229,.35); --success:#4ade80; --danger:#ef4444; --warn:#fbbf24;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:0;background:var(--brand-navy);color:var(--brand-white);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-image:radial-gradient(circle at 10% 10%,rgba(30,136,229,.13),transparent 34%),radial-gradient(circle at 90% 90%,rgba(255,138,30,.10),transparent 34%);background-attachment:fixed;}
+    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 32px;}
+    .app-header{position:sticky;top:0;z-index:50;background:rgba(11,26,58,.96);border-bottom:2px solid var(--brand-blue);box-shadow:0 4px 18px rgba(0,0,0,.5);backdrop-filter:blur(10px)}
+    .header-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px;}
+    .product-logo{width:64px;height:64px;border-radius:16px;border:2px solid var(--brand-orange);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 0 18px rgba(255,138,30,.28);background:linear-gradient(135deg,#081326,#17233b)}
+    .titlebox{min-width:0;flex:1}.titleline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.title{font-size:25px;font-weight:900;letter-spacing:.5px}.version{font-size:12px;color:#73b8ff;border:1px solid var(--brand-blue);background:rgba(30,136,229,.13);border-radius:6px;padding:3px 8px;font-weight:800}.sub{font-size:14px;color:var(--brand-orange);font-weight:800;margin-top:3px}.desc{font-size:13px;color:var(--brand-light);margin-top:5px;line-height:1.5}.status-pill{display:flex;align-items:center;gap:8px;margin-top:8px;width:100%;max-width:620px;border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.45);border-radius:999px;padding:8px 12px;color:var(--brand-light);font-size:13px}.dot{width:12px;height:12px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b;flex:0 0 auto}.dot.ok{background:var(--success);box-shadow:0 0 9px var(--success)}.dot.warn{background:var(--warn);box-shadow:0 0 9px var(--warn)}.dot.err{background:var(--danger);box-shadow:0 0 9px var(--danger)}
+    .card{background:var(--brand-panel);border:1px solid var(--glass-border);border-radius:16px;padding:18px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.34)}
+    .card-title{font-weight:900;color:var(--brand-blue);font-size:19px;margin:0 0 14px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}.card-title span{min-width:0}.section-note{line-height:1.7;color:#d6e3f7;background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:12px;padding:12px;margin:10px 0}.warning-note{line-height:1.7;color:#ffe4bd;background:rgba(255,138,30,.12);border:1px solid rgba(255,138,30,.35);border-radius:12px;padding:12px;margin:10px 0}
+    button,input,select,textarea{font-family:inherit;font-size:15px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.38);color:white;padding:12px;width:100%;outline:none} input:focus,select:focus,textarea:focus{border-color:var(--brand-orange);box-shadow:0 0 0 3px rgba(255,138,30,.18)} label{display:block;color:#77bfff;font-size:13px;font-weight:800;margin:10px 0 6px} textarea{min-height:150px;resize:vertical;line-height:1.55}
+    button{border:none;cursor:pointer;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;transition:.16s transform,.16s filter}.btn-primary{background:linear-gradient(135deg,#ff8a1e,#ffb25f);color:#111}.btn-blue{background:linear-gradient(135deg,#1E88E5,#36c9ff);color:#fff}.btn-outline{background:rgba(30,136,229,.12);border:1px solid var(--brand-blue);color:#9ed1ff}.btn-danger{background:linear-gradient(135deg,#ef4444,#ff7a7a);color:#fff}.btn-gray{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff}.btn-small{width:auto;padding:8px 11px;font-size:13px;border-radius:10px;display:inline-flex}.btn-row{display:flex;gap:10px;flex-wrap:wrap}.btn-row > button{flex:1 1 150px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .terminal{height:160px;overflow:auto;background:#050a15;border:1px solid #1e3a8a;border-radius:12px;margin:16px 0 20px;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)}.terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.94);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px}.logs{padding:10px 12px}.log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}.t{color:#64748b}.INFO{color:#3b82f6}.SUCCESS{color:#10b981}.WARNING{color:#f59e0b}.ERROR{color:#ef4444}.SYSTEM{color:#a855f7}
+    .preview{border:2px solid var(--brand-orange);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;margin-top:14px}.meta{font-size:14px;line-height:1.7;color:#e2e8f0}.meta strong{font-size:18px;color:#fff}.audio-player{width:100%;height:42px;margin:10px 0;border-radius:12px}.pill-list{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;padding:5px 10px;font-size:12px;color:#dbeafe}.node-list{display:grid;gap:10px;margin-top:12px}.node{border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.26);border-radius:13px;padding:12px}.node-top{display:flex;justify-content:space-between;gap:8px}.node-name{font-weight:900;color:var(--brand-orange)}.node-sub{font-size:12px;color:#bdd8ff;line-height:1.5;margin-top:4px}.key-mask{font-family:'Fira Code',monospace;font-size:12px;color:#cbd5e1;margin:8px 0;word-break:break-all;background:rgba(0,0,0,.25);padding:8px;border-radius:8px}.check-grid{display:grid;gap:10px}.check-item{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);border-radius:12px;padding:10px}.check-dot{width:13px;height:13px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b}.check-dot.ok{background:var(--success);box-shadow:0 0 7px var(--success)}.check-dot.warn{background:var(--warn);box-shadow:0 0 7px var(--warn)}.check-dot.err{background:var(--danger);box-shadow:0 0 7px var(--danger)}
+    pre.output{white-space:pre-wrap;word-break:break-word;background:#030712;color:#b6ff62;border-left:4px solid var(--brand-blue);border-radius:12px;padding:14px;max-height:420px;overflow:auto;line-height:1.65;font-size:14px}.mindmap{background:#fff;color:#111;border-radius:12px;border:2px solid var(--brand-blue);padding:12px;overflow:auto;min-height:180px}.footer-brand{margin:24px 0 12px;border-top:1px solid rgba(255,255,255,.13);padding-top:20px;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}.footer-logo{width:58px;height:58px;border-radius:50%;background:#f8fafc;border:3px solid #0B1A3A;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.footer-title{font-weight:900;font-size:20px}.footer-sub{font-size:12px;color:#61a7ff;font-weight:900}.footer-copy{font-size:11px;color:#9aa7bd;margin-top:3px}.disclaimer{font-size:11px;color:#8e9bb3;text-align:center;line-height:1.6;margin-bottom:20px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}.modal-box{background:#0B1A3A;border:2px solid var(--brand-orange);border-radius:16px;max-width:520px;width:100%;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.7)}.modal-title{color:var(--brand-orange);font-size:20px;font-weight:900;text-align:center;margin-bottom:12px}.modal-msg{color:var(--brand-light);line-height:1.7;text-align:left;white-space:pre-wrap}
+    
+    .product-logo{position:relative;overflow:hidden}
+    .product-logo::after{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 35%,rgba(255,138,30,.16),transparent 34%),radial-gradient(circle at 50% 85%,rgba(30,136,229,.16),transparent 30%);pointer-events:none}
+    .logo-svg{display:block;filter:drop-shadow(0 0 10px rgba(30,136,229,.32))}
+    .logo-frame{stroke:#37A8FF;stroke-width:2.6;fill:url(#logoBg);filter:url(#blueGlow)}
+    .wave-bar{transform-box:fill-box;transform-origin:center bottom;animation:waveBounce 1.35s ease-in-out infinite;filter:url(#orangeGlow)}
+    .wave-bar.bar1{animation-delay:-.45s}.wave-bar.bar2{animation-delay:-.2s}.wave-bar.bar3{animation-delay:-.05s}.wave-bar.bar4{animation-delay:-.3s}
+    .text-row{animation:linePulse 2.1s ease-in-out infinite}.text-row.row2{animation-delay:.28s}.text-row.row3{animation-delay:.56s}
+    .text-row .row-dot,.text-row .row-line{filter:url(#blueGlow)}
+    .product-logo:hover .wave-bar,.product-logo:focus-within .wave-bar{animation-duration:.85s}
+    @keyframes waveBounce{0%,100%{transform:scaleY(.68)}25%{transform:scaleY(1.05)}50%{transform:scaleY(1.22)}75%{transform:scaleY(.82)}}
+    @keyframes linePulse{0%,100%{opacity:.72;transform:translateX(0)}50%{opacity:1;transform:translateX(1.5px)}}
+    @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
+
+    @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
+
+    /* V5.8 readability overrides: muted functional panels, clear typography */
+    :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
+    body{background:#0B1A3A;color:var(--brand-white);}
+    .terminal{display:none!important;}
+    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 20px rgba(2,8,23,.18);}
+    .card-install{background:var(--panel-blue);}
+    .card-api{background:var(--panel-yellow);}
+    .card-audio{background:var(--panel-orange);}
+    .card-reader{background:var(--panel-green);}
+    .card-result{background:var(--panel-purple);}
+    .subcard{background:rgba(255,255,255,.78);border:1px solid rgba(15,23,42,.12);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
+    .card-title{color:#075985;border-bottom:1px solid rgba(15,23,42,.15);}
+    .section-note{background:rgba(255,255,255,.72);border-color:rgba(30,136,229,.28);color:var(--text-main);font-weight:600;}
+    .warning-note{background:#FFF7ED;color:#7C2D12;border-color:#FDBA74;font-weight:700;}
+    label{color:#075985;}
+    input,select,textarea{background:#FFFFFF;color:#0F172A;border:1px solid #94A3B8;}
+    input::placeholder, textarea::placeholder{color:#64748B;}
+    .node,.check-item{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
+    .node-name{color:#C2410C;}.node-sub{color:#334155;}
+    .key-mask{background:#F1F5F9;color:#0F172A;}
+    .pill{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
+    .preview{background:#FFFFFF;color:#0F172A;border-color:#FF8A1E;}
+    .meta{color:#1E293B;}.meta strong{color:#0F172A;}
+    pre.output{background:#0F172A;color:#D9F99D;}
+    .footer-brand{color:#FFFFFF;}
+    .disclaimer{color:#B6C2D6;}
+    .btn-outline{background:#FFFFFF;color:#0369A1;border:1px solid #38BDF8;}
+    .btn-gray{background:#E2E8F0;color:#0F172A;border:1px solid #CBD5E1;}
+    @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
+
+
+    /* V5.8 functional color system: darker muted panels + high-contrast text */
+    :root{
+      --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
+      --panel-settings:#D5E0EE;   /* A. 系統設定 */
+      --panel-notice:#E7D8B8;     /* B. 系統公告 */
+      --panel-flow:#D4E4DA;       /* C. 使用者流程 */
+      --panel-flow-doc:#D1E1D7;   /* C. 使用者流程 */
+      --panel-output:#DCD3EA;     /* D. 成果呈現 */
+      --sub-panel:#EEF2F6;
+    }
+    .terminal{display:none!important;}
+    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 22px rgba(2,8,23,.20);}
+    .card-settings{background:var(--panel-settings)!important;}
+    .card-service-center{background:linear-gradient(135deg,#D7E3F3,#C9D9EA)!important;color:#0F172A;}
+    .card-notice{background:var(--panel-notice)!important;}
+    .card-flow{background:var(--panel-flow)!important;}
+    .card-flow-doc{background:var(--panel-flow-doc)!important;}
+    .card-output{background:var(--panel-output)!important;}
+    .subcard{background:rgba(238,242,246,.92);border:1px solid rgba(15,23,42,.16);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
+    .section-note{color:var(--text-main);background:rgba(255,255,255,.44);border:1px solid rgba(15,23,42,.12);font-weight:600;}
+    .warning-note{color:#5F3100;background:rgba(255,237,213,.72);border:1px solid rgba(154,93,0,.25);font-weight:700;}
+    .card-title{color:#0B3B66;border-bottom:1px solid rgba(15,23,42,.16);}
+    .node{background:rgba(255,255,255,.50);border:1px solid rgba(15,23,42,.16);}
+    .node-name{color:#8A3F00;}
+    .node-sub{color:#243B53;}
+    .key-mask{background:rgba(15,23,42,.10);color:#0F172A;border:1px solid rgba(15,23,42,.10);}
+
+    .provider-catalog-list{display:grid;gap:10px;margin-top:12px}
+    .provider-catalog-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:rgba(255,255,255,.56);border:1px solid rgba(15,23,42,.14);border-radius:12px;padding:12px;color:#0F172A}
+    .provider-catalog-name{font-weight:900;color:#075985;font-size:16px}
+    .provider-catalog-models{font-size:13px;line-height:1.55;color:#334155;margin-top:4px;word-break:break-word}
+    .provider-catalog-badge{font-size:12px;font-weight:900;border-radius:999px;padding:5px 8px;background:#E0F2FE;color:#075985;white-space:nowrap;border:1px solid rgba(14,116,144,.22)}
+    .model-sync-status{margin-top:10px;font-size:13px;font-weight:800;color:#334155}
+
+    .key-summary{background:rgba(15,23,42,.10);border:1px solid rgba(15,23,42,.13);border-radius:12px;padding:10px 12px;margin:10px 0 12px;font-weight:900;color:#0F172A;}
+    .check-item{background:rgba(255,255,255,.42);border:1px solid rgba(15,23,42,.15);}
+    .pill{background:rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.15);color:#0F172A;font-weight:800;}
+    pre.output{background:#0B1220;color:#D9F99D;border-left:4px solid #2563EB;}
+    input,select,textarea{background:#F8FAFC;color:#0F172A;border:1px solid #94A3B8;}
+    select option{background:#F8FAFC;color:#0F172A;}
+    label{color:#075985;}
+    .btn-outline{background:#F8FAFC;color:#075985;border:1px solid #0284C7;}
+    .btn-gray{background:#CBD5E1;color:#0F172A;border:1px solid #94A3B8;}
+    .btn-blue{background:linear-gradient(135deg,#0F6FBF,#18A7D8);color:#FFFFFF;}
+    .btn-primary{background:linear-gradient(135deg,#D97706,#F59E0B);color:#111827;}
+    .disclaimer{color:#B6C2D6;}
+
+  
+    /* V5.8 system monitor: always visible for user progress and maintenance tracing */
+    .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
+    .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
+    .monitor-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
+    .monitor-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px;color:#D8DEE7;line-height:1.35;}
+    .monitor-chip b{display:block;color:#FFFFFF;font-size:14px;margin-bottom:4px}
+    .monitor-chip .chip-dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#64748b;box-shadow:0 0 7px #64748b;margin-right:6px;vertical-align:middle}
+    .monitor-chip.ok .chip-dot{background:var(--success);box-shadow:0 0 9px var(--success)}
+    .monitor-chip.warn .chip-dot{background:var(--warn);box-shadow:0 0 9px var(--warn)}
+    .monitor-chip.err .chip-dot{background:var(--danger);box-shadow:0 0 9px var(--danger)}
+    .monitor-chip span{font-size:13px;color:#C7D2E6}
+    .terminal{display:block!important;height:180px;overflow:auto;background:#050A15!important;border:1px solid #1E3A8A!important;border-radius:12px;margin:12px 0 0;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)!important;color:#E2E8F0!important}
+    .terminal.hidden{display:none!important}
+    .terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.96);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px;z-index:2}
+    .logs{padding:10px 12px}
+    .log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}
+    .monitor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .monitor-actions button{flex:0 1 auto}
+
+    /* V5.8 account lifecycle panel */
+    .card-account{background:linear-gradient(135deg,#E9E5C8,#D8E8D3)!important;color:#0F172A;}
+    .lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+    .life-box{background:rgba(255,255,255,.58);border:1px solid rgba(15,23,42,.15);border-radius:12px;padding:12px;line-height:1.55}
+    .life-box b{display:block;color:#075985;margin-bottom:4px}
+    .route-box{background:#0F172A;color:#EAF4FF;border-radius:12px;padding:12px;margin-top:10px;line-height:1.65;border:1px solid rgba(96,165,250,.35)}
+    .route-box strong{color:#FBBF24}
+    @media(max-width:720px){.lifecycle-grid{grid-template-columns:1fr}.monitor-grid{grid-template-columns:1fr 1fr}}
+
+    @media(max-width:720px){.monitor-grid{grid-template-columns:1fr 1fr}.terminal{height:150px}.monitor-actions button{flex:1 1 120px}}
+
+  
+  .safe-note{margin-top:10px;padding:12px 14px;border-radius:16px;background:rgba(30,136,229,.08);border:1px solid rgba(30,136,229,.22);font-weight:700;color:#12345a;line-height:1.7}
+  .privacy-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.28);color:#166534;font-size:13px;font-weight:800}
+  .provider-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+  .provider-guide-card{background:rgba(255,255,255,.74);border:1px solid rgba(11,26,58,.12);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(11,26,58,.06)}
+  .provider-guide-card h4{margin:0 0 6px;color:#0B1A3A;font-size:16px}
+  .provider-guide-card p{margin:0 0 10px;color:#334155;line-height:1.65;font-size:14px}
+  .provider-guide-card a{display:inline-block;text-decoration:none;font-weight:900;color:#0f6ea8;border:1px solid rgba(15,110,168,.28);border-radius:999px;padding:7px 10px;background:#f8fbff;margin-right:6px;margin-bottom:6px}
+  .rotation-policy{margin-top:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(255,138,30,.13),rgba(30,136,229,.10));border:1px solid rgba(255,138,30,.26);line-height:1.7;color:#162238;font-weight:700}
+  .demo-tools{margin-top:10px;padding:12px;border-radius:16px;border:1px dashed rgba(11,26,58,.25);background:rgba(11,26,58,.04)}
+  @media (max-width:760px){.provider-guide-grid{grid-template-columns:1fr}}
+
+
+
+/* ---- V5.9.1 mobile workspace refinements ---- */
+
+
+/* V5.9.1 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -31,6 +193,22 @@
   .workspace-hero .hero-actions{grid-template-columns:1fr}.card{margin:12px 0;padding:18px 14px;border-radius:18px}
   .card-title{font-size:18px}.btn-row{display:grid;grid-template-columns:1fr;gap:10px}.grid3,.lifecycle-grid,.monitor-grid{grid-template-columns:1fr}
 }
+
+
+/* ---- V5.9.1 final polish ---- */
+.app-header{background:rgba(11,26,58,.96)!important;}
+.user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
+.workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
+.workspace-hero .hero-actions .btn{min-height:48px}
+.api-hidden-note{font-size:13px;color:rgba(255,255,255,.68);line-height:1.6}
+@media(max-width:720px){
+  .header-inner{align-items:flex-start}
+  .user-workspace-menu{grid-template-columns:repeat(2,1fr);top:74px;margin-left:-2px;margin-right:-2px}
+  .user-workspace-menu .menu-btn{border-radius:14px;padding:11px 6px;font-size:13px}
+  .workspace-hero .hero-actions{grid-template-columns:1fr}
+  .compact-status span{font-size:12px}
+}
+
 </style>
 </head>
 <body>
@@ -83,7 +261,7 @@
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9 行動首頁優先版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.1 行動首頁優先版</div></div>
 <div class="sub">VoxAura AI Engine</div>
 <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
@@ -129,7 +307,7 @@
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.1 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
@@ -175,7 +353,7 @@
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.1 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -243,7 +421,7 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9';
+  const APP_VERSION = 'V5.9.1';
   const CACHE_BUST = '5.8';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
@@ -352,7 +530,7 @@
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.1 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -802,8 +980,8 @@ ${local.message}`);
   }
   async function init(){
     bind(); migrateLegacyStorage(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9 初始化完成', 'SYSTEM'); log('本版修正：行動首頁優先、設定收合、API Key 與使用者偏好持久化', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9'); log('PWA Service Worker 已註冊 V5.9', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.9.1 初始化完成', 'SYSTEM'); log('本版修正：行動首頁優先、設定收合、API Key 與使用者偏好持久化', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.1'); log('PWA Service Worker 已註冊 V5.9.1', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
