@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.2",
+  "name": "AbraKai 聲曜 V5.9.3",
   "short_name": "聲曜",
-  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報；V5.9.2 修復導覽定位、行動首頁優先、設定收合與持久化。",
-  "start_url": "./index.html?v=5.9.2",
+  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報；V5.9.3 修復快捷按鈕、語音播報控制、導覽定位、行動首頁優先與設定持久化。",
+  "start_url": "./index.html?v=5.9.3",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
