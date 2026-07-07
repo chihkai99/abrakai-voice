@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.7｜註冊試用、寬限期與 BYOK 優先模式</title>
+  <title>AbraKai 聲曜 V5.8｜安全介面、API 引導與 BYOK 輪替模式</title>
   <link rel="manifest" href="./manifest.json?v=5.7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +46,7 @@
 
     @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
 
-    /* V5.7 readability overrides: muted functional panels, clear typography */
+    /* V5.8 readability overrides: muted functional panels, clear typography */
     :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
     body{background:#0B1A3A;color:var(--brand-white);}
     .terminal{display:none!important;}
@@ -77,7 +77,7 @@
     @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
 
 
-    /* V5.7 functional color system: darker muted panels + high-contrast text */
+    /* V5.8 functional color system: darker muted panels + high-contrast text */
     :root{
       --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
       --panel-settings:#D5E0EE;   /* A. 系統設定 */
@@ -125,7 +125,7 @@
     .disclaimer{color:#B6C2D6;}
 
   
-    /* V5.7 system monitor: always visible for user progress and maintenance tracing */
+    /* V5.8 system monitor: always visible for user progress and maintenance tracing */
     .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
     .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
     .monitor-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
@@ -144,7 +144,7 @@
     .monitor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
     .monitor-actions button{flex:0 1 auto}
 
-    /* V5.7 account lifecycle panel */
+    /* V5.8 account lifecycle panel */
     .card-account{background:linear-gradient(135deg,#E9E5C8,#D8E8D3)!important;color:#0F172A;}
     .lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
     .life-box{background:rgba(255,255,255,.58);border:1px solid rgba(15,23,42,.15);border-radius:12px;padding:12px;line-height:1.55}
@@ -155,7 +155,19 @@
 
     @media(max-width:720px){.monitor-grid{grid-template-columns:1fr 1fr}.terminal{height:150px}.monitor-actions button{flex:1 1 120px}}
 
-  </style>
+  
+  .safe-note{margin-top:10px;padding:12px 14px;border-radius:16px;background:rgba(30,136,229,.08);border:1px solid rgba(30,136,229,.22);font-weight:700;color:#12345a;line-height:1.7}
+  .privacy-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.28);color:#166534;font-size:13px;font-weight:800}
+  .provider-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+  .provider-guide-card{background:rgba(255,255,255,.74);border:1px solid rgba(11,26,58,.12);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(11,26,58,.06)}
+  .provider-guide-card h4{margin:0 0 6px;color:#0B1A3A;font-size:16px}
+  .provider-guide-card p{margin:0 0 10px;color:#334155;line-height:1.65;font-size:14px}
+  .provider-guide-card a{display:inline-block;text-decoration:none;font-weight:900;color:#0f6ea8;border:1px solid rgba(15,110,168,.28);border-radius:999px;padding:7px 10px;background:#f8fbff;margin-right:6px;margin-bottom:6px}
+  .rotation-policy{margin-top:12px;padding:14px;border-radius:18px;background:linear-gradient(135deg,rgba(255,138,30,.13),rgba(30,136,229,.10));border:1px solid rgba(255,138,30,.26);line-height:1.7;color:#162238;font-weight:700}
+  .demo-tools{margin-top:10px;padding:12px;border-radius:16px;border:1px dashed rgba(11,26,58,.25);background:rgba(11,26,58,.04)}
+  @media (max-width:760px){.provider-guide-grid{grid-template-columns:1fr}}
+
+</style>
 </head>
 <body>
 <header class="app-header">
@@ -207,7 +219,7 @@
       </svg>
     </div>
     <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.7 授權生命週期版</div></div>
+      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.8 安全介面與 API 引導版</div></div>
       <div class="sub">VoxAura AI Engine</div>
       <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
       <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
@@ -251,7 +263,8 @@
 
   <section class="card card-service-center" id="serviceCenterPanel">
     <h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
-    <div class="section-note">系統會先檢查 AI 中介服務，並每日自動更新推薦供應商可用模型；模型中心放在 API Key 管理之前。官方 TRIAL_AGNES_API_KEY 僅供註冊後 7 天內每日 1 次體驗，正式與寬限使用以使用者自帶 API Key 為主。</div>
+    <div class="section-note">系統會先檢查 AI 中介服務，並每日自動更新推薦供應商可用模型；模型中心放在 API Key 管理之前。一般使用者不需要看到或修改後端服務網址，只會看到「系統服務已連線 / 未連線」。官方 官方試用 AI 額度 僅供註冊後 7 天內每日 1 次體驗，正式與寬限使用以使用者自帶 API Key 為主。</div>
+    <div class="safe-note"><span class="privacy-badge">🛡️ 使用者安全提示</span> 後端服務網址不是 API Key，但屬於管理資訊；正式版預設隱藏。真正的 API Key 不會放在 GitHub，也不會顯示在這個欄位。</div>
     <div class="subcard official-backend-card">
         <div class="btn-row" style="margin-top:10px">
           <button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
@@ -261,8 +274,9 @@
         <div id="modelSyncStatus" class="model-sync-status">模型清單：尚未同步。</div>
         <div id="providerCatalogList" class="provider-catalog-list"></div>
         <div id="devBackendPanel" class="hidden" style="margin-top:12px">
-          <label for="workerUrlInput">自訂 AI 服務網址（管理員）</label>
-          <input id="workerUrlInput" type="url" placeholder="管理員專用，通常不需填寫">
+          <label for="workerUrlInput">AI 服務網址（僅管理員維護）</label>
+          <input id="workerUrlInput" type="password" autocomplete="off" placeholder="正式版預設隱藏；需要更換後端服務時才由管理員貼上">
+          <div class="safe-note">目前一般使用者只需按「一鍵測試 AI 服務」。此欄位不顯示預設 Worker URL，避免把管理資訊誤當成一般設定。</div>
           <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存服務網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復系統預設</button></div>
         </div>
     </div>
@@ -271,12 +285,19 @@
 
   <section class="card card-account" id="accountPanel">
     <h2 class="card-title"><span>🔐 帳號、試用與授權生命週期</span></h2>
-    <div class="section-note">使用本系統必須先註冊帳號。每組帳號自註冊日起只有一次 7 天官方 API 試用期，每天 1 次 TRIAL_AGNES_API_KEY；若使用者自己的 API Key 已測試通過，系統立即優先使用自帶 Key，停止消耗官方試用額度。正式授權期與寬限期可反覆循環。</div>
+    <div class="section-note">使用本系統必須先註冊帳號。每組帳號自註冊日起只有一次 7 天官方 API 試用期，每天 1 次官方 AI 體驗額度；若使用者自己的 API Key 已測試通過，系統立即優先使用自帶 Key，停止消耗官方試用額度。正式授權期與寬限期可反覆循環。</div>
+    <div class="safe-note"><span class="privacy-badge">🔒 正式介面原則</span> 正式版不讓使用者手動切換授權狀態；訂閱、寬限期、停止使用都應由會員 / 授權後端自動判斷。下方「測試工具」只供開發驗證流程。</div>
     <div class="btn-row" style="margin-top:10px">
       <button class="btn-primary" id="registerAccountBtn">🪪 建立 / 載入註冊帳號</button>
-      <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
-      <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
-      <button class="btn-danger" id="mockStopBtn">🛑 模擬停止使用</button>
+      <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
+    </div>
+    <div id="demoToolsPanel" class="demo-tools hidden">
+      <div class="section-note">此區僅為 V5.8 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
+        <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
+        <button class="btn-danger" id="mockStopBtn">🛑 模擬停止使用</button>
+      </div>
     </div>
     <div class="lifecycle-grid">
       <div class="life-box"><b>帳號狀態</b><span id="accountStateText">尚未註冊</span></div>
@@ -288,11 +309,25 @@
 
  <section class="card card-settings">
     <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開設定</button></h2>
-    <div class="section-note">這裡只管理自帶 API Key。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
+    <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
+    <div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.8 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
     <div id="apiPanel" class="hidden">
+
+      <div class="subcard api-guide-card">
+        <h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
+        <div class="section-note">系統會每日嘗試從後端更新各供應商可用模型清單；若供應商暫時無法回應，會先使用內建推薦清單。使用者可依用途建立多組 API Key 節點，系統會優先使用「實測通過」且符合用途的節點。</div>
+        <div class="provider-guide-grid" id="providerGuideList">
+          <div class="provider-guide-card"><h4>Agnes AI</h4><p>適合文字、一般內容生成與官方 7 天每日 1 次體驗。正式用戶可自行申請 Agnes Key 後加入節點。</p><a href="https://agnes-ai.com/" target="_blank" rel="noopener">前往官方網站</a></div>
+          <div class="provider-guide-card"><h4>Google Gemini</h4><p>適合音檔、PDF / 文件理解與多模態任務。申請後把 API Key 加入自己的節點。</p><a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">申請教學</a><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">建立 Key</a></div>
+          <div class="provider-guide-card"><h4>OpenAI</h4><p>適合語音轉文字、文字整理、摘要與通用任務。可依不同用途建立多組節點。</p><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank" rel="noopener">API Keys</a></div>
+          <div class="provider-guide-card"><h4>Claude / xAI Grok</h4><p>適合文字、推理、文件摘要或備援節點。實際可用模型以後端同步與正式實測為準。</p><a href="https://platform.claude.com/" target="_blank" rel="noopener">Claude Console</a><a href="https://x.ai/api" target="_blank" rel="noopener">xAI API</a></div>
+        </div>
+        <div class="rotation-policy">🔁 輪替策略：同一用途若有多組「實測通過」的 API Key，系統會依供應商適性、使用次數與最近使用時間做選擇，避免一直打同一支 Key。這是穩定性與降溫設計，不是用來規避供應商規範或無限制用量。</div>
+      </div>
+
       <div class="subcard api-key-card">
         <h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
-        <div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。測試會分成「本機格式檢查」與「正式後端實測」：本機通過代表 Key 已正確儲存在此裝置；正式實測需 AI 後端服務已啟用後才會完成。</div>
+        <div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。測試分成「本機格式檢查」與「正式後端實測」：本機通過代表格式與本裝置儲存正常；正式實測代表 Worker 已用這把 Key 向供應商完成連線驗證。若有多組同用途 Key，系統會輪替選用，避免單一 Key 過度集中。</div>
         <input type="hidden" id="editingKeyIndex" value="">
         <div class="grid3">
           <div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
@@ -359,17 +394,17 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.7';
-  const CACHE_BUST = '5.7';
+  const APP_VERSION = 'V5.8';
+  const CACHE_BUST = '5.8';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v57',
-    keys: 'abrakai_voice_api_nodes_v57',
-    lastReport: 'abrakai_voice_last_report_v57',
-    catalog: 'abrakai_voice_provider_catalog_v57',
-    catalogMeta: 'abrakai_voice_provider_catalog_meta_v57',
-    account: 'abrakai_voice_account_v57',
-    trialUsage: 'abrakai_voice_trial_usage_v57'
+    worker: 'abrakai_voice_worker_url_v58',
+    keys: 'abrakai_voice_api_nodes_v58',
+    lastReport: 'abrakai_voice_last_report_v58',
+    catalog: 'abrakai_voice_provider_catalog_v58',
+    catalogMeta: 'abrakai_voice_provider_catalog_meta_v58',
+    account: 'abrakai_voice_account_v58',
+    trialUsage: 'abrakai_voice_trial_usage_v58'
   };
   const STATIC_MODEL_CATALOG = {
     Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
@@ -451,7 +486,7 @@
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.7 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.8 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -461,8 +496,24 @@
   function taskMatches(k, taskType){ const t = k.task || 'all'; return t === 'all' || t === taskType || t === 'fallback'; }
   function getBestUserApiNode(taskType){
     const order = taskType === 'audio' ? ['Gemini','OpenAI','Agnes','Claude','Grok'] : taskType === 'document' ? ['Gemini','Agnes','OpenAI','Claude','Grok'] : ['Agnes','Gemini','OpenAI','Claude','Grok'];
-    const nodes = loadKeys().filter(k => k.enabled !== false && (k.testStatus === '實測通過' || k.testStatus === '通過') && taskMatches(k, taskType));
-    return nodes.sort((a,b)=> order.indexOf(a.provider) - order.indexOf(b.provider))[0] || null;
+    const nodes = loadKeys()
+      .map((k, index) => ({...k, __index:index}))
+      .filter(k => k.enabled !== false && (k.testStatus === '實測通過' || k.testStatus === '通過') && taskMatches(k, taskType));
+    return nodes.sort((a,b)=>{
+      const pa = order.indexOf(a.provider); const pb = order.indexOf(b.provider);
+      if(pa !== pb) return pa - pb;
+      const ua = Number(a.usageCount || 0); const ub = Number(b.usageCount || 0);
+      if(ua !== ub) return ua - ub;
+      return Number(a.lastUsedAt || 0) - Number(b.lastUsedAt || 0);
+    })[0] || null;
+  }
+  function recordApiNodeUsage(node){
+    if(!node || node.__index === undefined) return;
+    const keys = loadKeys();
+    if(!keys[node.__index]) return;
+    keys[node.__index].usageCount = Number(keys[node.__index].usageCount || 0) + 1;
+    keys[node.__index].lastUsedAt = Date.now();
+    saveKeys(keys);
   }
   function computeAccountState(){
     const a = loadAccount();
@@ -492,7 +543,7 @@
     if(!s.systemOpen) return {ok:false, mode:'blocked', reason:'帳號目前已停止使用。請續約或聯絡管理員重新啟用。', state:s};
     const userNode = getBestUserApiNode(taskType);
     if(userNode) return {ok:true, mode:'user', node:userNode, reason:`將使用使用者自帶 API Key：${userNode.provider} / ${userNode.model}`, state:s};
-    if(s.trialApiAvailable) return {ok:true, mode:'trial', reason:'將使用官方 TRIAL_AGNES_API_KEY：註冊後 7 天內今日第 1 次。', state:s};
+    if(s.trialApiAvailable) return {ok:true, mode:'trial', reason:'將使用官方 官方試用 AI 額度：註冊後 7 天內今日第 1 次。', state:s};
     if(s.withinApiTrial) return {ok:false, mode:'blocked', reason:'今日官方免費 API 額度已用完。明日可再用 1 次，或立即設定自己的 API Key。', state:s};
     return {ok:false, mode:'blocked', reason:'註冊後 7 天官方 API 試用額度已結束。請申請並設定自己的 API Key，才能繼續使用 AI 功能。', state:s};
   }
@@ -521,7 +572,7 @@
     const a = createAccount();
     const d = new Date(); d.setDate(d.getDate() + GRACE_DAYS);
     a.subscriptionEndsAt = null; a.graceEndsAt = d.toISOString(); a.stopped = false;
-    saveAccount(a); renderAccountPanel(); log('已模擬進入寬限期', 'WARNING'); showModal('已進入寬限期','寬限期仍可使用系統；但官方 TRIAL_AGNES_API_KEY 免費額度只看註冊後 7 天，不會因寬限期而延長。');
+    saveAccount(a); renderAccountPanel(); log('已模擬進入寬限期', 'WARNING'); showModal('已進入寬限期','寬限期仍可使用系統；但官方 官方試用 AI 額度 免費額度只看註冊後 7 天，不會因寬限期而延長。');
   }
   function mockStop(){
     const a = loadAccount(); if(!a) return showModal('尚未註冊','尚未建立帳號，無法停止使用。');
@@ -537,7 +588,10 @@
     if(!route.ok) throw new Error(route.reason);
     const account = route.state.account;
     const base = {...payload, taskType, routeMode:route.mode, accountId:account.accountId, registeredAt:account.registeredAt};
-    if(route.mode === 'user') return {...base, provider:route.node.provider, model:route.node.model, apiKey:route.node.key};
+    if(route.mode === 'user') {
+      recordApiNodeUsage(route.node);
+      return {...base, provider:route.node.provider, model:route.node.model, apiKey:route.node.key};
+    }
     return base;
   }
 
@@ -619,12 +673,12 @@
     const enabledCount = keys.filter(k=>k.enabled!==false).length;
     const realPassedCount = keys.filter(k=>k.testStatus==='實測通過' || k.testStatus==='通過').length;
     const localPassedCount = keys.filter(k=>k.testStatus==='本機通過 / 待後端' || k.testStatus==='實測通過' || k.testStatus==='通過').length;
-    if ($('keySummary')) $('keySummary').textContent = `目前 API Key：${keys.length} 筆｜啟用：${enabledCount} 筆｜本機通過：${localPassedCount} 筆｜實測通過：${realPassedCount} 筆`;
+    if ($('keySummary')) $('keySummary').textContent = `此裝置自帶 API Key：${keys.length} 筆｜啟用：${enabledCount} 筆｜本機通過：${localPassedCount} 筆｜實測通過：${realPassedCount} 筆`;
     if (!keys.length) { list.innerHTML = '<div class="section-note">目前沒有 API Key 紀錄。註冊後 7 天內每日可使用 1 次官方試用額度；7 天後請設定自己的 API Key 才能繼續使用 AI 功能。</div>'; }
     else {
       list.innerHTML = keys.map((k,i)=>`
         <div class="node" data-index="${i}">
-          <div class="node-top"><div><div class="node-name">${escapeHtml(k.provider)}｜${escapeHtml(k.model)}</div><div class="node-sub">用途：${escapeHtml(k.task||'all')}｜狀態：${k.enabled!==false?'啟用':'停用'}｜測試：${escapeHtml(k.testStatus||'尚未測試')}</div></div><button class="btn-small ${k.enabled!==false?'btn-outline':'btn-gray'}" data-action="toggle" data-index="${i}">${k.enabled!==false?'停用':'啟用'}</button></div>
+          <div class="node-top"><div><div class="node-name">${escapeHtml(k.provider)}｜${escapeHtml(k.model)}</div><div class="node-sub">用途：${escapeHtml(k.task||'all')}｜狀態：${k.enabled!==false?'啟用':'停用'}｜測試：${escapeHtml(k.testStatus||'尚未測試')}｜使用：${Number(k.usageCount||0)} 次</div></div><button class="btn-small ${k.enabled!==false?'btn-outline':'btn-gray'}" data-action="toggle" data-index="${i}">${k.enabled!==false?'停用':'啟用'}</button></div>
           <div class="key-mask" id="keyMask${i}">${escapeHtml(maskKey(k.key, k.visible))}</div>
           <div class="btn-row"><button class="btn-small btn-outline" data-action="show" data-index="${i}">${k.visible?'隱藏':'顯示'}</button><button class="btn-small btn-outline" data-action="copy" data-index="${i}">複製</button><button class="btn-small btn-outline" data-action="test" data-index="${i}">測試</button><button class="btn-small btn-outline" data-action="edit" data-index="${i}">修改</button><button class="btn-small btn-danger" data-action="delete" data-index="${i}">刪除</button></div>
         </div>`).join('');
@@ -637,7 +691,7 @@
     const realPassed = keys.filter(k=>k.testStatus==='實測通過' || k.testStatus==='通過').length;
     const localPassed = keys.filter(k=>k.testStatus==='本機通過 / 待後端' || k.testStatus==='實測通過' || k.testStatus==='通過').length;
     const source = getWorkerSource();
-    setStatus(`待命中｜${source}｜API Key ${keys.length} 筆｜本機 ${localPassed} 筆｜實測 ${realPassed} 筆`, 'ok');
+    setStatus(`待命中｜${source}｜此裝置 Key ${keys.length} 筆｜本機 ${localPassed} 筆｜實測 ${realPassed} 筆`, 'ok');
     refreshMonitorSummary();
   }
   function saveKey(){
@@ -845,6 +899,7 @@ ${local.message}`);
     $('toggleInstallGuideBtn').addEventListener('click',()=>{ $('installGuide').classList.toggle('hidden'); $('toggleInstallGuideBtn').textContent = $('installGuide').classList.contains('hidden')?'查看說明':'收合說明'; });
     $('clearCacheBtn').addEventListener('click', clearCacheAndReload);
     $('registerAccountBtn').addEventListener('click', createAccount);
+    $('toggleDemoToolsBtn').addEventListener('click',()=>{ $('demoToolsPanel').classList.toggle('hidden'); $('toggleDemoToolsBtn').textContent = $('demoToolsPanel').classList.contains('hidden')?'🧰 開發測試工具':'收合開發測試工具'; });
     $('mockSubscribeBtn').addEventListener('click', mockSubscribe);
     $('mockGraceBtn').addEventListener('click', mockGrace);
     $('mockStopBtn').addEventListener('click', mockStop);
@@ -852,7 +907,7 @@ ${local.message}`);
     $('newProvider').addEventListener('change', updateModelDropdown); $('saveKeyBtn').addEventListener('click', saveKey); $('cancelEditBtn').addEventListener('click', cancelEdit);
     $('resetKeysBtn').addEventListener('click',()=>{ if(confirm('確定清除本機 API 節點資料？')){ localStorage.removeItem(STORAGE.keys); renderKeys(); log('已清除 API Key 紀錄', 'WARNING'); } });
     $('nodeList').addEventListener('click', e=>{ const btn=e.target.closest('button[data-action]'); if(!btn) return; nodeAction(btn.dataset.action, Number(btn.dataset.index)); });
-    $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 管理員設定':'收合管理員設定'; });
+    $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 管理員設定':'收合管理員設定'; log('管理員服務設定面板切換；正式版應限制管理員權限', 'WARNING'); });
     $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('syncModelsBtn').addEventListener('click',()=>syncProviderCatalog(true)); $('runCheckBtn').addEventListener('click', runCheck);
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
@@ -861,9 +916,9 @@ ${local.message}`);
     $('speakBtn').addEventListener('click', speakText); $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
   }
   async function init(){
-    bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); renderAccountPanel(); updateStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.7 初始化完成', 'SYSTEM'); log('本版修正：註冊試用、寬限期、正式授權循環、TRIAL_AGNES_API_KEY 與自帶 API Key 優先路由', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.7'); log('PWA Service Worker 已註冊 V5.7', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); autoSyncCatalogOnceDaily();
+    log('AbraKai 聲曜 V5.8 初始化完成', 'SYSTEM'); log('本版修正：安全介面、API 申請引導、模型清單更新、API Key 輪替與授權生命週期', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.8'); log('PWA Service Worker 已註冊 V5.8', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
