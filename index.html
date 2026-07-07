@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.1｜行動首頁優先與品牌風格修復版</title>
-<link href="./manifest.json?v=5.9.1" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.2｜行動首頁優先與導覽定位修正版</title>
+<link href="./manifest.json?v=5.9.2" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
-/* V5.9.1 style restoration: restored V5.8 premium dark-blue brand system, then applied V5.9.1 mobile workspace refinements. */
+/* V5.9.2 style restoration + anchored navigation fix: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, and stable sticky-header scrolling. */
 
     :root {
       --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
@@ -46,6 +46,18 @@
     @keyframes waveBounce{0%,100%{transform:scaleY(.68)}25%{transform:scaleY(1.05)}50%{transform:scaleY(1.22)}75%{transform:scaleY(.82)}}
     @keyframes linePulse{0%,100%{opacity:.72;transform:translateX(0)}50%{opacity:1;transform:translateX(1.5px)}}
     @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
+
+
+/* V5.9.2 sticky-header navigation fix */
+html{scroll-behavior:smooth}
+#workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
+  scroll-margin-top:180px;
+}
+@media(max-width:720px){
+  #workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
+    scroll-margin-top:168px;
+  }
+}
 
     @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
 
@@ -172,10 +184,10 @@
 
 
 
-/* ---- V5.9.1 mobile workspace refinements ---- */
+/* ---- V5.9.2 mobile workspace refinements ---- */
 
 
-/* V5.9.1 mobile-first workspace: keep daily-use features first, move settings into menu */
+/* V5.9.2 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -195,7 +207,7 @@
 }
 
 
-/* ---- V5.9.1 final polish ---- */
+/* ---- V5.9.2 final polish ---- */
 .app-header{background:rgba(11,26,58,.96)!important;}
 .user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
 .workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
@@ -261,7 +273,7 @@
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.1 行動首頁優先版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.2 導覽定位修正版</div></div>
 <div class="sub">VoxAura AI Engine</div>
 <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
@@ -279,7 +291,7 @@
 <h2 class="card-title"><span>🚀 開始使用 AbraKai 聲曜</span></h2>
 <div class="section-note">每天開啟系統會先看到這裡：錄音、匯入音檔、文件讀報與最近成果。系統設定、公告、API Key 與管理員工具已收進下方選單，需要時再開。</div>
 <div class="compact-status"><span id="homeServiceStatus">AI 服務：檢查中</span><span id="homeAccountStatus">帳號：尚未註冊</span><span id="homeApiStatus">API Key：尚未設定</span></div>
-<div class="hero-actions"><button class="btn-primary" onclick="document.getElementById('audioSection').scrollIntoView({behavior:'smooth'})" type="button">🎤 開始錄音 / 匯入音檔</button><button class="btn-blue" onclick="document.getElementById('readerSection').scrollIntoView({behavior:'smooth'})" type="button">📄 文件讀報 / 播報</button></div>
+<div class="hero-actions"><button class="btn-primary" onclick="scrollToTarget(document.getElementById('audioSection'))" type="button">🎤 開始錄音 / 匯入音檔</button><button class="btn-blue" onclick="scrollToTarget(document.getElementById('readerSection'))" type="button">📄 文件讀報 / 播報</button></div>
 </section><section class="card card-flow" id="audioSection">
 <h2 class="card-title"><span>🎙️ 使用流程：錄音與舊音檔解析</span></h2>
 <div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
@@ -307,7 +319,7 @@
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.1 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.2 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
@@ -353,7 +365,7 @@
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.1 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.2 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -421,8 +433,8 @@
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.1';
-  const CACHE_BUST = '5.8';
+  const APP_VERSION = 'V5.9.2';
+  const CACHE_BUST = '5.9.2';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
     worker: 'abrakai_voice_worker_url',
@@ -530,7 +542,7 @@
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.1 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.2 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -757,7 +769,7 @@
     if (action==='show') { k.visible = !k.visible; saveKeys(keys); renderKeys(); return; }
     if (action==='copy') { try { await navigator.clipboard.writeText(k.key||''); showModal('已複製','API Key 已複製到剪貼簿。'); } catch { showModal('複製失敗','瀏覽器不允許剪貼簿操作，請手動顯示後複製。'); } return; }
     if (action==='delete') { if(confirm('確定刪除此 API Key 紀錄？')) { keys.splice(index,1); saveKeys(keys); renderKeys(); } return; }
-    if (action==='edit') { $('newProvider').value=k.provider; updateModelDropdown(); $('newModel').value=k.model; $('newTask').value=k.task||'all'; $('newKey').value=''; $('editingKeyIndex').value=String(index); $('newKey').placeholder='不填則保留原 API Key；貼上新 Key 可替換'; $('saveKeyBtn').textContent='💾 儲存修改'; $('newKey').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    if (action==='edit') { $('newProvider').value=k.provider; updateModelDropdown(); $('newModel').value=k.model; $('newTask').value=k.task||'all'; $('newKey').value=''; $('editingKeyIndex').value=String(index); $('newKey').placeholder='不填則保留原 API Key；貼上新 Key 可替換'; $('saveKeyBtn').textContent='💾 儲存修改'; scrollToTarget($('newKey'), {delay:40}); return; }
     if (action==='test') { await testProvider(index); }
   }
   function validateLocalApiNode(k){
@@ -866,7 +878,7 @@ ${local.message}`);
   function stopRecording(){ if(mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop(); $('recordBtn').textContent='🎤 啟動會議錄音'; $('recordBtn').className='btn-primary'; }
   function setAudioPreview(blob, name, mime){
     $('previewArea').classList.remove('hidden'); $('audioNameTxt').textContent = name || '本次錄音'; $('audioMimeTxt').textContent = mime || blob.type || '未知'; $('fileSizeTxt').textContent = readableSize(blob.size);
-    const url = URL.createObjectURL(blob); $('audioPlayer').src = url; $('sourcePill').textContent = 'Source: ' + (name || 'recording'); $('previewArea').scrollIntoView({behavior:'smooth',block:'center'});
+    const url = URL.createObjectURL(blob); $('audioPlayer').src = url; $('sourcePill').textContent = 'Source: ' + (name || 'recording'); scrollToTarget($('previewArea'), {delay:80});
   }
   async function importAudioFile(file){
     if(!file) return; currentAudioBlob=file; currentAudioName=file.name; currentAudioMime=file.type || guessMimeFromName(file.name); setAudioPreview(file, file.name, currentAudioMime); log('已匯入舊錄音檔：' + file.name, 'SUCCESS');
@@ -912,7 +924,7 @@ ${local.message}`);
   function renderResult(data, source){
     const text = data.text || data.report || ''; currentReportText = text; setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, text); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = text || '無文字結果'; $('ttsInput').value = text || $('ttsInput').value;
     $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source;
-    renderMindmap(extractMermaid(text)); $('resultArea').scrollIntoView({behavior:'smooth',block:'start'});
+    renderMindmap(extractMermaid(text)); scrollToTarget($('resultArea'), {delay:80});
   }
   function extractMermaid(text){ const m=String(text||'').match(/```mermaid\s*([\s\S]*?)```/i); if(m) return m[1].trim(); const idx=String(text||'').indexOf('mindmap'); return idx>=0 ? String(text).slice(idx).trim() : ''; }
   async function renderMindmap(code){
@@ -937,6 +949,24 @@ ${local.message}`);
   }
 
 
+
+  function getStickyOffset(){
+    const header=document.querySelector('.app-header');
+    const menu=document.querySelector('.user-workspace-menu');
+    const headerH=header ? header.getBoundingClientRect().height : 0;
+    const menuH=menu ? menu.getBoundingClientRect().height : 0;
+    return Math.ceil(headerH + menuH + 14);
+  }
+  function scrollToTarget(target, opts={}){
+    if(!target) return;
+    const behavior = opts.behavior || 'smooth';
+    const run = () => {
+      const top = Math.max(0, window.pageYOffset + target.getBoundingClientRect().top - getStickyOffset());
+      window.scrollTo({top, behavior});
+    };
+    requestAnimationFrame(()=>setTimeout(run, opts.delay ?? 60));
+  }
+
   function setHomeStatus(){
     const keys=loadKeys(); const verified=keys.filter(k=>k.enabled!==false && k.remoteOk).length;
     const a=loadAccount();
@@ -949,9 +979,13 @@ ${local.message}`);
     const panels={api:'apiKeyPanel',account:'accountPanel',status:'monitorPanel',notice:'noticePanel',admin:'serviceCenterPanel'};
     Object.values(panels).forEach(id=>$(id)?.classList.remove('panel-open'));
     document.querySelectorAll('.user-workspace-menu .menu-btn').forEach(b=>b.classList.toggle('active', b.dataset.panel===name));
-    if(name==='home'){ document.getElementById('workspaceHome')?.scrollIntoView({behavior:'smooth'}); return; }
-    const target=$(panels[name]); if(target){ target.classList.add('panel-open'); target.scrollIntoView({behavior:'smooth',block:'start'}); }
-    if(name==='api'){ const api=$('apiPanel'); if(api) api.classList.remove('hidden'); }
+    if(name==='home'){ scrollToTarget($('workspaceHome')); return; }
+    const target=$(panels[name]);
+    if(target){
+      target.classList.add('panel-open');
+      if(name==='api'){ const api=$('apiPanel'); if(api) api.classList.remove('hidden'); }
+      scrollToTarget(target, {delay:90});
+    }
   }
 
   function bind(){
@@ -980,8 +1014,8 @@ ${local.message}`);
   }
   async function init(){
     bind(); migrateLegacyStorage(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.1 初始化完成', 'SYSTEM'); log('本版修正：行動首頁優先、設定收合、API Key 與使用者偏好持久化', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.1'); log('PWA Service Worker 已註冊 V5.9.1', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.9.2 初始化完成', 'SYSTEM'); log('本版修正：行動首頁優先、設定收合、導覽定位與 API Key 持久化', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.2'); log('PWA Service Worker 已註冊 V5.9.2', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
