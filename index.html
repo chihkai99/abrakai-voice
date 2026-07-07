@@ -4,664 +4,631 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0B1A3A">
-  <title>AbraKai 聲曜 V5.5｜版本一致修正與後端部署檢查</title>
-  <link rel="manifest" href="./manifest.json?v=5.5">
+  <title>AbraKai 聲曜 V5.6｜企業級語音閉環引擎</title>
+  <link rel="manifest" href="./manifest.json?v=5.6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
     :root {
-      --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
-      --brand-white:#FFFFFF; --brand-light:#D8DEE7; --brand-panel:rgba(46,52,65,.88);
-      --glass-border:rgba(30,136,229,.35); --success:#4ade80; --danger:#ef4444; --warn:#fbbf24;
+      --brand-navy: #0B1A3A; --brand-blue: #1E88E5; --brand-orange: #FF8A1E;
+      --brand-white: #FFFFFF; --brand-light: #D8DEE7;
+      --panel-bg: rgba(30, 41, 59, 0.85); --glass-border: rgba(30, 136, 229, 0.35);
+      --success: #10B981; --danger: #EF4444; --warn: #F59E0B; --info: #3B82F6;
+      --text-main: #F8FAFC; --text-muted: #94A3B8;
     }
-    *{box-sizing:border-box}
-    body{margin:0;padding:0;background:var(--brand-navy);color:var(--brand-white);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background-image:radial-gradient(circle at 10% 10%,rgba(30,136,229,.13),transparent 34%),radial-gradient(circle at 90% 90%,rgba(255,138,30,.10),transparent 34%);background-attachment:fixed;}
-    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 32px;}
-    .app-header{position:sticky;top:0;z-index:50;background:rgba(11,26,58,.96);border-bottom:2px solid var(--brand-blue);box-shadow:0 4px 18px rgba(0,0,0,.5);backdrop-filter:blur(10px)}
-    .header-inner{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px;}
-    .product-logo{width:64px;height:64px;border-radius:16px;border:2px solid var(--brand-orange);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 0 18px rgba(255,138,30,.28);background:linear-gradient(135deg,#081326,#17233b)}
-    .titlebox{min-width:0;flex:1}.titleline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.title{font-size:25px;font-weight:900;letter-spacing:.5px}.version{font-size:12px;color:#73b8ff;border:1px solid var(--brand-blue);background:rgba(30,136,229,.13);border-radius:6px;padding:3px 8px;font-weight:800}.sub{font-size:14px;color:var(--brand-orange);font-weight:800;margin-top:3px}.desc{font-size:13px;color:var(--brand-light);margin-top:5px;line-height:1.5}.status-pill{display:flex;align-items:center;gap:8px;margin-top:8px;width:100%;max-width:620px;border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.45);border-radius:999px;padding:8px 12px;color:var(--brand-light);font-size:13px}.dot{width:12px;height:12px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b;flex:0 0 auto}.dot.ok{background:var(--success);box-shadow:0 0 9px var(--success)}.dot.warn{background:var(--warn);box-shadow:0 0 9px var(--warn)}.dot.err{background:var(--danger);box-shadow:0 0 9px var(--danger)}
-    .card{background:var(--brand-panel);border:1px solid var(--glass-border);border-radius:16px;padding:18px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.34)}
-    .card-title{font-weight:900;color:var(--brand-blue);font-size:19px;margin:0 0 14px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}.card-title span{min-width:0}.section-note{line-height:1.7;color:#d6e3f7;background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:12px;padding:12px;margin:10px 0}.warning-note{line-height:1.7;color:#ffe4bd;background:rgba(255,138,30,.12);border:1px solid rgba(255,138,30,.35);border-radius:12px;padding:12px;margin:10px 0}
-    button,input,select,textarea{font-family:inherit;font-size:15px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.38);color:white;padding:12px;width:100%;outline:none} input:focus,select:focus,textarea:focus{border-color:var(--brand-orange);box-shadow:0 0 0 3px rgba(255,138,30,.18)} label{display:block;color:#77bfff;font-size:13px;font-weight:800;margin:10px 0 6px} textarea{min-height:150px;resize:vertical;line-height:1.55}
-    button{border:none;cursor:pointer;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px;transition:.16s transform,.16s filter}.btn-primary{background:linear-gradient(135deg,#ff8a1e,#ffb25f);color:#111}.btn-blue{background:linear-gradient(135deg,#1E88E5,#36c9ff);color:#fff}.btn-outline{background:rgba(30,136,229,.12);border:1px solid var(--brand-blue);color:#9ed1ff}.btn-danger{background:linear-gradient(135deg,#ef4444,#ff7a7a);color:#fff}.btn-gray{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff}.btn-small{width:auto;padding:8px 11px;font-size:13px;border-radius:10px;display:inline-flex}.btn-row{display:flex;gap:10px;flex-wrap:wrap}.btn-row > button{flex:1 1 150px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-    .terminal{height:160px;overflow:auto;background:#050a15;border:1px solid #1e3a8a;border-radius:12px;margin:16px 0 20px;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)}.terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.94);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px}.logs{padding:10px 12px}.log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}.t{color:#64748b}.INFO{color:#3b82f6}.SUCCESS{color:#10b981}.WARNING{color:#f59e0b}.ERROR{color:#ef4444}.SYSTEM{color:#a855f7}
-    .preview{border:2px solid var(--brand-orange);border-radius:14px;background:rgba(0,0,0,.35);padding:14px;margin-top:14px}.meta{font-size:14px;line-height:1.7;color:#e2e8f0}.meta strong{font-size:18px;color:#fff}.audio-player{width:100%;height:42px;margin:10px 0;border-radius:12px}.pill-list{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;padding:5px 10px;font-size:12px;color:#dbeafe}.node-list{display:grid;gap:10px;margin-top:12px}.node{border:1px solid rgba(30,136,229,.35);background:rgba(0,0,0,.26);border-radius:13px;padding:12px}.node-top{display:flex;justify-content:space-between;gap:8px}.node-name{font-weight:900;color:var(--brand-orange)}.node-sub{font-size:12px;color:#bdd8ff;line-height:1.5;margin-top:4px}.key-mask{font-family:'Fira Code',monospace;font-size:12px;color:#cbd5e1;margin:8px 0;word-break:break-all;background:rgba(0,0,0,.25);padding:8px;border-radius:8px}.check-grid{display:grid;gap:10px}.check-item{display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.25);border-radius:12px;padding:10px}.check-dot{width:13px;height:13px;border-radius:50%;background:#64748b;box-shadow:0 0 6px #64748b}.check-dot.ok{background:var(--success);box-shadow:0 0 7px var(--success)}.check-dot.warn{background:var(--warn);box-shadow:0 0 7px var(--warn)}.check-dot.err{background:var(--danger);box-shadow:0 0 7px var(--danger)}
-    pre.output{white-space:pre-wrap;word-break:break-word;background:#030712;color:#b6ff62;border-left:4px solid var(--brand-blue);border-radius:12px;padding:14px;max-height:420px;overflow:auto;line-height:1.65;font-size:14px}.mindmap{background:#fff;color:#111;border-radius:12px;border:2px solid var(--brand-blue);padding:12px;overflow:auto;min-height:180px}.footer-brand{margin:24px 0 12px;border-top:1px solid rgba(255,255,255,.13);padding-top:20px;display:flex;align-items:center;justify-content:center;gap:14px;text-align:left}.footer-logo{width:58px;height:58px;border-radius:50%;background:#f8fafc;border:3px solid #0B1A3A;display:flex;align-items:center;justify-content:center;flex:0 0 auto}.footer-title{font-weight:900;font-size:20px}.footer-sub{font-size:12px;color:#61a7ff;font-weight:900}.footer-copy{font-size:11px;color:#9aa7bd;margin-top:3px}.disclaimer{font-size:11px;color:#8e9bb3;text-align:center;line-height:1.6;margin-bottom:20px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px)}.modal-box{background:#0B1A3A;border:2px solid var(--brand-orange);border-radius:16px;max-width:520px;width:100%;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,.7)}.modal-title{color:var(--brand-orange);font-size:20px;font-weight:900;text-align:center;margin-bottom:12px}.modal-msg{color:var(--brand-light);line-height:1.7;text-align:left;white-space:pre-wrap}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0; background: var(--brand-navy); color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-image: radial-gradient(circle at 10% 10%, rgba(30, 136, 229, 0.15), transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(255, 138, 30, 0.15), transparent 40%);
+      background-attachment: fixed;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+    .app-header {
+      position: sticky; top: 0; z-index: 50; background: rgba(11, 26, 58, 0.95);
+      border-bottom: 2px solid var(--brand-blue); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px); padding: 15px 20px;
+    }
+    .header-inner {
+      max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo-group { display: flex; align-items: center; gap: 15px; }
+    .product-logo {
+      width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--brand-orange);
+      background: linear-gradient(135deg, #081326, #17233b);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 15px rgba(255, 138, 30, 0.3); flex-shrink: 0;
+    }
+    .title-box { display: flex; flex-direction: column; }
+    .title-line { display: flex; align-items: center; gap: 10px; }
+    .title { font-size: 24px; font-weight: 900; letter-spacing: 0.5px; }
+    .version {
+      font-size: 11px; color: #73b8ff; background: rgba(30, 136, 229, 0.15);
+      border: 1px solid var(--brand-blue); border-radius: 6px; padding: 3px 8px; font-weight: 800;
+    }
+    .sub-title { font-size: 13px; color: var(--brand-orange); font-weight: 800; margin-top: 4px; }
     
-    .product-logo{position:relative;overflow:hidden}
-    .product-logo::after{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 35%,rgba(255,138,30,.16),transparent 34%),radial-gradient(circle at 50% 85%,rgba(30,136,229,.16),transparent 30%);pointer-events:none}
-    .logo-svg{display:block;filter:drop-shadow(0 0 10px rgba(30,136,229,.32))}
-    .logo-frame{stroke:#37A8FF;stroke-width:2.6;fill:url(#logoBg);filter:url(#blueGlow)}
-    .wave-bar{transform-box:fill-box;transform-origin:center bottom;animation:waveBounce 1.35s ease-in-out infinite;filter:url(#orangeGlow)}
-    .wave-bar.bar1{animation-delay:-.45s}.wave-bar.bar2{animation-delay:-.2s}.wave-bar.bar3{animation-delay:-.05s}.wave-bar.bar4{animation-delay:-.3s}
-    .text-row{animation:linePulse 2.1s ease-in-out infinite}.text-row.row2{animation-delay:.28s}.text-row.row3{animation-delay:.56s}
-    .text-row .row-dot,.text-row .row-line{filter:url(#blueGlow)}
-    .product-logo:hover .wave-bar,.product-logo:focus-within .wave-bar{animation-duration:.85s}
-    @keyframes waveBounce{0%,100%{transform:scaleY(.68)}25%{transform:scaleY(1.05)}50%{transform:scaleY(1.22)}75%{transform:scaleY(.82)}}
-    @keyframes linePulse{0%,100%{opacity:.72;transform:translateX(0)}50%{opacity:1;transform:translateX(1.5px)}}
-    @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
-
-    @media(max-width:720px){.wrap{padding:12px}.header-inner{padding:12px}.product-logo{width:58px;height:58px}.title{font-size:24px}.version{font-size:11px}.desc{font-size:12px}.grid,.grid3{grid-template-columns:1fr}.terminal{height:140px}.card{padding:16px;margin:14px 0}.btn-row{flex-direction:column}.btn-row>button{flex:1 1 auto}.footer-brand{justify-content:flex-start}}
-
-    /* V5.5 readability overrides: muted functional panels, clear typography */
-    :root{--text-main:#0B1A3A;--text-muted:#334155;--line:#BFD4EA;--panel-blue:#EAF4FF;--panel-green:#ECFDF5;--panel-orange:#FFF7ED;--panel-purple:#F5F3FF;--panel-yellow:#FEFCE8;--panel-gray:#F8FAFC;}
-    body{background:#0B1A3A;color:var(--brand-white);}
-    .terminal{display:none!important;}
-    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 20px rgba(2,8,23,.18);}
-    .card-install{background:var(--panel-blue);}
-    .card-api{background:var(--panel-yellow);}
-    .card-audio{background:var(--panel-orange);}
-    .card-reader{background:var(--panel-green);}
-    .card-result{background:var(--panel-purple);}
-    .subcard{background:rgba(255,255,255,.78);border:1px solid rgba(15,23,42,.12);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
-    .card-title{color:#075985;border-bottom:1px solid rgba(15,23,42,.15);}
-    .section-note{background:rgba(255,255,255,.72);border-color:rgba(30,136,229,.28);color:var(--text-main);font-weight:600;}
-    .warning-note{background:#FFF7ED;color:#7C2D12;border-color:#FDBA74;font-weight:700;}
-    label{color:#075985;}
-    input,select,textarea{background:#FFFFFF;color:#0F172A;border:1px solid #94A3B8;}
-    input::placeholder, textarea::placeholder{color:#64748B;}
-    .node,.check-item{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
-    .node-name{color:#C2410C;}.node-sub{color:#334155;}
-    .key-mask{background:#F1F5F9;color:#0F172A;}
-    .pill{background:#FFFFFF;color:#0F172A;border-color:#CBD5E1;}
-    .preview{background:#FFFFFF;color:#0F172A;border-color:#FF8A1E;}
-    .meta{color:#1E293B;}.meta strong{color:#0F172A;}
-    pre.output{background:#0F172A;color:#D9F99D;}
-    .footer-brand{color:#FFFFFF;}
-    .disclaimer{color:#B6C2D6;}
-    .btn-outline{background:#FFFFFF;color:#0369A1;border:1px solid #38BDF8;}
-    .btn-gray{background:#E2E8F0;color:#0F172A;border:1px solid #CBD5E1;}
-    @media(max-width:720px){.card-title{font-size:18px}.section-note{font-size:15px}.subcard{padding:13px}.terminal{display:none!important}}
-
-
-    /* V5.5 functional color system: darker muted panels + high-contrast text */
-    :root{
-      --text-main:#0F172A; --text-muted:#334155; --line:#8EA8C4;
-      --panel-settings:#D5E0EE;   /* A. 系統設定 */
-      --panel-notice:#E7D8B8;     /* B. 系統公告 */
-      --panel-flow:#D4E4DA;       /* C. 使用者流程 */
-      --panel-flow-doc:#D1E1D7;   /* C. 使用者流程 */
-      --panel-output:#DCD3EA;     /* D. 成果呈現 */
-      --sub-panel:#EEF2F6;
+    .studio-logo-group { display: flex; align-items: center; gap: 12px; text-align: right; }
+    .studio-text { display: flex; flex-direction: column; }
+    .studio-name { font-size: 18px; font-weight: 900; }
+    .studio-sub { font-size: 11px; color: var(--brand-blue); font-weight: 800; letter-spacing: 1px; }
+    .studio-logo {
+      width: 50px; height: 50px; border-radius: 50%; background: #F8FAFC; border: 2px solid var(--brand-navy);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .terminal{display:none!important;}
-    .card{color:var(--text-main);border:1px solid var(--line);box-shadow:0 8px 22px rgba(2,8,23,.20);}
-    .card-settings{background:var(--panel-settings)!important;}
-    .card-service-center{background:linear-gradient(135deg,#D7E3F3,#C9D9EA)!important;color:#0F172A;}
-    .card-notice{background:var(--panel-notice)!important;}
-    .card-flow{background:var(--panel-flow)!important;}
-    .card-flow-doc{background:var(--panel-flow-doc)!important;}
-    .card-output{background:var(--panel-output)!important;}
-    .subcard{background:rgba(238,242,246,.92);border:1px solid rgba(15,23,42,.16);border-radius:14px;padding:14px;margin:12px 0;color:var(--text-main);}
-    .section-note{color:var(--text-main);background:rgba(255,255,255,.44);border:1px solid rgba(15,23,42,.12);font-weight:600;}
-    .warning-note{color:#5F3100;background:rgba(255,237,213,.72);border:1px solid rgba(154,93,0,.25);font-weight:700;}
-    .card-title{color:#0B3B66;border-bottom:1px solid rgba(15,23,42,.16);}
-    .node{background:rgba(255,255,255,.50);border:1px solid rgba(15,23,42,.16);}
-    .node-name{color:#8A3F00;}
-    .node-sub{color:#243B53;}
-    .key-mask{background:rgba(15,23,42,.10);color:#0F172A;border:1px solid rgba(15,23,42,.10);}
 
-    .provider-catalog-list{display:grid;gap:10px;margin-top:12px}
-    .provider-catalog-item{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:rgba(255,255,255,.56);border:1px solid rgba(15,23,42,.14);border-radius:12px;padding:12px;color:#0F172A}
-    .provider-catalog-name{font-weight:900;color:#075985;font-size:16px}
-    .provider-catalog-models{font-size:13px;line-height:1.55;color:#334155;margin-top:4px;word-break:break-word}
-    .provider-catalog-badge{font-size:12px;font-weight:900;border-radius:999px;padding:5px 8px;background:#E0F2FE;color:#075985;white-space:nowrap;border:1px solid rgba(14,116,144,.22)}
-    .model-sync-status{margin-top:10px;font-size:13px;font-weight:800;color:#334155}
+    .card {
+      background: var(--panel-bg); border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 20px; margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    .card-title {
+      font-size: 18px; font-weight: 900; color: var(--brand-blue);
+      margin: 0 0 15px 0; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .section-note {
+      font-size: 13px; line-height: 1.6; color: #D8DEE7; background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--brand-blue); padding: 10px 15px; border-radius: 0 8px 8px 0; margin-bottom: 15px;
+    }
 
-    .key-summary{background:rgba(15,23,42,.10);border:1px solid rgba(15,23,42,.13);border-radius:12px;padding:10px 12px;margin:10px 0 12px;font-weight:900;color:#0F172A;}
-    .check-item{background:rgba(255,255,255,.42);border:1px solid rgba(15,23,42,.15);}
-    .pill{background:rgba(15,23,42,.08);border:1px solid rgba(15,23,42,.15);color:#0F172A;font-weight:800;}
-    pre.output{background:#0B1220;color:#D9F99D;border-left:4px solid #2563EB;}
-    input,select,textarea{background:#F8FAFC;color:#0F172A;border:1px solid #94A3B8;}
-    select option{background:#F8FAFC;color:#0F172A;}
-    label{color:#075985;}
-    .btn-outline{background:#F8FAFC;color:#075985;border:1px solid #0284C7;}
-    .btn-gray{background:#CBD5E1;color:#0F172A;border:1px solid #94A3B8;}
-    .btn-blue{background:linear-gradient(135deg,#0F6FBF,#18A7D8);color:#FFFFFF;}
-    .btn-primary{background:linear-gradient(135deg,#D97706,#F59E0B);color:#111827;}
-    .disclaimer{color:#B6C2D6;}
+    button, input, select, textarea {
+      font-family: inherit; font-size: 14px; border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.4);
+      color: white; padding: 10px 14px; outline: none; transition: all 0.2s;
+    }
+    button { font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    button:active { transform: translateY(1px); }
+    input:focus, select:focus, textarea:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 2px rgba(255, 138, 30, 0.2); }
+    input, select { width: 100%; margin-bottom: 12px; }
+    textarea { width: 100%; min-height: 120px; resize: vertical; line-height: 1.5; margin-bottom: 12px; }
+    label { display: block; font-size: 12px; font-weight: 800; color: #94A3B8; margin-bottom: 6px; }
 
-  
-    /* V5.5 system monitor: always visible for user progress and maintenance tracing */
-    .card-monitor{background:#122440!important;color:#EAF4FF!important;border:1px solid rgba(96,165,250,.45)!important;box-shadow:0 8px 24px rgba(2,8,23,.34)!important;}
-    .card-monitor .card-title{color:#9ED1FF!important;border-bottom:1px solid rgba(148,196,255,.22)!important;}
-    .monitor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:10px 0 12px;}
-    .monitor-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px;color:#D8DEE7;line-height:1.35;}
-    .monitor-chip b{display:block;color:#FFFFFF;font-size:14px;margin-bottom:4px}
-    .monitor-chip .chip-dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#64748b;box-shadow:0 0 7px #64748b;margin-right:6px;vertical-align:middle}
-    .monitor-chip.ok .chip-dot{background:var(--success);box-shadow:0 0 9px var(--success)}
-    .monitor-chip.warn .chip-dot{background:var(--warn);box-shadow:0 0 9px var(--warn)}
-    .monitor-chip.err .chip-dot{background:var(--danger);box-shadow:0 0 9px var(--danger)}
-    .monitor-chip span{font-size:13px;color:#C7D2E6}
-    .terminal{display:block!important;height:180px;overflow:auto;background:#050A15!important;border:1px solid #1E3A8A!important;border-radius:12px;margin:12px 0 0;font-family:'Fira Code',monospace;box-shadow:inset 0 0 18px rgba(0,0,0,.65)!important;color:#E2E8F0!important}
-    .terminal.hidden{display:none!important}
-    .terminal-head{position:sticky;top:0;display:flex;justify-content:space-between;background:rgba(5,10,21,.96);border-bottom:1px solid #1e3a8a;color:#60a5fa;padding:10px 12px;font-size:13px;z-index:2}
-    .logs{padding:10px 12px}
-    .log{font-size:13px;line-height:1.55;margin-bottom:5px;word-break:break-word}
-    .monitor-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-    .monitor-actions button{flex:0 1 auto}
-    @media(max-width:720px){.monitor-grid{grid-template-columns:1fr 1fr}.terminal{height:150px}.monitor-actions button{flex:1 1 120px}}
+    .btn-primary { background: linear-gradient(135deg, #FF8A1E, #FFA742); color: #000; border: none; }
+    .btn-blue { background: linear-gradient(135deg, #1E88E5, #42A5F5); color: #fff; border: none; }
+    .btn-outline { background: rgba(30, 136, 229, 0.1); border: 1px solid var(--brand-blue); color: #9ED1FF; }
+    .btn-danger { background: linear-gradient(135deg, #EF4444, #F87171); color: #fff; border: none; }
+    .btn-small { padding: 6px 12px; font-size: 12px; border-radius: 6px; }
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-group > button { flex: 1; min-width: fit-content; }
 
+    .terminal-card { border-color: var(--brand-orange); background: #050A15; }
+    .terminal {
+      height: 200px; overflow-y: auto; font-family: 'Fira Code', monospace;
+      font-size: 13px; color: #E2E8F0; padding: 10px;
+      border: 1px solid #1E3A8A; border-radius: 8px; background: rgba(0, 0, 0, 0.5);
+    }
+    .log-line { margin-bottom: 4px; line-height: 1.4; word-break: break-all; }
+    .log-time { color: #64748B; margin-right: 8px; }
+    .log-info { color: var(--info); }
+    .log-success { color: var(--success); }
+    .log-warn { color: var(--warn); }
+    .log-error { color: var(--danger); font-weight: bold; }
+    .log-sys { color: #A855F7; }
+
+    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
+    .status-chip {
+      background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #64748B; flex-shrink: 0; }
+    .status-dot.ok { background: var(--success); box-shadow: 0 0 8px var(--success); }
+    .status-dot.err { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+    .status-dot.warn { background: var(--warn); box-shadow: 0 0 8px var(--warn); }
+    .status-text { font-size: 13px; font-weight: 600; }
+    .status-sub { font-size: 11px; color: var(--text-muted); display: block; margin-top: 2px; }
+
+    .table-container { overflow-x: auto; margin-bottom: 15px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap; }
+    th { color: var(--brand-blue); font-weight: 800; background: rgba(0, 0, 0, 0.2); }
+    .key-mask { font-family: monospace; background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 4px; color: #CBD5E1; }
+    .badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 800; }
+    .badge-provider { background: rgba(30, 136, 229, 0.2); color: #9ED1FF; border: 1px solid var(--brand-blue); }
+    
+    pre.output-box {
+      background: #030712; color: #B6FF62; border-left: 4px solid var(--brand-blue);
+      border-radius: 8px; padding: 15px; max-height: 400px; overflow-y: auto;
+      line-height: 1.6; font-size: 14px; white-space: pre-wrap; word-break: break-word; margin-bottom: 15px;
+    }
+    .mindmap-container { background: #fff; border-radius: 8px; padding: 15px; overflow-x: auto; }
+    
+    .hidden { display: none !important; }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .studio-logo-group { align-self: flex-end; }
+      .btn-group { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
-<header class="app-header">
-  <div class="header-inner">
-    <div class="product-logo" aria-label="AbraKai 聲曜 Logo">
-      <svg class="logo-svg" width="42" height="42" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="logoBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#081326"/>
-            <stop offset="1" stop-color="#12284A"/>
-          </linearGradient>
-          <linearGradient id="barGrad" x1="0" y1="14" x2="0" y2="36" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FFD35A"/>
-            <stop offset="1" stop-color="#FF8A1E"/>
-          </linearGradient>
-          <linearGradient id="lineGrad" x1="12" y1="40" x2="50" y2="40" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#8BD6FF"/>
-            <stop offset="1" stop-color="#37A8FF"/>
-          </linearGradient>
-          <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.8" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="orangeGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.4" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <rect class="logo-frame" x="5" y="5" width="54" height="54" rx="14"/>
-        <rect class="wave-bar bar1" x="17" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar2" x="27" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar3" x="37" y="12" width="6" height="23" rx="3" fill="url(#barGrad)"/>
-        <rect class="wave-bar bar4" x="47" y="20" width="6" height="15" rx="3" fill="url(#barGrad)"/>
-        <g class="text-row row1">
-          <circle class="row-dot" cx="17" cy="42" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="40.2" width="25" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="42" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-        <g class="text-row row2">
-          <circle class="row-dot" cx="17" cy="49" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="47.2" width="19" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="49" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-        <g class="text-row row3">
-          <circle class="row-dot" cx="17" cy="56" r="2.6" fill="url(#lineGrad)"/>
-          <rect class="row-line" x="22" y="54.2" width="22" height="3.6" rx="1.8" fill="url(#lineGrad)"/>
-          <circle class="row-dot" cx="50" cy="56" r="2.6" fill="url(#lineGrad)"/>
-        </g>
-      </svg>
-    </div>
-    <div class="titlebox">
-      <div class="titleline"><div class="title">AbraKai 聲曜</div><div id="versionBadge" class="version">V5.5 一致修正版</div></div>
-      <div class="sub">VoxAura AI Engine</div>
-      <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
-      <div class="status-pill"><span id="statusDot" class="dot"></span><span id="statusText">系統初始化中</span></div>
-    </div>
-  </div>
-</header>
 
-<main class="wrap">
-  <section class="card card-monitor" id="monitorPanel" aria-label="系統監視視窗">
-    <h2 class="card-title">
-      <span>🛰️ 系統監視視窗</span>
-      <span class="btn-row" style="flex:0 0 auto;margin:0">
-        <button class="btn-small btn-outline" id="toggleMonitorBtn" type="button">收合紀錄</button>
-        <button class="btn-small btn-gray" id="clearMonitorBtn" type="button">清除紀錄</button>
-      </span>
-    </h2>
-    <div class="monitor-grid">
-      <div class="monitor-chip warn" id="monService"><b><span class="chip-dot"></span>AI 服務</b><span id="monServiceText">等待檢測</span></div>
-      <div class="monitor-chip warn" id="monCatalog"><b><span class="chip-dot"></span>模型清單</b><span id="monCatalogText">等待同步</span></div>
-      <div class="monitor-chip warn" id="monAudio"><b><span class="chip-dot"></span>錄音流程</b><span id="monAudioText">待命</span></div>
-      <div class="monitor-chip warn" id="monReport"><b><span class="chip-dot"></span>成果輸出</b><span id="monReportText">尚未產生</span></div>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="product-logo">
+          <svg width="36" height="36" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="27" y="12" width="10" height="26" rx="5" fill="#FF8A1E"/>
+            <rect x="13" y="22" width="10" height="16" rx="5" fill="#FF8A1E"/>
+            <rect x="41" y="22" width="10" height="16" rx="5" fill="#FF8A1E"/>
+            <circle cx="20" cy="50" r="4" fill="#1E88E5"/><rect x="26" y="48" width="18" height="4" rx="2" fill="#1E88E5"/><circle cx="48" cy="50" r="4" fill="#1E88E5"/>
+          </svg>
+        </div>
+        <div class="title-box">
+          <div class="title-line">
+            <div class="title">AbraKai 聲曜</div>
+            <div class="version">V5.6</div>
+          </div>
+          <div class="sub-title">企業級語音閉環引擎</div>
+        </div>
+      </div>
+      
+      <div class="studio-logo-group">
+        <div class="studio-text">
+          <div class="studio-name">阿布拉.凱工作室</div>
+          <div class="studio-sub">ABRA-KAI STUDIO</div>
+        </div>
+        <div class="studio-logo">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 8 L8 28 H14 V54 H26 V40 H38 V54 H50 V28 H56 Z" fill="#0B1A3A"/>
+            <path d="M20 45 L20 30 L32 20 L44 30" stroke="#1E88E5" stroke-width="2" fill="none"/>
+            <circle cx="32" cy="20" r="4" fill="#FF8A1E"/><circle cx="20" cy="45" r="3" fill="#1E88E5"/><circle cx="44" cy="30" r="3" fill="#1E88E5"/>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="section-note" style="background:rgba(255,255,255,.08);color:#DCEBFF;border-color:rgba(148,196,255,.22)">
-      這裡會記錄系統目前狀態、測試結果、錄音進度、模型更新與錯誤原因，方便使用者掌握流程，也方便後續維護追蹤。
-    </div>
-    <section class="terminal" id="terminalView" aria-label="系統終端紀錄">
-      <div class="terminal-head"><span>&gt;_ AbraKai Routing Terminal</span><span style="color:#4ade80">Live Monitoring</span></div>
-      <div id="terminalLogs" class="logs"></div>
+  </header>
+
+  <main class="wrap">
+    
+    <section class="card terminal-card" id="monitorPanel">
+      <h2 class="card-title">
+        <span>🛰️ 系統監視終端機</span>
+        <button class="btn-small btn-outline" onclick="document.getElementById('terminalLogs').innerHTML=''">清除紀錄</button>
+      </h2>
+      <div class="section-note">
+        這裡是系統的神經中樞。如果您遇到「連線失敗」或「404 錯誤」，請查看下方的日誌輸出，系統會提供精確的排錯建議。
+      </div>
+      
+      <div class="status-grid">
+        <div class="status-chip"><div class="status-dot" id="dotWorker"></div><div><span class="status-text">Worker 路由代理</span><span class="status-sub" id="txtWorker">等待檢測</span></div></div>
+        <div class="status-chip"><div class="status-dot" id="dotSync"></div><div><span class="status-text">模型同步狀態</span><span class="status-sub" id="txtSync">尚未同步</span></div></div>
+      </div>
+
+      <div class="terminal" id="terminalView">
+        <div id="terminalLogs"></div>
+      </div>
     </section>
-  </section>
 
-  <section class="card card-notice">
-    <h2 class="card-title"><span>📢 系統公告與使用提醒</span><button class="btn-small btn-outline" id="toggleInstallGuideBtn">查看說明</button></h2>
-    <div id="installGuide" class="hidden">
-      <div class="section-note">可將本系統加入手機主畫面，之後像 App 一樣從桌面圖示開啟。若畫面未更新，可使用下方按鈕清除舊版快取。</div>
-      <button class="btn-blue" id="clearCacheBtn">🔄 清除舊版快取並重新載入</button>
-    </div>
-  </section>
-
-
-  <section class="card card-service-center" id="serviceCenterPanel">
-    <h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
-    <div class="section-note">系統會先檢查官方 AI 服務，並每日自動更新推薦供應商可用模型；也可手動立即更新。模型中心放在 API Key 管理之前，讓使用者先知道目前可用服務與推薦模型。</div>
-    <div class="subcard official-backend-card">
-        <div class="btn-row" style="margin-top:10px">
-          <button class="btn-blue" id="testWorkerBtn">🧪 一鍵測試 AI 服務</button>
-          <button class="btn-outline" id="syncModelsBtn">🔄 手動更新模型清單</button>
-          <button class="btn-outline" id="toggleDevBackendBtn">⚙️ 管理員設定</button>
-        </div>
-        <div id="modelSyncStatus" class="model-sync-status">模型清單：尚未同步。</div>
-        <div id="providerCatalogList" class="provider-catalog-list"></div>
-        <div id="devBackendPanel" class="hidden" style="margin-top:12px">
-          <label for="workerUrlInput">自訂 AI 服務網址（管理員）</label>
-          <input id="workerUrlInput" type="url" placeholder="管理員專用，通常不需填寫">
-          <div class="btn-row" style="margin-top:10px"><button class="btn-blue" id="saveWorkerBtn">💾 儲存服務網址</button><button class="btn-gray" id="clearWorkerOverrideBtn">恢復系統預設</button></div>
-        </div>
-    </div>
-  </section>
-
- <section class="card card-settings">
-    <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開設定</button></h2>
-    <div class="section-note">這裡只管理自帶 API Key。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-    <div id="apiPanel" class="hidden">
-      <div class="subcard api-key-card">
-        <h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
-        <div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。若只使用系統服務，這裡可以先不設定。</div>
-        <input type="hidden" id="editingKeyIndex" value="">
-        <div class="grid3">
-          <div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
-          <div><label for="newModel">模型</label><select id="newModel"></select></div>
-          <div><label for="newTask">用途</label><select id="newTask"><option value="all">通用</option><option value="audio">語音 / 音檔</option><option value="document">PDF / 文件</option><option value="text">文字 / 讀報</option><option value="fallback">備援</option></select></div>
-        </div>
-        <label for="newKey">API Key</label><input id="newKey" type="password" placeholder="貼上 API Key；修改時不填代表保留原 Key">
-        <div class="btn-row" style="margin-top:10px"><button class="btn-primary" id="saveKeyBtn">➕ 新增 / 更新節點</button><button class="btn-gray" id="cancelEditBtn">取消修改</button><button class="btn-danger" id="resetKeysBtn">🧹 清除 API Key 紀錄</button></div>
-        <div id="keySummary" class="key-summary">目前尚未載入 API Key 清單。</div>
-        <div id="nodeList" class="node-list"></div>
+    <section class="card">
+      <h2 class="card-title"><span>🛡️ AI 服務與模型更新中心</span></h2>
+      <div class="section-note">
+        請先確保下方的「AI 服務連線」測試通過。若失敗，請檢查 Worker URL 佈署狀態或 CORS 設定。
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn-blue" id="testWorkerBtn">🧪 測試 AI 服務連線</button>
+        <button class="btn-outline" id="syncModelsBtn">🔄 手動同步最新模型</button>
+        <button class="btn-outline" id="toggleAdminBtn">⚙️ 管理員設定 (修改 Worker URL)</button>
       </div>
 
-      <div class="subcard check-card">
-        <h3 class="card-title" style="font-size:16px"><span>🧪 一鍵系統檢測</span><button class="btn-small btn-outline" id="runCheckBtn">開始檢測</button></h3>
-        <div class="check-grid">
-          <div class="check-item"><span id="checkStorageDot" class="check-dot"></span><span id="checkStorageText">本機儲存：待測</span></div>
-          <div class="check-item"><span id="checkBackendDot" class="check-dot"></span><span id="checkBackendText">正式服務：待測</span></div>
-          <div class="check-item"><span id="checkKeyDot" class="check-dot"></span><span id="checkKeyText">API 節點：待測</span></div>
-          <div class="check-item"><span id="checkAudioDot" class="check-dot"></span><span id="checkAudioText">音檔流程：待測</span></div>
+      <div id="adminPanel" class="hidden" style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+        <label>Cloudflare Worker API URL (一般情況下勿動)</label>
+        <input type="text" id="workerUrlInput" placeholder="https://abrakai-voice-api.xxx.workers.dev">
+        <div class="btn-group">
+          <button class="btn-primary btn-small" id="saveWorkerBtn">儲存設定</button>
+          <button class="btn-outline btn-small" onclick="document.getElementById('workerUrlInput').value = DEFAULT_WORKER_API_URL; alert('已恢復預設 URL，請按儲存');">恢復預設</button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="card card-flow" id="audioSection">
-    <h2 class="card-title"><span>🎙️ 使用流程：錄音與舊音檔解析</span></h2>
-    <div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
-    <div class="btn-row"><button id="recordBtn" class="btn-primary">🎤 啟動會議錄音</button><button id="pickAudioBtn" class="btn-outline">📂 匯入舊錄音檔</button></div>
-    <input id="audioFileInput" type="file" accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden">
-    <div id="previewArea" class="preview hidden">
-      <div class="meta"><b style="color:var(--brand-orange)">✅ 音檔已就緒</b><br>檔名：<span id="audioNameTxt">本次錄音</span><br>格式：<span id="audioMimeTxt">-</span><br>大小：<strong id="fileSizeTxt">0 MB</strong></div>
-      <audio id="audioPlayer" class="audio-player" controls></audio>
-      <div class="btn-row"><button class="btn-outline" id="downloadAudioBtn">💾 另存音檔</button><button class="btn-blue" id="analyzeAudioBtn">🧠 錄音轉文字並產生報告</button></div>
-    </div>
-  </section>
+    <section class="card">
+      <h2 class="card-title">
+        <span>🔑 API 金鑰管理 (叢集設定)</span>
+        <button class="btn-small btn-blue" onclick="document.getElementById('keyForm').classList.toggle('hidden')">新增金鑰</button>
+      </h2>
+      
+      <div id="keyForm" class="hidden" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+          <div>
+            <label>供應商</label>
+            <select id="newProvider">
+              <option value="Agnes">Agnes AI (強推)</option>
+              <option value="Gemini">Google Gemini (強推)</option>
+              <option value="OpenAI">OpenAI (標準)</option>
+              <option value="Claude">Anthropic Claude</option>
+              <option value="Grok">xAI Grok (備援)</option>
+            </select>
+          </div>
+          <div>
+            <label>模型名稱 (自動同步)</label>
+            <select id="newModel"></select>
+          </div>
+          <div>
+            <label>派工策略</label>
+            <select id="newTask">
+              <option value="all">通用輪詢</option>
+              <option value="audio">專職：語音/音檔</option>
+              <option value="text">專職：文字讀報</option>
+              <option value="fallback">最後備援</option>
+            </select>
+          </div>
+        </div>
+        <label>API Key</label>
+        <input type="password" id="newKey" placeholder="sk-...">
+        <button class="btn-primary" id="saveKeyBtn">➕ 新增節點</button>
+      </div>
 
-  <section class="card card-flow card-flow-doc" id="readerSection">
-    <h2 class="card-title"><span>📄 使用流程：文件讀取與語音播報</span></h2>
-    <div class="section-note">文字檔可直接朗讀；PDF / Word 可交由 AI 提純成適合播報的內容。</div>
-    <div class="btn-row"><button id="pickDocBtn" class="btn-outline">📤 匯入 TXT / PDF / Word</button><button id="speakBtn" class="btn-blue">▶️ 現場精準播報</button></div>
-    <input id="docFileInput" type="file" accept=".txt,.md,.pdf,.doc,.docx,application/pdf,text/plain" class="hidden">
-    <textarea id="ttsInput" placeholder="可貼上文字、匯入 TXT，或等待 AI 產出報告後播報... 這裡的內容會用手機或電腦瀏覽器內建語音播報。"></textarea>
-  </section>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr><th>順位</th><th>供應商 / 模型</th><th>策略</th><th>API Key</th><th>狀態</th><th>操作</th></tr>
+          </thead>
+          <tbody id="keyTableBody">
+            <tr><td colspan="6" style="text-align:center; color:#94A3B8;">尚未設定 API Key</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-  <section id="resultArea" class="card card-output hidden">
-    <h2 class="card-title"><span>📊 成果呈現</span></h2>
-    <div class="pill-list"><span id="providerPill" class="pill">服務：-</span><span id="modelPill" class="pill">模型：-</span><span id="sourcePill" class="pill">來源：-</span></div>
-    <h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
-    <pre id="outputContent" class="output">等待資料產出...</pre>
-    <div class="btn-row"><button id="readReportBtn" class="btn-blue">🔊 播報報告</button><button id="downloadReportBtn" class="btn-outline">📥 匯出 Markdown</button><button id="shareReportBtn" class="btn-outline">📤 分享</button></div>
-    <h3 style="color:var(--brand-orange)">🧠 互動心智圖</h3>
-    <div id="mindmapView" class="mindmap"><div id="mermaidCode">尚未產生心智圖</div></div>
-  </section>
+    <section class="card">
+      <h2 class="card-title"><span>🎙️ 會議語音收錄與解析</span></h2>
+      <div class="btn-group">
+        <button id="recordBtn" class="btn-primary">🎤 啟動會議錄音</button>
+        <button class="btn-outline" onclick="document.getElementById('audioFileInput').click()">📂 匯入舊錄音檔</button>
+        <input type="file" id="audioFileInput" accept="audio/*" class="hidden">
+      </div>
+      
+      <div id="audioPreviewArea" class="hidden" style="margin-top: 15px; padding: 15px; background: rgba(30,136,229,0.1); border: 1px solid var(--brand-blue); border-radius: 8px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <span style="color:var(--brand-orange); font-weight:bold;">✅ 音檔已就緒</span>
+          <span id="audioSizeTxt" style="font-size:12px;">0 MB</span>
+        </div>
+        <audio id="audioPlayer" controls style="width:100%; height:40px; margin-bottom:10px;"></audio>
+        <div class="btn-group">
+          <button class="btn-blue" id="analyzeBtn">🧠 啟動 AI 解析</button>
+          <button class="btn-outline btn-small" id="downloadAudioBtn">💾 另存音檔</button>
+        </div>
+      </div>
+    </section>
 
-  <section class="footer-brand">
-    <div class="footer-logo"><svg width="48" height="48" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8 L8 28 H14 V54 H26 V40 H38 V54 H50 V28 H56 Z" fill="#0B1A3A"/><path d="M20 45 L20 30 L32 20 L44 30" stroke="#1E88E5" stroke-width="2" fill="none"/><circle cx="32" cy="20" r="4" fill="#FF8A1E"/><circle cx="20" cy="45" r="3" fill="#1E88E5"/><circle cx="44" cy="30" r="3" fill="#1E88E5"/></svg></div>
-    <div><div class="footer-title">阿布拉.凱工作室</div><div class="footer-sub">ABRA-KAI STUDIO</div><div class="footer-copy">© 2026 All rights reserved.</div></div>
-  </section>
-  <div class="disclaimer">免責聲明：AI 逐字稿與摘要可能受音質、服務狀態、模型限制與網路狀態影響；正式商用前請完成服務啟用、權限控管與測試。</div>
-</main>
+    <section class="card hidden" id="resultCard">
+      <h2 class="card-title"><span>📝 結構化會議報告</span></h2>
+      <pre id="reportOutput" class="output-box"></pre>
+      
+      <h2 class="card-title"><span>🧠 智慧心智圖</span></h2>
+      <div class="mindmap-container">
+        <div id="mermaidCode"></div>
+      </div>
+    </section>
 
-<div id="sysModal" class="modal" role="dialog" aria-modal="true"><div class="modal-box"><div id="modalTitle" class="modal-title">系統提示</div><div id="modalMsg" class="modal-msg"></div><button id="modalOkBtn" class="btn-blue" style="margin-top:18px">確認</button></div></div>
+  </main>
 
-<script>
-(function(){
-  'use strict';
-  const APP_VERSION = 'V5.5';
-  const CACHE_BUST = '5.5';
-  const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
-  const STORAGE = {
-    worker: 'abrakai_voice_worker_url_v55',
-    keys: 'abrakai_voice_api_nodes_v55',
-    lastReport: 'abrakai_voice_last_report_v55',
-    catalog: 'abrakai_voice_provider_catalog_v55',
-    catalogMeta: 'abrakai_voice_provider_catalog_meta_v55'
-  };
-  const STATIC_MODEL_CATALOG = {
-    Agnes:['agnes-2.0-flash','agnes-image-2.0-flash','agnes-video-2.0'],
-    Gemini:['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-2.5-pro'],
-    OpenAI:['gpt-4o-transcribe','gpt-4o-mini-transcribe','gpt-5.5','gpt-5.4-mini'],
-    Claude:['claude-sonnet-5','claude-haiku-4-5','claude-opus-4-8'],
-    Grok:['grok-4.3','grok-4','grok-voice-api']
-  };
-  let MODEL_CATALOG = JSON.parse(JSON.stringify(STATIC_MODEL_CATALOG));
-  let mediaRecorder = null;
-  let recordStream = null;
-  let audioChunks = [];
-  let currentAudioBlob = null;
-  let currentAudioName = '';
-  let currentAudioMime = '';
-  let currentReportText = '';
+  <script>
+    const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkai99.workers.dev';
+    const STATIC_MODELS = {
+      Agnes: ['agnes-2.0-flash', 'agnes-image-2.1-flash'],
+      Gemini: ['gemini-1.5-flash', 'gemini-1.5-pro-latest'],
+      OpenAI: ['gpt-4o', 'gpt-4o-mini'],
+      Claude: ['claude-3-5-sonnet-20240620'],
+      Grok: ['grok-1.5']
+    };
 
-  const $ = (id) => document.getElementById(id);
-  function safeParse(json, fallback){ try { const v = JSON.parse(json); return v ?? fallback; } catch { return fallback; } }
-  function loadKeys(){ const arr = safeParse(localStorage.getItem(STORAGE.keys), []); return Array.isArray(arr) ? arr : []; }
-  function saveKeys(keys){ localStorage.setItem(STORAGE.keys, JSON.stringify(keys)); }
-  function nowTime(){ const d = new Date(); return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
-  function escapeHtml(s){ return String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
-  function log(msg, type='INFO'){
-    const el = document.createElement('div'); el.className='log';
-    el.innerHTML = `<span class="t">[${nowTime()}]</span> <span class="${type}">[${type}]</span> ${escapeHtml(msg)}`;
-    const logs = $('terminalLogs'); 
-    if (logs) {
-      logs.appendChild(el); 
-      const terminal = $('terminalView') || logs.parentElement;
-      terminal.scrollTop = terminal.scrollHeight;
+    let apiKeys = JSON.parse(localStorage.getItem('abrakai_keys_v56')) || [];
+    let dynamicModels = JSON.parse(localStorage.getItem('abrakai_models_v56')) || STATIC_MODELS;
+    
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let currentBlob = null;
+    let isRecording = false;
+
+    // Helper: UI Logging
+    function logMsg(msg, type = 'info') {
+      const logs = document.getElementById('terminalLogs');
+      const time = new Date().toLocaleTimeString('zh-TW', {hour12: false});
+      let colorClass = `log-${type}`;
+      logs.innerHTML += `<div class="log-line"><span class="log-time">[${time}]</span> <span class="${colorClass}">${msg}</span></div>`;
+      document.getElementById('terminalView').scrollTop = document.getElementById('terminalView').scrollHeight;
     }
-  }
-  function setMonitor(id, text, state='warn'){
-    const box = $(id); const label = $(id + 'Text');
-    if (!box || !label) return;
-    box.className = 'monitor-chip ' + (state === 'ok' ? 'ok' : state === 'err' ? 'err' : 'warn');
-    label.textContent = text;
-  }
-  function refreshMonitorSummary(){
-    const keys = loadKeys();
-    const passed = keys.filter(k => k.testStatus === '通過').length;
-    const meta = getCatalogMeta();
-    setMonitor('monService', getWorkerSource(), passed > 0 ? 'ok' : 'warn');
-    setMonitor('monCatalog', meta?.updatedAt ? ('已同步：' + new Date(meta.updatedAt).toLocaleString()) : '使用內建清單', meta?.updatedAt ? 'ok' : 'warn');
-    setMonitor('monAudio', currentAudioBlob ? '音檔已就緒' : '待錄音 / 待匯入', currentAudioBlob ? 'ok' : 'warn');
-    setMonitor('monReport', currentReportText ? '報告已產生' : '尚未產生', currentReportText ? 'ok' : 'warn');
-  }
-  function setStatus(text, kind='normal'){
-    $('statusText').textContent = text;
-    $('statusDot').className = 'dot' + (kind==='ok'?' ok':kind==='warn'?' warn':kind==='err'?' err':'');
-  }
-  function showModal(title, msg){ $('modalTitle').textContent=title; $('modalMsg').textContent=msg; $('sysModal').style.display='flex'; }
-  function closeModal(){ $('sysModal').style.display='none'; }
-  function getWorkerUrl(){ const override=(localStorage.getItem(STORAGE.worker)||'').trim().replace(/\/$/,''); return override || DEFAULT_WORKER_API_URL; }
-  function getWorkerSource(){ return (localStorage.getItem(STORAGE.worker)||'').trim() ? '自訂服務' : '系統服務'; }
-  function readableSize(bytes){ return ((bytes||0)/(1024*1024)).toFixed(2)+' MB'; }
-  function getExtForMime(mime){ if(/mp4|m4a/.test(mime)) return 'm4a'; if(/mpeg|mp3/.test(mime)) return 'mp3'; if(/wav/.test(mime)) return 'wav'; if(/webm/.test(mime)) return 'webm'; return 'audio'; }
-  function chooseMime(){
-    const list = ['audio/mp4;codecs=mp4a.40.2','audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'];
-    if (!window.MediaRecorder) return '';
-    return list.find(t => { try { return MediaRecorder.isTypeSupported(t); } catch { return false; } }) || '';
-  }
-  function blobToBase64(blob){
-    return new Promise((resolve,reject)=>{ const r = new FileReader(); r.onload=()=>resolve(String(r.result).split(',')[1] || ''); r.onerror=reject; r.readAsDataURL(blob); });
-  }
-  function fileToText(file){ return new Promise((resolve,reject)=>{ const r = new FileReader(); r.onload=()=>resolve(String(r.result||'')); r.onerror=reject; r.readAsText(file, 'utf-8'); }); }
 
-
-  function loadCatalogFromStorage(){
-    const saved = safeParse(localStorage.getItem(STORAGE.catalog), null);
-    if (saved && typeof saved === 'object') MODEL_CATALOG = {...STATIC_MODEL_CATALOG, ...saved};
-  }
-  function saveCatalog(catalog, meta){
-    if (catalog && typeof catalog === 'object') {
-      MODEL_CATALOG = {...STATIC_MODEL_CATALOG, ...catalog};
-      localStorage.setItem(STORAGE.catalog, JSON.stringify(MODEL_CATALOG));
-      localStorage.setItem(STORAGE.catalogMeta, JSON.stringify(meta || {updatedAt:new Date().toISOString(), source:'local'}));
+    function updateStatusDot(id, state, text) {
+      const dot = document.getElementById(`dot${id}`);
+      const txt = document.getElementById(`txt${id}`);
+      dot.className = `status-dot ${state}`;
+      txt.textContent = text;
     }
-  }
-  function getCatalogMeta(){ return safeParse(localStorage.getItem(STORAGE.catalogMeta), null); }
-  function isSameLocalDate(iso){
-    if(!iso) return false;
-    const a = new Date(iso), b = new Date();
-    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-  }
-  function renderProviderCatalog(){
-    const box = $('providerCatalogList');
-    if(!box) return;
-    const meta = getCatalogMeta();
-    const last = meta?.updatedAt ? new Date(meta.updatedAt).toLocaleString('zh-TW') : '尚未同步';
-    if($('modelSyncStatus')) $('modelSyncStatus').textContent = `模型清單：${last}｜來源：${meta?.source || '系統預設'}`;
-    const order = ['Agnes','Gemini','OpenAI','Claude','Grok'];
-    box.innerHTML = order.map(name => {
-      const models = MODEL_CATALOG[name] || [];
-      return `<div class="provider-catalog-item">
-        <div><div class="provider-catalog-name">${escapeHtml(name)}</div><div class="provider-catalog-models">${models.slice(0,5).map(escapeHtml).join('、') || '待更新'}</div></div>
-        <div class="provider-catalog-badge">${models.length} 模型</div>
-      </div>`;
-    }).join('');
-  }
-  async function syncProviderCatalog(manual=false){
-    const worker = getWorkerUrl();
-    if($('modelSyncStatus')) $('modelSyncStatus').textContent = manual ? '模型清單：手動更新中...' : '模型清單：每日自動更新中...';
-    try{
-      const res = await fetch(worker + '/api/catalog', {cache:'no-store'});
-      const data = await res.json().catch(()=>({}));
-      if(!res.ok || !data.ok) throw new Error(data.error || 'catalog sync failed');
-      saveCatalog(data.catalog || {}, {updatedAt:data.updatedAt || new Date().toISOString(), source:data.source || getWorkerSource()});
-      updateModelDropdown();
-      renderProviderCatalog();
-      if(manual) showModal('模型清單已更新', '已同步推薦供應商目前可用模型清單。');
-      log('模型清單同步完成', 'SUCCESS');
-      return true;
-    }catch(err){
-      renderProviderCatalog();
-      const msg = String(err.message || err);
-      if(manual) showModal('模型清單暫時無法更新', `目前無法連線到 AI 服務，因此先使用系統內建模型清單。\n\n錯誤：${msg}`);
-      log('模型清單同步失敗：' + msg, 'WARNING');
-      return false;
+
+    function getWorkerUrl() {
+      return (document.getElementById('workerUrlInput').value || DEFAULT_WORKER_API_URL).trim().replace(/\/$/, '');
     }
-  }
-  async function autoSyncCatalogOnceDaily(){
-    loadCatalogFromStorage();
-    renderProviderCatalog();
-    const meta = getCatalogMeta();
-    if(!isSameLocalDate(meta?.updatedAt)) await syncProviderCatalog(false);
-  }
 
-  function updateModelDropdown(){
-    const provider = $('newProvider').value;
-    const models = MODEL_CATALOG[provider] || [];
-    $('newModel').innerHTML = models.map(m=>`<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
-  }
-  function maskKey(k, visible){
-    if (!k) return '(未填)';
-    if (visible) return k;
-    if (k.length <= 10) return k.slice(0,2) + '••••' + k.slice(-2);
-    return k.slice(0,5) + '••••••••' + k.slice(-4);
-  }
-  function renderKeys(){
-    const keys = loadKeys();
-    const list = $('nodeList');
-    const enabledCount = keys.filter(k=>k.enabled!==false).length;
-    const passedCount = keys.filter(k=>k.testStatus==='通過').length;
-    if ($('keySummary')) $('keySummary').textContent = `目前 API Key：${keys.length} 筆｜啟用：${enabledCount} 筆｜測試通過：${passedCount} 筆`;
-    if (!keys.length) { list.innerHTML = '<div class="section-note">目前沒有 API Key 紀錄。若系統服務已啟用，仍可直接進行錄音解析與文件處理。</div>'; }
-    else {
-      list.innerHTML = keys.map((k,i)=>`
-        <div class="node" data-index="${i}">
-          <div class="node-top"><div><div class="node-name">${escapeHtml(k.provider)}｜${escapeHtml(k.model)}</div><div class="node-sub">用途：${escapeHtml(k.task||'all')}｜狀態：${k.enabled!==false?'啟用':'停用'}｜測試：${escapeHtml(k.testStatus||'尚未測試')}</div></div><button class="btn-small ${k.enabled!==false?'btn-outline':'btn-gray'}" data-action="toggle" data-index="${i}">${k.enabled!==false?'停用':'啟用'}</button></div>
-          <div class="key-mask" id="keyMask${i}">${escapeHtml(maskKey(k.key, k.visible))}</div>
-          <div class="btn-row"><button class="btn-small btn-outline" data-action="show" data-index="${i}">${k.visible?'隱藏':'顯示'}</button><button class="btn-small btn-outline" data-action="copy" data-index="${i}">複製</button><button class="btn-small btn-outline" data-action="test" data-index="${i}">測試</button><button class="btn-small btn-outline" data-action="edit" data-index="${i}">修改</button><button class="btn-small btn-danger" data-action="delete" data-index="${i}">刪除</button></div>
-        </div>`).join('');
+    function populateModelDropdown() {
+      const provider = document.getElementById('newProvider').value;
+      const select = document.getElementById('newModel');
+      select.innerHTML = '';
+      (dynamicModels[provider] || []).forEach(m => {
+        select.innerHTML += `<option value="${m}">${m}</option>`;
+      });
     }
-    updateStatus();
-  }
-  function updateStatus(){
-    const keys = loadKeys(); const passed = keys.filter(k=>k.testStatus==='通過').length;
-    const source = getWorkerSource();
-    setStatus(`待命中｜${source}｜API Key ${keys.length} 筆｜通過 ${passed} 筆`, 'ok');
-    refreshMonitorSummary();
-  }
-  function saveKey(){
-    const provider = $('newProvider').value, model = $('newModel').value, task = $('newTask').value, key = $('newKey').value.trim(), edit = $('editingKeyIndex').value;
-    const keys = loadKeys();
-    if (edit !== '') {
-      const idx = Number(edit); if (!keys[idx]) return showModal('修改失敗','找不到要修改的節點。');
-      keys[idx] = {...keys[idx], provider, model, task, key: key || keys[idx].key, updatedAt: Date.now()};
-      saveKeys(keys); cancelEdit(); renderKeys(); log(`已修改節點：${provider} ${model}`, 'SUCCESS'); showModal('修改成功','API Key 紀錄已更新。'); return;
+
+    document.getElementById('newProvider').addEventListener('change', populateModelDropdown);
+
+    async function syncModels() {
+      logMsg('開始向 Worker 請求同步最新模型清單...', 'info');
+      updateStatusDot('Sync', 'warn', '同步中...');
+      
+      const workerUrl = getWorkerUrl();
+      try {
+        const res = await fetch(`${workerUrl}/api/catalog`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        
+        if (data.ok && data.catalog) {
+           dynamicModels = { ...STATIC_MODELS, ...data.catalog };
+           localStorage.setItem('abrakai_models_v56', JSON.stringify(dynamicModels));
+           populateModelDropdown();
+           logMsg('模型庫同步成功！', 'success');
+           updateStatusDot('Sync', 'ok', '已同步最新');
+        } else {
+           throw new Error(data.error || '未知的格式錯誤');
+        }
+      } catch (err) {
+        logMsg(`同步失敗: ${err.message}。將使用本地快取清單。`, 'warn');
+        updateStatusDot('Sync', 'err', '同步失敗');
+        // Fallback to static if empty
+        populateModelDropdown();
+      }
     }
-    if (!key) return showModal('輸入不足','請先貼上 API Key；若只使用系統服務，可以不用新增。');
-    keys.push({provider, model, task, key, enabled:true, visible:false, testStatus:'尚未測試', createdAt:Date.now()});
-    saveKeys(keys); $('newKey').value=''; renderKeys(); log(`新增本機 API 節點：${provider} ${model}`, 'SUCCESS'); showModal('新增成功','已新增 1 筆 API Key 紀錄，可在清單中管理。');
-  }
-  function cancelEdit(){ $('editingKeyIndex').value=''; $('newKey').value=''; $('newKey').placeholder='貼上 API Key；修改時不填代表保留原 Key'; $('saveKeyBtn').textContent='➕ 新增 / 更新節點'; }
-  async function nodeAction(action, index){
-    const keys = loadKeys(); const k = keys[index]; if (!k) return;
-    if (action==='toggle') { k.enabled = k.enabled===false; saveKeys(keys); renderKeys(); return; }
-    if (action==='show') { k.visible = !k.visible; saveKeys(keys); renderKeys(); return; }
-    if (action==='copy') { try { await navigator.clipboard.writeText(k.key||''); showModal('已複製','API Key 已複製到剪貼簿。'); } catch { showModal('複製失敗','瀏覽器不允許剪貼簿操作，請手動顯示後複製。'); } return; }
-    if (action==='delete') { if(confirm('確定刪除此 API Key 紀錄？')) { keys.splice(index,1); saveKeys(keys); renderKeys(); } return; }
-    if (action==='edit') { $('newProvider').value=k.provider; updateModelDropdown(); $('newModel').value=k.model; $('newTask').value=k.task||'all'; $('newKey').value=''; $('editingKeyIndex').value=String(index); $('newKey').placeholder='不填則保留原 API Key；貼上新 Key 可替換'; $('saveKeyBtn').textContent='💾 儲存修改'; $('newKey').scrollIntoView({behavior:'smooth',block:'center'}); return; }
-    if (action==='test') { await testProvider(index); }
-  }
-  async function testProvider(index){
-    const worker = getWorkerUrl(); const keys = loadKeys(); const k = keys[index]; if(!k) return;
-    if(!worker) return showModal('AI 服務尚未可用', '目前尚未設定 AI 服務網址，因此系統尚未真正測試供應商服務。\n\n本機 API Key 只代表已儲存在這台手機 / 電腦瀏覽器，不代表 Agnes 或其他供應商已通過實測。');
-    try{
-      const res = await fetch(worker + '/api/test-provider', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:k.provider,model:k.model}), cache:'no-store'});
-      const data = await res.json().catch(()=>({})); if(!res.ok || !data.ok) throw new Error(data.error || '測試失敗');
-      k.testStatus='通過'; saveKeys(keys); renderKeys(); showModal('測試通過', `${k.provider} 已完成連線測試。\n模型：${data.model || k.model}`); log(`${k.provider} 節點測試通過`, 'SUCCESS');
-    }catch(err){
-      k.testStatus='失敗'; saveKeys(keys); renderKeys();
-      showModal('AI 服務尚未可用', `目前不是 ${k.provider} 連接點錯誤，而是系統 AI 服務尚未連線或尚未部署完成。\n\n請先確認「AI 服務與模型更新中心」的一鍵測試通過後，再測試個別 API Key。\n\n錯誤：${String(err.message || err)}`);
-      log(`${k.provider} 節點測試失敗：${err.message || err}`, 'ERROR');
+
+    function renderKeyTable() {
+      const tbody = document.getElementById('keyTableBody');
+      if (apiKeys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94A3B8;">尚未設定 API Key，請新增。</td></tr>`;
+        return;
+      }
+      
+      tbody.innerHTML = apiKeys.map((k, i) => {
+        const displayKey = k.show ? k.key : `sk-${'*'.repeat(12)}`;
+        let statusColor = k.status === '通過' ? 'var(--success)' : (k.status === '失敗' ? 'var(--danger)' : '#94A3B8');
+        
+        return `
+          <tr>
+            <td>#${i+1}</td>
+            <td><span class="badge badge-provider">${k.provider}</span><br><span style="font-size:10px;color:#94A3B8">${k.model}</span></td>
+            <td>${k.task}</td>
+            <td><span class="key-mask">${displayKey}</span> <button class="btn-small btn-outline" style="padding:2px 5px;" onclick="toggleKeyVisibility(${i})">👁️</button></td>
+            <td style="color:${statusColor}; font-weight:bold;">${k.status || '未測'}</td>
+            <td>
+              <button class="btn-small btn-outline" onclick="testKey(${i})" title="測試連線">⚡</button>
+              <button class="btn-small btn-danger" onclick="deleteKey(${i})" title="刪除">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
-  }
 
-  async function testWorker(){
-    const worker = getWorkerUrl(); if(!worker) return showModal('AI 服務尚未可用','系統尚未設定官方 AI 服務。請管理員完成 AI 服務啟用。');
-    try{
-      const res = await fetch(worker + '/api/health'); const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || 'health check failed');
-      showModal('服務連線正常', `AI 服務已連線。\n已設定 服務設定：${JSON.stringify(data.configured || {}, null, 2)}`); setMonitor('monService','AI 服務可用','ok'); log('AI 服務測試通過', 'SUCCESS'); updateStatus();
-    }catch(err){
-      showModal('AI 服務尚未可用', `系統服務目前無法連線或尚未啟用。\n\n這通常不是 Agnes、Gemini 或 OpenAI 連接點錯誤，而是官方 AI 後端尚未部署、網址尚未生效、CORS 尚未設定，或目前網路無法連線。\n\n一般使用者不需要自行填網址；請管理員確認服務部署與 Secrets 設定。\n\n錯誤：${String(err.message || err)}`);
-      setMonitor('monService','AI 服務尚未可用','err'); log('AI 服務測試失敗：' + (err.message || err), 'ERROR');
-    }
-  }
-  function saveWorker(){
-    const v = $('workerUrlInput').value.trim().replace(/\/$/,''); if(!v) return showModal('尚未填寫','管理員專用，通常不需填寫。一般使用者可直接使用系統服務。');
-    localStorage.setItem(STORAGE.worker, v); log('已儲存自訂 AI 服務網址', 'SUCCESS'); updateStatus(); showModal('已儲存','自訂 AI 服務網址已儲存。接著請按「一鍵測試 AI 服務」。');
-  }
-  function clearWorkerOverride(){ localStorage.removeItem(STORAGE.worker); $('workerUrlInput').value=''; updateStatus(); showModal('已恢復系統預設','系統已恢復使用預設 AI 服務。'); }
+    document.getElementById('saveKeyBtn').addEventListener('click', () => {
+      const provider = document.getElementById('newProvider').value;
+      const model = document.getElementById('newModel').value;
+      const task = document.getElementById('newTask').value;
+      const key = document.getElementById('newKey').value.trim();
+      
+      if (!key) return alert('請填寫 API Key');
+      
+      apiKeys.push({ provider, model, task, key, show: false, status: '未測' });
+      localStorage.setItem('abrakai_keys_v56', JSON.stringify(apiKeys));
+      document.getElementById('newKey').value = '';
+      logMsg(`新增節點: [${provider}] ${model}`, 'success');
+      renderKeyTable();
+    });
 
-  async function startRecording(){
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) return showModal('瀏覽器不支援','目前瀏覽器不支援錄音。iPhone 建議用 Safari 或 Chrome 最新版。');
-    const mime = chooseMime();
-    try{
-      recordStream = await navigator.mediaDevices.getUserMedia({audio:true}); audioChunks=[];
-      const opt = mime ? {mimeType:mime} : undefined; mediaRecorder = new MediaRecorder(recordStream, opt);
-      mediaRecorder.ondataavailable = (e)=>{ if(e.data && e.data.size>0) audioChunks.push(e.data); };
-      mediaRecorder.onstop = ()=>{
-        const actualMime = mediaRecorder.mimeType || mime || 'audio/webm';
-        currentAudioBlob = new Blob(audioChunks, {type:actualMime}); currentAudioMime = currentAudioBlob.type || actualMime; currentAudioName = `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`;
-        setAudioPreview(currentAudioBlob, currentAudioName, currentAudioMime); stopStream(); setMonitor('monAudio','錄音完成，待解析','ok'); log('錄音完成，音檔已進入待解析狀態', 'SUCCESS');
-      };
-      mediaRecorder.start(); $('recordBtn').textContent='🛑 結束錄音'; $('recordBtn').className='btn-danger'; setMonitor('monAudio','錄音中','warn'); log('錄音開始', 'INFO');
-    }catch(err){ showModal('錄音失敗','無法啟動麥克風：' + (err.message || err)); log('錄音失敗：' + err.message, 'ERROR'); }
-  }
-  function stopStream(){ if(recordStream){ recordStream.getTracks().forEach(t=>t.stop()); recordStream=null; } }
-  function stopRecording(){ if(mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop(); $('recordBtn').textContent='🎤 啟動會議錄音'; $('recordBtn').className='btn-primary'; }
-  function setAudioPreview(blob, name, mime){
-    $('previewArea').classList.remove('hidden'); $('audioNameTxt').textContent = name || '本次錄音'; $('audioMimeTxt').textContent = mime || blob.type || '未知'; $('fileSizeTxt').textContent = readableSize(blob.size);
-    const url = URL.createObjectURL(blob); $('audioPlayer').src = url; $('sourcePill').textContent = 'Source: ' + (name || 'recording'); $('previewArea').scrollIntoView({behavior:'smooth',block:'center'});
-  }
-  async function importAudioFile(file){
-    if(!file) return; currentAudioBlob=file; currentAudioName=file.name; currentAudioMime=file.type || guessMimeFromName(file.name); setAudioPreview(file, file.name, currentAudioMime); log('已匯入舊錄音檔：' + file.name, 'SUCCESS');
-  }
-  function guessMimeFromName(name){ const n=String(name).toLowerCase(); if(n.endsWith('.m4a')||n.endsWith('.mp4')) return 'audio/mp4'; if(n.endsWith('.mp3')) return 'audio/mpeg'; if(n.endsWith('.wav')) return 'audio/wav'; if(n.endsWith('.webm')) return 'audio/webm'; return 'application/octet-stream'; }
-  function downloadAudio(){ if(!currentAudioBlob) return showModal('沒有音檔','目前沒有可儲存的錄音或匯入音檔。'); const a=document.createElement('a'); a.href=URL.createObjectURL(currentAudioBlob); a.download=currentAudioName || `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`; a.click(); log('已下載音檔備份', 'INFO'); }
+    window.toggleKeyVisibility = (idx) => { apiKeys[idx].show = !apiKeys[idx].show; renderKeyTable(); };
+    window.deleteKey = (idx) => { apiKeys.splice(idx, 1); localStorage.setItem('abrakai_keys_v56', JSON.stringify(apiKeys)); renderKeyTable(); };
 
-  async function analyzeAudio(){
-    if(!currentAudioBlob) return showModal('沒有音檔','請先錄音，或按「匯入舊錄音檔」選擇上一次儲存的音檔。');
-    const worker = getWorkerUrl(); if(!worker) return showModal('AI 服務尚未可用', '錄音已成功，但目前沒有設定 AI 服務網址，因此系統不能辨識真實會議內容。\n\n請管理員先完成 AI 服務設定，再回到本頁按「錄音轉文字並產生報告」。');
-    try{
-      showModal('開始解析','正在將音檔送往 AI 服務處理。時間長短取決於音檔大小與模型速度，請不要關閉頁面。');
-      const base64Data = await blobToBase64(currentAudioBlob);
-      const promptText = `請將這段會議錄音轉成繁體中文逐字稿，並輸出：\n1. 逐字稿\n2. 會議摘要\n3. 決議事項\n4. 待辦清單\n5. 風險與提醒\n6. Mermaid mindmap。\n請使用清楚標題，避免虛構錄音中沒有說的內容。`;
-      const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskType:'audio',base64Data,mimeType:currentAudioMime || currentAudioBlob.type || 'application/octet-stream',filename:currentAudioName,promptText})});
-      const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || (data.details||[]).join('\n') || 'AI 解析失敗');
-      closeModal(); renderResult(data, currentAudioName || 'audio'); log(`音檔解析完成：${data.provider || '-'} / ${data.model || '-'}`, 'SUCCESS');
-    }catch(err){ closeModal(); showModal('AI 解析失敗', String(err.message || err)); log('音檔解析失敗：' + (err.message || err), 'ERROR'); }
-  }
+    document.getElementById('testWorkerBtn').addEventListener('click', async () => {
+      const url = getWorkerUrl();
+      logMsg(`正在測試 Worker 連線: ${url}`, 'info');
+      try {
+        const res = await fetch(`${url}/api/health`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.ok) {
+          logMsg('✅ Worker 連線成功！', 'success');
+          updateStatusDot('Worker', 'ok', '已連線');
+        } else {
+          throw new Error(data.error || '回應格式異常');
+        }
+      } catch (err) {
+        logMsg(`❌ Worker 連線失敗: ${err.message}`, 'error');
+        logMsg('👉 排錯建議: 1. 檢查網址是否正確 2. 檢查 Cloudflare Worker 是否已成功部署 3. 檢查 CORS 設定。', 'warn');
+        updateStatusDot('Worker', 'err', '連線失敗');
+      }
+    });
 
-  async function importDocument(file){
-    if(!file) return; const name=file.name || 'document'; const mime=file.type || guessDocMime(name);
-    if(/\.txt$|\.md$/i.test(name) || mime.startsWith('text/')){
-      const text = await fileToText(file); $('ttsInput').value = text; log('已匯入文字檔，可直接播報', 'SUCCESS'); showModal('文字檔已匯入','TXT / Markdown 已載入讀報器，可直接按「現場精準播報」。'); return;
-    }
-    const worker = getWorkerUrl(); if(!worker) return showModal('PDF / Word 需要 AI 服務', '您已選擇 PDF / Word 類文件。這類文件若要提純摘要，需要 AI 服務與可處理文件的模型。\n\n若只是要播報，建議先把內容複製成文字貼到讀報器。');
-    try{
-      showModal('文件提純中','正在送往 AI 服務處理文件。');
-      const base64Data = await blobToBase64(file);
-      const promptText = '請讀取這份文件，萃取可供語音播報的繁體中文摘要，刪除頁碼、雜訊、重複標題，保留重點、章節與行動事項。';
-      const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskType:'document',base64Data,mimeType:mime,filename:name,promptText})});
-      const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || '文件解析失敗');
-      closeModal(); const text = data.text || ''; $('ttsInput').value = text; renderResult(data, name); log('文件提純完成：' + name, 'SUCCESS');
-    }catch(err){ closeModal(); showModal('文件提純失敗', String(err.message || err)); log('文件提純失敗：' + (err.message || err), 'ERROR'); }
-  }
-  function guessDocMime(name){ const n=String(name).toLowerCase(); if(n.endsWith('.pdf')) return 'application/pdf'; if(n.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'; if(n.endsWith('.doc')) return 'application/msword'; return 'application/octet-stream'; }
-  function renderResult(data, source){
-    const text = data.text || data.report || ''; currentReportText = text; setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, text); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = text || '無文字結果'; $('ttsInput').value = text || $('ttsInput').value;
-    $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source;
-    renderMindmap(extractMermaid(text)); $('resultArea').scrollIntoView({behavior:'smooth',block:'start'});
-  }
-  function extractMermaid(text){ const m=String(text||'').match(/```mermaid\s*([\s\S]*?)```/i); if(m) return m[1].trim(); const idx=String(text||'').indexOf('mindmap'); return idx>=0 ? String(text).slice(idx).trim() : ''; }
-  async function renderMindmap(code){
-    if(!code){ $('mermaidCode').textContent='此報告未包含 Mermaid 心智圖。'; return; }
-    try{ mermaid.initialize({startOnLoad:false,theme:'default'}); const id='m'+Date.now(); const {svg}= await mermaid.render(id, code); $('mermaidCode').innerHTML=svg; }
-    catch(err){ $('mermaidCode').textContent='心智圖渲染失敗：' + (err.message || err); }
-  }
-  function speakText(){ const text = $('ttsInput').value.trim(); if(!text) return showModal('沒有文字','請先貼上文字、匯入 TXT，或產生 AI 報告。'); if(!('speechSynthesis' in window)) return showModal('不支援','此瀏覽器不支援語音播報。'); speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/[\/_*#`>\[\](){}]/g,' ')); u.lang='zh-TW'; u.rate=1; speechSynthesis.speak(u); log('開始語音播報', 'INFO'); }
-  function downloadReport(){ if(!currentReportText) currentReportText = $('outputContent').textContent || ''; if(!currentReportText) return showModal('沒有報告','目前沒有可匯出的報告。'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([currentReportText],{type:'text/markdown;charset=utf-8'})); a.download=`AbraKai_Report_${Date.now()}.md`; a.click(); }
-  async function shareReport(){ const text=currentReportText || $('outputContent').textContent || ''; if(!text) return showModal('沒有報告','目前沒有可分享內容。'); if(navigator.share) await navigator.share({title:'AbraKai 聲曜報告', text}); else { await navigator.clipboard.writeText(text); showModal('已複製','報告已複製到剪貼簿。'); } }
+    window.testKey = async (idx) => {
+      const k = apiKeys[idx];
+      const url = getWorkerUrl();
+      logMsg(`正在透過 Worker 測試節點 #${idx+1} [${k.provider}]...`, 'info');
+      
+      try {
+        const res = await fetch(`${url}/api/test-provider`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ provider: k.provider, model: k.model, key: k.key }) // 傳送 key 給 worker 測試
+        });
+        const data = await res.json();
+        
+        if (res.ok && data.ok) {
+          logMsg(`✅ 節點 #${idx+1} 測試通過`, 'success');
+          k.status = '通過';
+        } else {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+      } catch (err) {
+        let errorStr = err.message;
+        logMsg(`❌ 節點 #${idx+1} 測試失敗: ${errorStr}`, 'error');
+        
+        // 針對常見錯誤給予白話文建議
+        if (errorStr.includes('Failed to fetch')) {
+           logMsg('👉 排錯建議: 您的前端連不上 Worker。請先點擊上方的「測試 AI 服務連線」確認 Worker 狀態。', 'warn');
+        } else if (errorStr.includes('404')) {
+           logMsg(`👉 排錯建議: 供應商找不到模型。請檢查模型名稱 [${k.model}] 是否正確，或嘗試更新模型清單。`, 'warn');
+        } else if (errorStr.includes('401')) {
+           logMsg('👉 排錯建議: API Key 無效或遭拒絕，請檢查是否複製錯誤。', 'warn');
+        }
+        k.status = '失敗';
+      }
+      localStorage.setItem('abrakai_keys_v56', JSON.stringify(apiKeys));
+      renderKeyTable();
+    };
 
-  function setCheck(idDot,idText,state,msg){ const d=$(idDot), t=$(idText); d.className='check-dot'+(state===true?' ok':state===false?' err':' warn'); t.textContent=msg; }
-  async function runCheck(){
-    try{ localStorage.setItem('abrakai_test','1'); localStorage.removeItem('abrakai_test'); setCheck('checkStorageDot','checkStorageText',true,'本機儲存：正常'); }catch{ setCheck('checkStorageDot','checkStorageText',false,'本機儲存：失敗'); }
-    const worker=getWorkerUrl(); if(!worker) setCheck('checkBackendDot','checkBackendText',false,'AI 服務：尚未啟用'); else { setCheck('checkBackendDot','checkBackendText',null,`AI 服務：${getWorkerSource()}已帶入，請按一鍵測試確認`); }
-    const keys=loadKeys(); setCheck('checkKeyDot','checkKeyText', keys.length>0, keys.length?`API Key：已記錄 ${keys.length} 筆`:'API Key：尚未記錄');
-    setCheck('checkAudioDot','checkAudioText', Boolean(currentAudioBlob), currentAudioBlob?'音檔流程：已有待解析音檔':'音檔流程：尚未錄音或匯入舊音檔');
-  }
-  async function clearCacheAndReload(){
-    try{ if('serviceWorker' in navigator){ const regs=await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map(r=>r.unregister())); } if(window.caches){ const names=await caches.keys(); await Promise.all(names.map(n=>caches.delete(n))); } }catch(e){ console.warn(e); }
-    location.href = location.pathname + '?v=' + CACHE_BUST + '&t=' + Date.now();
-  }
 
-  function bind(){
-    $('modalOkBtn').addEventListener('click', closeModal); $('sysModal').addEventListener('click', e=>{ if(e.target.id==='sysModal') closeModal(); });
-    $('toggleMonitorBtn').addEventListener('click',()=>{ $('terminalView').classList.toggle('hidden'); $('toggleMonitorBtn').textContent = $('terminalView').classList.contains('hidden') ? '展開紀錄' : '收合紀錄'; log('系統監視視窗切換', 'INFO'); });
-    $('clearMonitorBtn').addEventListener('click',()=>{ $('terminalLogs').innerHTML=''; log('監視紀錄已清除', 'WARNING'); });
-    $('toggleInstallGuideBtn').addEventListener('click',()=>{ $('installGuide').classList.toggle('hidden'); $('toggleInstallGuideBtn').textContent = $('installGuide').classList.contains('hidden')?'查看說明':'收合說明'; });
-    $('clearCacheBtn').addEventListener('click', clearCacheAndReload);
-    $('toggleApiPanelBtn').addEventListener('click',()=>{ $('apiPanel').classList.toggle('hidden'); $('toggleApiPanelBtn').textContent = $('apiPanel').classList.contains('hidden')?'展開設定':'收合設定'; log('設定面板切換', 'INFO'); });
-    $('newProvider').addEventListener('change', updateModelDropdown); $('saveKeyBtn').addEventListener('click', saveKey); $('cancelEditBtn').addEventListener('click', cancelEdit);
-    $('resetKeysBtn').addEventListener('click',()=>{ if(confirm('確定清除本機 API 節點資料？')){ localStorage.removeItem(STORAGE.keys); renderKeys(); log('已清除 API Key 紀錄', 'WARNING'); } });
-    $('nodeList').addEventListener('click', e=>{ const btn=e.target.closest('button[data-action]'); if(!btn) return; nodeAction(btn.dataset.action, Number(btn.dataset.index)); });
-    $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 管理員設定':'收合管理員設定'; });
-    $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('syncModelsBtn').addEventListener('click',()=>syncProviderCatalog(true)); $('runCheckBtn').addEventListener('click', runCheck);
-    $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
-    $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
-    $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
-    $('pickDocBtn').addEventListener('click',()=> $('docFileInput').click()); $('docFileInput').addEventListener('change', e=> importDocument(e.target.files[0]));
-    $('speakBtn').addEventListener('click', speakText); $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
-  }
-  async function init(){
-    bind(); loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = getWorkerUrl(); renderKeys(); updateStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.5 初始化完成', 'SYSTEM'); log('本版修正：版本顯示一致、系統監視視窗、AI 服務檢測、每日/手動模型更新中心', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.5'); log('PWA Service Worker 已註冊 V5.5', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
-  }
-  document.addEventListener('DOMContentLoaded', init);
-})();
-</script>
+    // Note: Since this is a standalone HTML, the actual analyze endpoint logic resides in your Worker.
+    // Here we implement the frontend hook to send data to the worker.
+
+    document.getElementById('recordBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('recordBtn');
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+          mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+          mediaRecorder.onstop = () => {
+            currentBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(currentBlob);
+            document.getElementById('audioPlayer').src = url;
+            document.getElementById('audioSizeTxt').textContent = `${(currentBlob.size / (1024*1024)).toFixed(2)} MB`;
+            document.getElementById('audioPreviewArea').classList.remove('hidden');
+            logMsg('錄音完成，等待上傳分析', 'info');
+          };
+          mediaRecorder.start();
+          isRecording = true;
+          btn.textContent = '🛑 結束錄音';
+          btn.className = 'btn-danger';
+          logMsg('開始錄音...', 'sys');
+        } catch (err) {
+          logMsg(`無法存取麥克風: ${err.message}`, 'error');
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        btn.textContent = '🎤 重新錄音';
+        btn.className = 'btn-primary';
+      }
+    });
+
+    document.getElementById('downloadAudioBtn').addEventListener('click', () => {
+      if(!currentBlob) return;
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(currentBlob);
+      a.download = `AbraKai_Audio_${Date.now()}.webm`;
+      a.click();
+    });
+
+    document.getElementById('audioFileInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        currentBlob = file;
+        document.getElementById('audioPlayer').src = URL.createObjectURL(file);
+        document.getElementById('audioSizeTxt').textContent = `${(file.size / (1024*1024)).toFixed(2)} MB`;
+        document.getElementById('audioPreviewArea').classList.remove('hidden');
+        logMsg(`載入音檔: ${file.name}`, 'info');
+    });
+
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+        if (!currentBlob) return alert('沒有音檔');
+        if (apiKeys.length === 0) {
+            alert('請先在上方設定至少一把 API Key！');
+            return;
+        }
+
+        const url = getWorkerUrl();
+        logMsg('啟動分析流程，轉換音檔格式中...', 'info');
+        
+        try {
+            // Read blob as base64
+            const reader = new FileReader();
+            reader.readAsDataURL(currentBlob);
+            reader.onloadend = async () => {
+                const base64Data = reader.result.split(',')[1];
+                logMsg(`音檔編碼完成，準備發送至 Worker 代理... (長度: ${base64Data.length})`, 'sys');
+                
+                try {
+                    // Send to worker
+                    const res = await fetch(`${url}/api/analyze`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            taskType: 'audio',
+                            base64Data: base64Data,
+                            mimeType: currentBlob.type || 'audio/webm',
+                            // Send keys array to worker so it can do the fallback routing
+                            keys: apiKeys 
+                        })
+                    });
+                    
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || '解析失敗');
+                    
+                    logMsg(`✅ 解析成功！使用的供應商: ${data.provider} [${data.model}]`, 'success');
+                    
+                    // Display results
+                    document.getElementById('resultCard').classList.remove('hidden');
+                    document.getElementById('reportOutput').textContent = data.text || '無回傳內容';
+                    
+                    // Try to render mermaid if mindmap syntax is found
+                    if(data.text && data.text.includes('```mermaid')) {
+                        const match = data.text.match(/```mermaid\s*([\s\S]*?)```/);
+                        if(match && match[1]) {
+                            try {
+                                mermaid.initialize({startOnLoad:false, theme:'dark'});
+                                const {svg} = await mermaid.render('mindmapGraph', match[1].trim());
+                                document.getElementById('mermaidCode').innerHTML = svg;
+                            } catch(e) {
+                                document.getElementById('mermaidCode').innerHTML = `<span style="color:red">心智圖渲染失敗: ${e.message}</span>`;
+                            }
+                        }
+                    } else {
+                         document.getElementById('mermaidCode').innerHTML = `<span style="color:#94A3B8">AI 未回傳心智圖語法。</span>`;
+                    }
+                    
+                    document.getElementById('resultCard').scrollIntoView({behavior: 'smooth'});
+
+                } catch (err) {
+                    logMsg(`❌ 解析請求失敗: ${err.message}`, 'error');
+                }
+            };
+        } catch (err) {
+             logMsg(`音檔處理錯誤: ${err.message}`, 'error');
+        }
+    });
+
+    // Toggle Admin Panel
+    document.getElementById('toggleAdminBtn').addEventListener('click', () => {
+        document.getElementById('adminPanel').classList.toggle('hidden');
+    });
+    
+    document.getElementById('saveWorkerBtn').addEventListener('click', () => {
+        localStorage.setItem('abrakai_voice_worker_url_v55', document.getElementById('workerUrlInput').value); // Keep old key name to preserve user settings if any
+        logMsg('Worker URL 已更新', 'success');
+    });
+
+    // Init
+    window.onload = () => {
+        document.getElementById('workerUrlInput').value = localStorage.getItem('abrakai_voice_worker_url_v55') || DEFAULT_WORKER_API_URL;
+        logMsg('AbraKai 聲曜 V5.6 初始化...', 'sys');
+        populateModelDropdown();
+        renderKeyTable();
+    };
+
+  </script>
 </body>
 </html>
