@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.3｜快捷操作與語音播報控制修正版</title>
-<link href="./manifest.json?v=5.9.3" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.4｜錄音前 AI 準備啟動模式</title>
+<link href="./manifest.json?v=5.9.4" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
-/* V5.9.3 quick-action + TTS controls fix: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2/5.9.3 anchored navigation, and make primary hero actions executable. */
+/* V5.9.4 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2/5.9.4 anchored navigation, and make primary hero actions executable. */
 
     :root {
       --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
@@ -48,7 +48,7 @@
     @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
 
 
-/* V5.9.3 sticky-header navigation fix */
+/* V5.9.4 sticky-header navigation fix */
 html{scroll-behavior:smooth}
 #workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
   scroll-margin-top:180px;
@@ -184,10 +184,10 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.3 mobile workspace refinements ---- */
+/* ---- V5.9.4 mobile workspace refinements ---- */
 
 
-/* V5.9.3 mobile-first workspace: keep daily-use features first, move settings into menu */
+/* V5.9.4 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -209,7 +209,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.3 final polish ---- */
+/* ---- V5.9.4 final polish ---- */
 .app-header{background:rgba(11,26,58,.96)!important;}
 .user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
 .workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
@@ -275,7 +275,7 @@ html{scroll-behavior:smooth}
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.3 快捷操作修正版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.4 準備啟動模式</div></div>
 <div class="sub">VoxAura AI Engine</div>
 <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
@@ -291,18 +291,59 @@ html{scroll-behavior:smooth}
 <button class="menu-btn" data-panel="admin" type="button">管理員</button>
 </nav><section class="card workspace-hero" id="workspaceHome">
 <h2 class="card-title"><span>🚀 開始使用 AbraKai 聲曜</span></h2>
-<div class="section-note">每天開啟系統會先看到這裡：錄音、匯入音檔、文件讀報與最近成果。系統設定、公告、API Key 與管理員工具已收進下方選單，需要時再開。</div>
+<div class="section-note">每天開啟系統會先看到這裡：先做錄音前準備、再正式錄音或匯入檔案。系統設定、公告、API Key 與管理員工具已收進下方選單，需要時再開。</div>
 <div class="compact-status"><span id="homeServiceStatus">AI 服務：檢查中</span><span id="homeAccountStatus">帳號：尚未註冊</span><span id="homeApiStatus">API Key：尚未設定</span></div>
 <div class="hero-actions quick-action-grid">
-<button class="btn-primary" id="quickRecordBtn" type="button">🎤 立即錄音</button>
+<button class="btn-primary" id="quickRecordBtn" type="button">🧭 AI 準備錄音</button>
 <button class="btn-outline" id="quickImportAudioBtn" type="button">📂 匯入音檔</button>
 <button class="btn-blue" id="quickImportDocBtn" type="button">📄 匯入文件</button>
 <button class="btn-outline" id="quickReaderBtn" type="button">🔊 開啟播報器</button>
 </div>
+</section><section class="card prep-card" id="meetingPrepSection">
+<h2 class="card-title"><span>🧭 錄音前 AI 準備啟動</span></h2>
+<div class="section-note">正式錄音前先讓系統理解情境，可提高逐字稿、講者標記、決議、待辦與總報告品質。趕時間也可以跳過準備直接錄音。</div>
+<div class="prep-choice-row">
+  <div class="prep-choice"><strong>AI 準備錄音</strong><span>適合正式會議、課程、客戶訪談、檢討會議。先填幾個重點，系統會產生錄音與分析策略。</span></div>
+  <div class="prep-choice"><strong>直接錄音</strong><span>適合臨時紀錄。仍可產生報告，但講者判斷、決議與待辦準確度較依賴音檔內容。</span></div>
+</div>
+<div class="prep-grid">
+  <div><label for="prepTitle">會議 / 錄音名稱</label><input id="prepTitle" placeholder="例如：7月專案進度會議" type="text"/></div>
+  <div><label for="prepCompany">公司 / 團隊</label><input id="prepCompany" placeholder="例如：阿布拉.凱工作室" type="text"/></div>
+  <div><label for="prepScenario">錄音情境</label><select id="prepScenario"><option value="正式會議">正式會議</option><option value="課程 / 教學">課程 / 教學</option><option value="客戶訪談">客戶訪談</option><option value="一般對話">一般對話</option><option value="檢討會議">檢討會議</option><option value="業務會議">業務會議</option><option value="報告 / 簡報">報告 / 簡報</option><option value="其他">其他</option></select></div>
+  <div><label for="prepDuration">預估時長</label><select id="prepDuration"><option value="30">30 分鐘內</option><option value="60">約 1 小時</option><option selected value="120">約 2 小時</option><option value="180">約 3 小時</option><option value="240">約 4 小時</option><option value="300">4 小時以上</option></select></div>
+  <div><label for="prepParticipantsCount">與會者人數</label><input id="prepParticipantsCount" min="1" placeholder="例如：6" type="number"/></div>
+  <div><label for="prepOutputLanguage">報告輸出語言</label><select id="prepOutputLanguage"><option selected value="繁體中文">繁體中文</option><option value="英文">英文</option><option value="中英雙語">中英雙語</option><option value="保留原語言">保留原語言</option></select></div>
+  <div class="wide"><label for="prepLanguages">會議語言 / 口音</label><input id="prepLanguages" placeholder="例如：中文、英文、日本人英文、印度口音英文、台語可能出現" type="text"/></div>
+  <div class="wide"><label for="prepParticipants">與會者名單 / 職稱</label><textarea id="prepParticipants" placeholder="一行一位，例如：
+尤致凱｜主持人
+王經理｜業務窗口
+林小姐｜行政紀錄"></textarea></div>
+  <div class="wide"><label for="prepNotes">補充情境 / 會議目的</label><textarea id="prepNotes" placeholder="例如：這場會議要確認專案進度、待辦負責人、風險與下次會議事項。可用語音輸入補充。"></textarea></div>
+</div>
+<div class="subcard"><b>本次報告要追蹤什麼？</b>
+  <div class="prep-focus-grid">
+    <label><input class="prep-focus" checked type="checkbox" value="逐字稿"/> 逐字稿</label>
+    <label><input class="prep-focus" checked type="checkbox" value="摘要"/> 摘要</label>
+    <label><input class="prep-focus" checked type="checkbox" value="決議事項"/> 決議事項</label>
+    <label><input class="prep-focus" checked type="checkbox" value="待辦清單與負責人"/> 待辦與負責人</label>
+    <label><input class="prep-focus" checked type="checkbox" value="風險與提醒"/> 風險提醒</label>
+    <label><input class="prep-focus" type="checkbox" value="講者標記"/> 講者標記</label>
+    <label><input class="prep-focus" type="checkbox" value="多語言翻譯整理"/> 多語言翻譯</label>
+    <label><input class="prep-focus" type="checkbox" value="Mermaid 心智圖"/> Mermaid 心智圖</label>
+    <label><input class="prep-focus" type="checkbox" value="課程學習筆記"/> 課程筆記</label>
+  </div>
+</div>
+<div class="btn-row" style="margin-top:12px">
+  <button class="btn-blue" id="generatePrepBtn" type="button">🧠 產生本次錄音策略</button>
+  <button class="btn-outline" id="voicePrepBtn" type="button">🎙️ 語音補充情境</button>
+  <button class="btn-primary" id="startPreparedRecordBtn" type="button">✅ 完成準備，正式錄音</button>
+  <button class="btn-outline" id="skipPrepRecordBtn" type="button">⚡ 先錄音吧</button>
+</div>
+<div class="prep-strategy" id="prepStrategyOutput">尚未產生本次錄音策略。建議先完成上方準備；若趕時間，也可以直接開始錄音。</div>
 </section><section class="card card-flow" id="audioSection">
 <h2 class="card-title"><span>🎙️ 使用流程：錄音與舊音檔解析</span></h2>
-<div class="section-note">錄音後可直接產生逐字稿與會議報告；也可以匯入上次儲存的音檔重新解析。</div>
-<div class="btn-row"><button class="btn-primary" id="recordBtn">🎤 啟動會議錄音</button><button class="btn-outline" id="pickAudioBtn">📂 匯入舊錄音檔</button></div>
+<div class="section-note">正式開始後可直接錄音；長會議建議每 30 分鐘分段，系統會在錄音中提醒分段風險。也可以匯入上次儲存的音檔重新解析。</div>
+<div class="btn-row"><button class="btn-primary" id="recordBtn">🎤 正式開始錄音</button><button class="btn-outline" id="pickAudioBtn">📂 匯入舊錄音檔</button></div><div class="recording-status-box" id="recordingStatusBox">錄音狀態：待命。若是正式會議，建議先完成上方 AI 準備。</div>
 <input accept="audio/*,.m4a,.mp3,.wav,.webm,.mp4" class="hidden" id="audioFileInput" type="file"/>
 <div class="preview hidden" id="previewArea">
 <div class="meta"><b style="color:var(--brand-orange)">✅ 音檔已就緒</b><br/>檔名：<span id="audioNameTxt">本次錄音</span><br/>格式：<span id="audioMimeTxt">-</span><br/>大小：<strong id="fileSizeTxt">0 MB</strong></div>
@@ -334,7 +375,7 @@ html{scroll-behavior:smooth}
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.3 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.4 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
@@ -380,7 +421,7 @@ html{scroll-behavior:smooth}
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.3 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.4 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -448,8 +489,8 @@ html{scroll-behavior:smooth}
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.3';
-  const CACHE_BUST = '5.9.3';
+  const APP_VERSION = 'V5.9.4';
+  const CACHE_BUST = '5.9.4';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
     worker: 'abrakai_voice_worker_url',
@@ -459,7 +500,8 @@ html{scroll-behavior:smooth}
     catalogMeta: 'abrakai_voice_provider_catalog_meta',
     account: 'abrakai_voice_account',
     trialUsage: 'abrakai_voice_trial_usage',
-    ui: 'abrakai_voice_ui_preferences'
+    ui: 'abrakai_voice_ui_preferences',
+    prep: 'abrakai_voice_meeting_prep'
   };
   const LEGACY_STORAGE_KEYS = {
     worker:['abrakai_voice_worker_url_v58','abrakai_voice_worker_url_v57','abrakai_voice_worker_url_v56'],
@@ -487,6 +529,11 @@ html{scroll-behavior:smooth}
   let mediaRecorder = null;
   let recordStream = null;
   let audioChunks = [];
+  let recordStartedAt = null;
+  let recordTimer = null;
+  let recordWarned28 = false;
+  let recordWarned30 = false;
+  let recordWarned35 = false;
   let currentAudioBlob = null;
   let currentAudioName = '';
   let currentAudioMime = '';
@@ -557,7 +604,7 @@ html{scroll-behavior:smooth}
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.3 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.4 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -874,6 +921,114 @@ ${local.message}`);
   }
   function clearWorkerOverride(){ localStorage.removeItem(STORAGE.worker); $('workerUrlInput').value=''; updateStatus(); showModal('已恢復系統預設','系統已恢復使用預設 AI 服務。'); }
 
+  function getPrepFocus(){ return Array.from(document.querySelectorAll('.prep-focus:checked')).map(x=>x.value); }
+  function getMeetingPrep(){
+    return {
+      title: $('prepTitle')?.value?.trim() || '',
+      company: $('prepCompany')?.value?.trim() || '',
+      scenario: $('prepScenario')?.value || '正式會議',
+      duration: Number($('prepDuration')?.value || 120),
+      participantsCount: $('prepParticipantsCount')?.value || '',
+      outputLanguage: $('prepOutputLanguage')?.value || '繁體中文',
+      languages: $('prepLanguages')?.value?.trim() || '',
+      participants: $('prepParticipants')?.value?.trim() || '',
+      notes: $('prepNotes')?.value?.trim() || '',
+      focus: getPrepFocus(),
+      updatedAt: new Date().toISOString()
+    };
+  }
+  function saveMeetingPrep(showToast=false){
+    const prep = getMeetingPrep(); localStorage.setItem(STORAGE.prep, JSON.stringify(prep));
+    if(showToast) log('已儲存錄音前準備設定', 'SUCCESS');
+    return prep;
+  }
+  function loadMeetingPrep(){ return safeParse(localStorage.getItem(STORAGE.prep), null); }
+  function restoreMeetingPrep(){
+    const p = loadMeetingPrep(); if(!p) return;
+    if($('prepTitle')) $('prepTitle').value = p.title || '';
+    if($('prepCompany')) $('prepCompany').value = p.company || '';
+    if($('prepScenario')) $('prepScenario').value = p.scenario || '正式會議';
+    if($('prepDuration')) $('prepDuration').value = String(p.duration || 120);
+    if($('prepParticipantsCount')) $('prepParticipantsCount').value = p.participantsCount || '';
+    if($('prepOutputLanguage')) $('prepOutputLanguage').value = p.outputLanguage || '繁體中文';
+    if($('prepLanguages')) $('prepLanguages').value = p.languages || '';
+    if($('prepParticipants')) $('prepParticipants').value = p.participants || '';
+    if($('prepNotes')) $('prepNotes').value = p.notes || '';
+    if(Array.isArray(p.focus)) document.querySelectorAll('.prep-focus').forEach(ch=>{ ch.checked = p.focus.includes(ch.value); });
+    buildPrepStrategy(false);
+  }
+  function buildPrepStrategy(scroll=true){
+    const p = saveMeetingPrep(false);
+    const mins = Math.max(10, Number(p.duration || 120));
+    const segMin = mins <= 45 ? 20 : 30;
+    const expectedSegments = Math.max(1, Math.ceil(mins / segMin));
+    const overlap = 60;
+    const focus = p.focus?.length ? p.focus.join('、') : '逐字稿、摘要、決議、待辦';
+    const speakerHint = p.participants ? '已提供與會者名單；建議會議開始時仍請每位與會者依序自我介紹，AI 才更容易把講者 A/B/C 對應到姓名。' : '尚未提供與會者名單；建議正式錄音開始時請大家依序自我介紹，例如「大家好，我是王小明，負責業務窗口」。';
+    const languageHint = p.languages ? `偵測語言重點：${p.languages}。輸出統一為「${p.outputLanguage}」。台語、方言或重口音內容需人工複核。` : `未指定多語言；輸出統一為「${p.outputLanguage}」。若現場有外國人或台語，建議先補充語言資訊。`;
+    const strategy = `【本次錄音策略】
+情境：${p.scenario}${p.title ? '｜' + p.title : ''}${p.company ? '｜' + p.company : ''}
+預估時長：約 ${mins} 分鐘；建議每 ${segMin} 分鐘分段，預估 ${expectedSegments} 段，可提前結束或略超過。
+長會議提醒：每段交接建議保留約 ${overlap} 秒重疊緩衝，避免重要句子被切斷；本版先提供提醒與報告策略，正式自動切段會在後續版本加入。
+講者策略：${speakerHint}
+語言策略：${languageHint}
+報告重點：${focus}。
+正式開始前：請確認麥克風、電量、網路與儲存空間；若本段錄音超過 30 分鐘，系統會提醒音檔可能過大。`;
+    if($('prepStrategyOutput')) $('prepStrategyOutput').textContent = strategy;
+    log('已產生錄音前 AI 準備策略', 'SUCCESS');
+    if(scroll && $('prepStrategyOutput')) scrollToTarget($('prepStrategyOutput'), {delay:50});
+    return strategy;
+  }
+  function buildMeetingPromptContext(){
+    const p = loadMeetingPrep() || getMeetingPrep();
+    const strategy = $('prepStrategyOutput')?.textContent || '';
+    return `
+【錄音前準備資訊】
+會議/錄音名稱：${p.title || '未提供'}
+公司/團隊：${p.company || '未提供'}
+錄音情境：${p.scenario || '未提供'}
+預估時長：${p.duration || '未提供'} 分鐘
+與會者人數：${p.participantsCount || '未提供'}
+與會者名單/職稱：
+${p.participants || '未提供'}
+會議語言/口音：${p.languages || '未提供'}
+報告輸出語言：${p.outputLanguage || '繁體中文'}
+補充情境/目的：
+${p.notes || '未提供'}
+本次報告追蹤項目：${(p.focus||[]).join('、') || '逐字稿、摘要、決議、待辦、風險'}
+${strategy ? '\n' + strategy : ''}
+
+請依上述情境分析音檔；若無法確認真實講者姓名，不要硬猜，請標為「講者A/B/C」，並在可推測時標示信心程度。若有多語言，請保留必要原文並依使用者設定輸出。`;
+  }
+  function startPrepVoiceInput(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR) return showModal('目前瀏覽器不支援語音填寫','這台裝置的瀏覽器暫不支援語音辨識填寫。您可以先用文字輸入，或改用手機支援的瀏覽器。');
+    const rec = new SR(); rec.lang='zh-TW'; rec.interimResults=false; rec.continuous=false;
+    rec.onstart=()=>{ setMonitor('monAudio','錄音前語音補充中','warn'); log('開始錄音前語音補充', 'INFO'); };
+    rec.onresult=(e)=>{ const text = Array.from(e.results).map(r=>r[0].transcript).join('\n'); $('prepNotes').value = (($('prepNotes').value||'') + '\n' + text).trim(); buildPrepStrategy(false); log('已加入語音補充情境', 'SUCCESS'); };
+    rec.onerror=(e)=> showModal('語音補充失敗', '瀏覽器回報：' + (e.error || 'unknown'));
+    rec.onend=()=>setMonitor('monAudio','待錄音 / 待匯入','warn');
+    rec.start();
+  }
+  function confirmDirectRecord(){
+    buildPrepStrategy(false);
+    showModal('即將直接錄音','您選擇跳過完整準備直接錄音。系統仍可產生報告，但若需要更精準的講者標記、決議與待辦，建議先完成 AI 準備。按確認後請再按一次「正式開始錄音」或使用準備區按鈕開始。');
+    scrollToTarget($('audioSection'), {delay:80});
+  }
+  function updateRecordingStatus(){
+    if(!recordStartedAt || !$('recordingStatusBox')) return;
+    const sec = Math.floor((Date.now() - recordStartedAt)/1000);
+    const mm = String(Math.floor(sec/60)).padStart(2,'0'); const ss = String(sec%60).padStart(2,'0');
+    const p = loadMeetingPrep() || getMeetingPrep();
+    const target = Number(p.duration || 120) > 45 ? 30 : 20;
+    let msg = `錄音中：${mm}:${ss}｜建議每 ${target} 分鐘分段保存。`;
+    let warn = false;
+    if(sec >= (target*60 - 120) && !recordWarned28){ recordWarned28=true; log('錄音即將到達建議分段時間，請留意是否要分段保存', 'WARNING'); }
+    if(sec >= target*60){ warn = true; msg += ' 已超過建議分段時間，音檔越大越可能影響上傳與 AI 解析。'; if(!recordWarned30){ recordWarned30=true; log('錄音已超過建議分段時間', 'WARNING'); } }
+    if(sec >= (target+5)*60 && !recordWarned35){ recordWarned35=true; log('本段錄音已明顯超過建議長度，建議結束本段後另開新段', 'ERROR'); }
+    $('recordingStatusBox').textContent = msg; $('recordingStatusBox').classList.toggle('warn', warn);
+  }
+
   async function startRecording(){
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) return showModal('瀏覽器不支援','目前瀏覽器不支援錄音。iPhone 建議用 Safari 或 Chrome 最新版。');
     const mime = chooseMime();
@@ -886,11 +1041,11 @@ ${local.message}`);
         currentAudioBlob = new Blob(audioChunks, {type:actualMime}); currentAudioMime = currentAudioBlob.type || actualMime; currentAudioName = `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`;
         setAudioPreview(currentAudioBlob, currentAudioName, currentAudioMime); stopStream(); setMonitor('monAudio','錄音完成，待解析','ok'); log('錄音完成，音檔已進入待解析狀態', 'SUCCESS');
       };
-      mediaRecorder.start(); $('recordBtn').textContent='🛑 結束錄音'; $('recordBtn').className='btn-danger'; setMonitor('monAudio','錄音中','warn'); log('錄音開始', 'INFO');
+      mediaRecorder.start(); recordStartedAt = Date.now(); recordWarned28=false; recordWarned30=false; recordWarned35=false; if(recordTimer) clearInterval(recordTimer); recordTimer=setInterval(updateRecordingStatus, 1000); updateRecordingStatus(); $('recordBtn').textContent='🛑 結束錄音'; $('recordBtn').className='btn-danger'; setMonitor('monAudio','錄音中','warn'); log('正式錄音開始', 'INFO');
     }catch(err){ showModal('錄音失敗','無法啟動麥克風：' + (err.message || err)); log('錄音失敗：' + err.message, 'ERROR'); }
   }
-  function stopStream(){ if(recordStream){ recordStream.getTracks().forEach(t=>t.stop()); recordStream=null; } }
-  function stopRecording(){ if(mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop(); $('recordBtn').textContent='🎤 啟動會議錄音'; $('recordBtn').className='btn-primary'; }
+  function stopStream(){ if(recordTimer){ clearInterval(recordTimer); recordTimer=null; } if($('recordingStatusBox')){ $('recordingStatusBox').textContent='錄音狀態：待命。若是正式會議，建議先完成上方 AI 準備。'; $('recordingStatusBox').classList.remove('warn'); } recordStartedAt=null; if(recordStream){ recordStream.getTracks().forEach(t=>t.stop()); recordStream=null; } }
+  function stopRecording(){ if(mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop(); $('recordBtn').textContent='🎤 正式開始錄音'; $('recordBtn').className='btn-primary'; }
   function setAudioPreview(blob, name, mime){
     $('previewArea').classList.remove('hidden'); $('audioNameTxt').textContent = name || '本次錄音'; $('audioMimeTxt').textContent = mime || blob.type || '未知'; $('fileSizeTxt').textContent = readableSize(blob.size);
     const url = URL.createObjectURL(blob); $('audioPlayer').src = url; $('sourcePill').textContent = 'Source: ' + (name || 'recording'); scrollToTarget($('previewArea'), {delay:80});
@@ -1052,10 +1207,16 @@ ${local.message}`);
     $('nodeList').addEventListener('click', e=>{ const btn=e.target.closest('button[data-action]'); if(!btn) return; nodeAction(btn.dataset.action, Number(btn.dataset.index)); });
     $('toggleDevBackendBtn').addEventListener('click',()=>{ $('devBackendPanel').classList.toggle('hidden'); $('toggleDevBackendBtn').textContent = $('devBackendPanel').classList.contains('hidden')?'⚙️ 管理員設定':'收合管理員設定'; log('管理員服務設定面板切換；正式版應限制管理員權限', 'WARNING'); });
     $('saveWorkerBtn').addEventListener('click', saveWorker); $('clearWorkerOverrideBtn').addEventListener('click', clearWorkerOverride); $('testWorkerBtn').addEventListener('click', testWorker); $('syncModelsBtn').addEventListener('click',()=>syncProviderCatalog(true)); $('runCheckBtn').addEventListener('click', runCheck);
+    $('generatePrepBtn')?.addEventListener('click',()=>buildPrepStrategy(true));
+    $('voicePrepBtn')?.addEventListener('click', startPrepVoiceInput);
+    $('startPreparedRecordBtn')?.addEventListener('click',()=>{ buildPrepStrategy(false); scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>{ if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); }, 300); });
+    $('skipPrepRecordBtn')?.addEventListener('click',()=>{ scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>{ if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); }, 300); log('使用者選擇跳過 AI 準備直接錄音', 'WARNING'); });
+    ['prepTitle','prepCompany','prepScenario','prepDuration','prepParticipantsCount','prepOutputLanguage','prepLanguages','prepParticipants','prepNotes'].forEach(id=>$(id)?.addEventListener('change',()=>buildPrepStrategy(false)));
+    document.querySelectorAll('.prep-focus').forEach(ch=>ch.addEventListener('change',()=>buildPrepStrategy(false)));
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
     $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
-    $('quickRecordBtn')?.addEventListener('click',()=>{ scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); }, 280); });
+    $('quickRecordBtn')?.addEventListener('click',()=>{ scrollToTarget($('meetingPrepSection'), {delay:20}); setTimeout(()=>buildPrepStrategy(false), 260); });
     $('quickImportAudioBtn')?.addEventListener('click',()=>{ scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>$('audioFileInput').click(), 260); });
     $('quickImportDocBtn')?.addEventListener('click',()=>{ scrollToTarget($('readerSection'), {delay:20}); setTimeout(()=>$('docFileInput').click(), 260); });
     $('quickReaderBtn')?.addEventListener('click',()=>{ scrollToTarget($('readerSection'), {delay:20}); setTtsStatus('已開啟播報器，請貼上文字或匯入文件'); });
@@ -1066,9 +1227,9 @@ ${local.message}`);
     $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
   }
   async function init(){
-    bind(); migrateLegacyStorage(); loadTtsPrefs(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.3 初始化完成', 'SYSTEM'); log('本版修正：快捷操作可直接執行、語音播報控制、導覽定位與設定持久化', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.3'); log('PWA Service Worker 已註冊 V5.9.3', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
+    log('AbraKai 聲曜 V5.9.4 初始化完成', 'SYSTEM'); log('本版新增：錄音前 AI 準備啟動、錄音情境設定、長會議分段建議與報告提示強化', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.4'); log('PWA Service Worker 已註冊 V5.9.4', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
