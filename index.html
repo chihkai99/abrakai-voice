@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.9｜直覺選單、設定中心與心智圖保存版</title>
-<link href="./manifest.json?v=5.9.9" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.10｜常駐浮動功能選單修正版</title>
+<link href="./manifest.json?v=5.9.10" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
-/* V5.9.9 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
+/* V5.9.10 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
 
     :root {
       --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
@@ -48,7 +48,7 @@
     @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
 
 
-/* V5.9.9 sticky-header navigation fix */
+/* V5.9.10 sticky-header navigation fix */
 html{scroll-behavior:smooth}
 #workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
   scroll-margin-top:180px;
@@ -204,10 +204,10 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.9 mobile workspace refinements ---- */
+/* ---- V5.9.10 mobile workspace refinements ---- */
 
 
-/* V5.9.9 mobile-first workspace: keep daily-use features first, move settings into menu */
+/* V5.9.10 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -229,7 +229,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.9 final polish ---- */
+/* ---- V5.9.10 final polish ---- */
 .app-header{background:rgba(11,26,58,.96)!important;}
 .user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
 .workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
@@ -245,7 +245,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.9 compact scenario-based prep ---- */
+/* ---- V5.9.10 compact scenario-based prep ---- */
 .compact-prep-card{padding:16px!important}
 .compact-note{padding:10px 12px!important;margin:8px 0 10px!important;line-height:1.55!important}
 .scenario-shell{background:rgba(255,255,255,.60);border:1px solid rgba(11,26,58,.13);border-radius:18px;padding:12px;margin:10px 0;color:#0F172A}
@@ -259,7 +259,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.9 elder-friendly simplified UI overrides ---- */
+/* ---- V5.9.10 elder-friendly simplified UI overrides ---- */
 .elder-note{font-size:18px!important;color:#0f223d!important;background:rgba(255,255,255,.92)!important;border-color:rgba(30,136,229,.26)!important}
 .quick-start-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
 .big-action{min-height:86px!important;border-radius:20px!important;padding:16px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;gap:14px!important;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(225,243,255,.94))!important;border:2px solid rgba(30,136,229,.36)!important;color:#08213f!important;box-shadow:0 10px 24px rgba(11,26,58,.14)!important}
@@ -287,7 +287,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.9 checkbox / option readability fix ----
+/* ---- V5.9.10 checkbox / option readability fix ----
    Fixes mobile issue where report tracking options appeared blank because
    global mobile input sizing and label colors affected checkbox rows. */
 .prep-focus-grid{display:grid!important;gap:12px!important;}
@@ -326,12 +326,17 @@ html{scroll-behavior:smooth}
 }
 
 
-/* V5.9.9 compact navigation + settings center */
-.main-menu-toggle{position:sticky;top:calc(var(--header-offset, 86px));z-index:46;margin:8px 0 10px;width:100%;min-height:54px;border-radius:18px;background:linear-gradient(135deg,#FF8A1E,#22c55e);color:#06142b;border:0;font-size:20px;font-weight:1000;box-shadow:0 10px 28px rgba(0,0,0,.28)}
-.user-workspace-menu{display:none!important}.user-workspace-menu.menu-open{display:grid!important}
+/* V5.9.10 compact navigation + settings center */
+/* V5.9.10 floating menu: always reachable, tiny footprint */
+.main-menu-toggle{position:fixed!important;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:1001;margin:0!important;width:58px!important;height:58px!important;min-height:58px!important;border-radius:999px!important;background:linear-gradient(135deg,#FF8A1E,#22c55e);color:#06142b!important;border:2px solid rgba(255,255,255,.55)!important;font-size:28px!important;font-weight:1000!important;line-height:1!important;box-shadow:0 14px 36px rgba(0,0,0,.46),0 0 0 5px rgba(30,136,229,.14)!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.main-menu-toggle:active{transform:scale(.96)}
+.user-workspace-menu{display:none!important}
+.user-workspace-menu.menu-open{display:grid!important;position:fixed!important;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:1000;width:min(320px,calc(100vw - 32px))!important;grid-template-columns:1fr!important;gap:8px!important;margin:0!important;padding:12px!important;border-radius:22px!important;background:rgba(11,26,58,.96)!important;border:1px solid rgba(30,136,229,.45)!important;box-shadow:0 20px 50px rgba(0,0,0,.58)!important;backdrop-filter:blur(14px)!important}
+.user-workspace-menu.menu-open .menu-btn{min-height:52px!important;border-radius:16px!important;font-size:17px!important;padding:10px 12px!important;text-align:center!important}
 .settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.setting-card{background:rgba(255,255,255,.08);border:1px solid rgba(30,136,229,.36);border-radius:18px;padding:16px;cursor:pointer;color:#eaf4ff;text-align:left;box-shadow:0 8px 20px rgba(0,0,0,.18)}.setting-card b{display:block;color:#fff;font-size:18px;margin-bottom:6px}.setting-card span{display:block;color:#bdd8ff;line-height:1.5;font-size:14px}.setting-card.primary{border-color:rgba(255,138,30,.7);background:linear-gradient(135deg,rgba(255,138,30,.18),rgba(30,136,229,.12))}.mindmap-actions{margin-top:10px}.mindmap-meta{font-size:13px;color:#bdd8ff;margin-top:8px;line-height:1.6}.profile-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.profile-mini{background:#f8fafc;color:#0B1A3A;border-radius:14px;padding:12px;border:1px solid rgba(30,136,229,.25)}.profile-mini b{color:#075985}
-@media(max-width:720px){.main-menu-toggle{top:112px!important;font-size:22px!important;min-height:62px!important;border-radius:20px!important}.user-workspace-menu.menu-open{grid-template-columns:1fr!important}.settings-grid{grid-template-columns:1fr}.setting-card{padding:18px}.setting-card b{font-size:23px}.setting-card span{font-size:17px}.profile-mini-grid{grid-template-columns:1fr}.mindmap-actions{display:grid!important;grid-template-columns:1fr!important}.mindmap-actions button{font-size:18px!important;min-height:56px!important}}
+@media(max-width:720px){.main-menu-toggle{right:14px!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;width:56px!important;height:56px!important;min-height:56px!important;font-size:27px!important}.user-workspace-menu.menu-open{right:14px!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;width:calc(100vw - 28px)!important;max-width:330px!important;grid-template-columns:1fr!important}.settings-grid{grid-template-columns:1fr}.setting-card{padding:18px}.setting-card b{font-size:23px}.setting-card span{font-size:17px}.profile-mini-grid{grid-template-columns:1fr}.mindmap-actions{display:grid!important;grid-template-columns:1fr!important}.mindmap-actions button{font-size:18px!important;min-height:56px!important}}
 
+body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </style>
 </head>
 <body>
@@ -384,14 +389,14 @@ html{scroll-behavior:smooth}
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.9 直覺選單修正版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.10 浮動選單修正版</div></div>
 <div class="sub">VoxAura AI Engine</div>
 <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
 </div>
 </div>
 </header>
-<main class="wrap"><button class="main-menu-toggle" id="mainMenuToggle" type="button">☰ 打開功能選單</button><nav aria-label="功能選單" class="user-workspace-menu" id="mainFunctionMenu">
+<main class="wrap"><button aria-label="開啟主功能選單" title="功能選單" class="main-menu-toggle" id="mainMenuToggle" type="button">☰</button><nav aria-label="功能選單" class="user-workspace-menu" id="mainFunctionMenu">
 <button class="menu-btn active" data-panel="home" type="button">🏠 首頁工作台</button>
 <button class="menu-btn" data-panel="settings" type="button">⚙️ 設定中心</button>
 <button class="menu-btn" data-panel="status" type="button">🛰️ 系統狀態</button>
@@ -510,7 +515,7 @@ html{scroll-behavior:smooth}
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.9 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.10 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:20px"><span>🧭 API Key 供應商與推薦組合</span></h3>
@@ -574,7 +579,7 @@ html{scroll-behavior:smooth}
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.9 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.10 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -642,8 +647,8 @@ html{scroll-behavior:smooth}
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.9';
-  const CACHE_BUST = '5.9.9';
+  const APP_VERSION = 'V5.9.10';
+  const CACHE_BUST = '5.9.10';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
     worker: 'abrakai_voice_worker_url',
@@ -759,7 +764,7 @@ html{scroll-behavior:smooth}
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.9 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.10 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -1395,7 +1400,7 @@ ${strategy ? '\n' + strategy : ''}
     if($('homeApiStatus')) $('homeApiStatus').textContent='API Key：' + (verified ? `已實測 ${verified} 組` : '尚未實測通過');
     if($('firstUseBox')) $('firstUseBox').classList.toggle('hidden', !!a);
   }
-  function closeMainMenu(){ const menu=$('mainFunctionMenu'); if(menu) menu.classList.remove('menu-open'); if($('mainMenuToggle')) $('mainMenuToggle').textContent='☰ 打開功能選單'; }
+  function closeMainMenu(){ const menu=$('mainFunctionMenu'); if(menu) menu.classList.remove('menu-open'); const btn=$('mainMenuToggle'); if(btn){ btn.textContent='☰'; btn.setAttribute('aria-label','開啟主功能選單'); btn.title='功能選單'; } }
   function showPanel(name){
     const panels={settings:'settingsPanel',api:'apiKeyPanel',account:'accountPanel',status:'monitorPanel',notice:'noticePanel',admin:'serviceCenterPanel'};
     Object.values(panels).forEach(id=>$(id)?.classList.remove('panel-open'));
@@ -1446,8 +1451,10 @@ ${strategy ? '\n' + strategy : ''}
   }
 
   function bind(){
-    $('mainMenuToggle')?.addEventListener('click',()=>{ const menu=$('mainFunctionMenu'); if(!menu) return; const open=!menu.classList.contains('menu-open'); menu.classList.toggle('menu-open', open); $('mainMenuToggle').textContent = open ? '✕ 收合功能選單' : '☰ 打開功能選單'; });
+    $('mainMenuToggle')?.addEventListener('click',()=>{ const menu=$('mainFunctionMenu'); const btn=$('mainMenuToggle'); if(!menu||!btn) return; const open=!menu.classList.contains('menu-open'); menu.classList.toggle('menu-open', open); btn.textContent = open ? '✕' : '☰'; btn.setAttribute('aria-label', open ? '收合主功能選單' : '開啟主功能選單'); btn.title = open ? '收合功能選單' : '功能選單'; });
     document.querySelectorAll('.user-workspace-menu .menu-btn').forEach(btn=>btn.addEventListener('click',()=>showPanel(btn.dataset.panel)));
+    document.addEventListener('click', e=>{ const menu=$('mainFunctionMenu'); const btn=$('mainMenuToggle'); if(!menu||!btn||!menu.classList.contains('menu-open')) return; if(menu.contains(e.target)||btn.contains(e.target)) return; closeMainMenu(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMainMenu(); });
     document.querySelectorAll('[data-settings-target]').forEach(btn=>btn.addEventListener('click',()=>showPanel(btn.dataset.settingsTarget)));
     $('modalOkBtn').addEventListener('click', closeModal); $('sysModal').addEventListener('click', e=>{ if(e.target.id==='sysModal') closeModal(); });
     $('toggleMonitorBtn').addEventListener('click',()=>{ $('terminalView').classList.toggle('hidden'); $('toggleMonitorBtn').textContent = $('terminalView').classList.contains('hidden') ? '展開紀錄' : '收合紀錄'; log('系統監視視窗切換', 'INFO'); });
@@ -1491,8 +1498,8 @@ ${strategy ? '\n' + strategy : ''}
   }
   async function init(){
     bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); updatePrepScenarioUI(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); restoreLastResult(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.9 初始化完成', 'SYSTEM'); log('本版修正：功能選單收合、設定中心、心智圖本機保存與載入', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.9'); log('PWA Service Worker 已註冊 V5.9.9', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.9.10 初始化完成', 'SYSTEM'); log('本版修正：主功能選單改為常駐浮動小圖示，展開後快速切換功能頁', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.10'); log('PWA Service Worker 已註冊 V5.9.10', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();

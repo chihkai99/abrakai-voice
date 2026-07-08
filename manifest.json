@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.9",
+  "name": "AbraKai 聲曜 V5.9.10",
   "short_name": "聲曜",
-  "description": "直覺選單、設定中心與心智圖保存版：主功能選單預設收合、設定中心整合使用者 Profile/API Key/管理工具，並保存 Mermaid 心智圖。",
-  "start_url": "./index.html?v=5.9.9",
+  "description": "常駐浮動功能選單修正版：功能選單縮小成固定浮動圖示，任何畫面都可快速展開切換，不佔首頁版面。",
+  "start_url": "./index.html?v=5.9.10",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
