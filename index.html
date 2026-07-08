@@ -5,8 +5,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.11｜逐字稿校正、繁中報告與可展開心智圖版</title>
-<link href="./manifest.json?v=5.9.11" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.12｜專業逐字稿、AI處理紀錄與分享強化版</title>
+<link href="./manifest.json?v=5.9.12" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
@@ -341,6 +341,11 @@ html{scroll-behavior:smooth}
 
 @media(max-width:720px){.main-menu-toggle{right:14px!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;width:56px!important;height:56px!important;min-height:56px!important;font-size:27px!important}.user-workspace-menu.menu-open{right:14px!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;width:calc(100vw - 28px)!important;max-width:330px!important;grid-template-columns:1fr!important}.settings-grid{grid-template-columns:1fr}.setting-card{padding:18px}.setting-card b{font-size:23px}.setting-card span{font-size:17px}.profile-mini-grid{grid-template-columns:1fr}.mindmap-actions{display:grid!important;grid-template-columns:1fr!important}.mindmap-actions button{font-size:18px!important;min-height:56px!important}}
 
+
+/* ---- V5.9.12 professional transcript + AI pipeline + CD player + sharing ---- */
+.pipeline-panel{margin:12px 0;padding:12px;border-radius:16px;background:rgba(15,23,42,.75);border:1px solid rgba(96,165,250,.42);color:#e0f2fe;line-height:1.6;font-size:13px}.pipeline-panel b{color:#fff}.pipeline-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}.pipeline-step{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:10px}.pipeline-step strong{color:#FFB25F}.pipeline-note{font-size:12px;color:#bfd7ff;margin-top:8px}.share-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}.share-grid button{min-height:48px!important;font-size:14px!important}.cd-player{margin-top:12px;border:1px solid rgba(30,136,229,.35);background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(30,136,229,.10));border-radius:18px;padding:12px}.cd-display{background:#030712;border:1px solid rgba(96,165,250,.42);border-radius:14px;padding:10px;color:#b6ff62;font-family:'Fira Code',monospace;font-size:13px;line-height:1.5;min-height:46px;max-height:120px;overflow:auto}.cd-controls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}.cd-controls button{min-height:48px!important;font-size:16px!important;border-radius:14px!important}.cd-progress-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-top:10px;color:#dbeafe;font-size:12px;font-weight:800}.cd-progress-wrap input[type=range]{padding:0;width:100%;accent-color:#FF8A1E}.tts-voice-row{display:grid;grid-template-columns:1.2fr .7fr .7fr;gap:10px}.tts-helper-note strong{color:#fff}.hidden-mobile-extra{display:block}
+@media(max-width:720px){.share-grid{grid-template-columns:1fr 1fr}.cd-controls{grid-template-columns:1fr 1fr 1fr}.cd-controls button{font-size:15px!important;min-height:50px!important}.tts-voice-row{grid-template-columns:1fr}.pipeline-panel{font-size:13px;max-height:42vh;overflow:auto}.hidden-mobile-extra{display:none!important}}
+
 body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </style>
 </head>
@@ -394,9 +399,9 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.11 校正心智圖版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.12 專業校正分享版</div></div>
 <div class="sub">VoxAura AI Engine</div>
-<div class="desc">AI 會議紀錄、校正版逐字稿、繁中報告與可展開心智圖</div>
+<div class="desc">AI 會議紀錄、專業校正版逐字稿、AI處理紀錄與可分享心智圖</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
 </div>
 </div>
@@ -498,28 +503,40 @@ VoxAura AI Engine
 <div class="preview hidden" id="previewArea">
 <div class="meta"><b style="color:var(--brand-orange)">✅ 音檔已就緒</b><br/>檔名：<span id="audioNameTxt">本次錄音</span><br/>格式：<span id="audioMimeTxt">-</span><br/>大小：<strong id="fileSizeTxt">0 MB</strong></div>
 <audio class="audio-player" controls="" id="audioPlayer"></audio>
-<div class="btn-row"><button class="btn-outline" id="downloadAudioBtn">💾 另存音檔</button><button class="btn-blue" id="analyzeAudioBtn">🧠 錄音轉文字並產生報告</button></div>
+<div class="btn-row"><button class="btn-outline" id="downloadAudioBtn">💾 另存音檔</button><button class="btn-outline" id="shareAudioBtn">📤 分享音檔</button><button class="btn-blue" id="analyzeAudioBtn">🧠 錄音轉文字並產生報告</button></div>
 </div>
 </section><section class="card card-flow card-flow-doc" id="readerSection">
 <h2 class="card-title"><span>📄 使用流程：文件讀取與語音播報</span></h2>
 <div class="section-note">文字檔可直接朗讀；PDF / Word 可交由 AI 提純成適合播報的內容。</div>
-<div class="tts-control-grid">
-<div class="tts-control-card"><label for="ttsVoiceStyle">聲音風格</label><select id="ttsVoiceStyle"><option value="auto">自動選擇</option><option value="female">女聲優先</option><option value="male">男聲優先</option></select></div>
+<div class="tts-control-grid tts-voice-row">
+<div class="tts-control-card"><label for="ttsVoiceSelect">朗讀聲音</label><select id="ttsVoiceSelect"><option value="">載入裝置聲音中...</option></select></div>
 <div class="tts-control-card"><label for="ttsRate">語速</label><select id="ttsRate"><option value="0.75">較慢 0.75x</option><option value="0.9">稍慢 0.9x</option><option selected value="1">標準 1.0x</option><option value="1.15">稍快 1.15x</option><option value="1.3">較快 1.3x</option></select></div>
 <div class="tts-control-card"><label for="ttsPitch">音調</label><select id="ttsPitch"><option value="0.85">較低</option><option selected value="1">標準</option><option value="1.15">較高</option><option value="1.3">更高</option></select></div>
 </div>
 <div class="btn-row"><button class="btn-outline" id="pickDocBtn">📤 匯入 TXT / PDF / Word</button><button class="btn-blue" id="speakBtn">▶️ 播放</button><button class="btn-outline" id="pauseTtsBtn">⏸️ 暫停</button><button class="btn-outline" id="resumeTtsBtn">▶️ 繼續</button><button class="btn-danger" id="stopTtsBtn">⏹️ 停止</button></div>
 <input accept=".txt,.md,.pdf,.doc,.docx,application/pdf,text/plain" class="hidden" id="docFileInput" type="file"/>
 <textarea id="ttsInput" placeholder="可貼上文字、匯入 TXT，或等待 AI 產出報告後播報... 這裡的內容會用手機或電腦瀏覽器內建語音播報。"></textarea>
+<div class="cd-player" aria-label="CD Player 讀稿器">
+  <div class="cd-display" id="ttsNowPlaying">待命：請先貼上文字或產生報告。</div>
+  <div class="cd-controls">
+    <button class="btn-outline" id="ttsRestartBtn" type="button">↺ 重來</button>
+    <button class="btn-outline" id="ttsPrevBtn" type="button">⏪ 上一句</button>
+    <button class="btn-blue" id="ttsPlayPauseBtn" type="button">▶️/⏸️</button>
+    <button class="btn-outline" id="ttsNextBtn" type="button">⏩ 下一句</button>
+    <button class="btn-outline" id="ttsLoopBtn" type="button">🔁 重複</button>
+  </div>
+  <div class="cd-progress-wrap"><span id="ttsProgressStart">0</span><input id="ttsSeekRange" min="0" max="0" value="0" type="range"/><span id="ttsProgressEnd">0</span></div>
+</div>
 <div class="btn-row" style="margin-top:10px"><button class="btn-outline" id="downloadTtsTextBtn">💾 儲存播報文字</button><button class="btn-outline" id="shareTtsTextBtn">📤 分享文字</button><button class="btn-blue" id="ttsFileRoadmapBtn">🎧 轉 MP3 / MP4 說明</button></div>
-<div class="tts-helper-note">目前「現場播報」使用手機或電腦瀏覽器內建語音，已支援播放、暫停、繼續、停止、語速與音調調整。若要真正輸出 MP3 / MP4 語音檔，正式版需再接後端 TTS 供應商，不能只靠瀏覽器內建播報直接產生檔案。</div>
+<div class="tts-helper-note"><strong>提醒：</strong>本版採瀏覽器內建語音，已改成類 CD Player 操作：播放、暫停、上一句、下一句、重來、重複與段落進度拉桿。聲音品質取決於手機/電腦可用語音；正式自然人聲 MP3/MP4 輸出需再接後端 TTS 供應商。</div>
 <div class="tts-mini-status" id="ttsStatusText">語音播報：待命</div>
 </section><section class="card card-output hidden" id="resultArea">
 <h2 class="card-title"><span>📊 成果呈現</span></h2>
 <div class="pill-list"><span class="pill" id="providerPill">服務：-</span><span class="pill" id="modelPill">模型：-</span><span class="pill" id="sourcePill">來源：-</span></div>
+<div class="pipeline-panel" id="aiPipelinePanel"><b>🛰️ AI 處理紀錄</b><div id="aiPipelineContent">尚未產生 AI 處理紀錄。</div></div>
 <h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
 <pre class="output" id="outputContent">等待資料產出...</pre>
-<div class="btn-row"><button class="btn-blue" id="readReportBtn">🔊 播報報告</button><button class="btn-outline" id="downloadReportBtn">📥 匯出 Markdown</button><button class="btn-outline" id="shareReportBtn">📤 分享</button></div>
+<div class="share-grid"><button class="btn-blue" id="readReportBtn">🔊 播報</button><button class="btn-outline" id="downloadReportBtn">📥 Markdown</button><button class="btn-outline" id="downloadTxtBtn">📄 TXT</button><button class="btn-outline" id="downloadTranscriptBtn">📝 逐字稿</button><button class="btn-outline" id="shareReportBtn">📤 系統分享</button><button class="btn-outline" id="lineShareBtn">LINE</button><button class="btn-outline" id="emailShareBtn">Email</button><button class="btn-outline" id="copyReportBtn">📋 複製</button></div>
 <h3 style="color:var(--brand-orange)">🧠 可展開心智圖</h3>
 <div class="mindmap-toolbar" id="mindmapDepthToolbar">
   <button class="btn-outline" data-depth="1" type="button">第 1 層</button>
@@ -528,13 +545,13 @@ VoxAura AI Engine
   <button class="btn-blue" data-depth="all" type="button">全開</button>
 </div>
 <div class="mindmap mindmap-canvas" id="mindmapView"><div id="mermaidCode">尚未產生心智圖</div></div>
-<div class="btn-row mindmap-actions"><button class="btn-blue" id="saveMindmapBtn" type="button">💾 保存心智圖</button><button class="btn-outline" id="downloadMindmapSvgBtn" type="button">📥 SVG</button><button class="btn-outline" id="downloadMindmapPngBtn" type="button">📷 PNG</button><button class="btn-outline" id="downloadMindmapJpgBtn" type="button">🖼️ JPG</button><button class="btn-gray" id="clearMindmapBtn" type="button">清除保存</button></div>
+<div class="btn-row mindmap-actions"><button class="btn-blue" id="saveMindmapBtn" type="button">💾 保存心智圖</button><button class="btn-outline" id="downloadMindmapSvgBtn" type="button">📥 SVG</button><button class="btn-outline" id="downloadMindmapPngBtn" type="button">📷 PNG</button><button class="btn-outline" id="downloadMindmapJpgBtn" type="button">🖼️ JPG</button><button class="btn-outline" id="shareMindmapImageBtn" type="button">📤 分享圖片</button><button class="btn-gray" id="clearMindmapBtn" type="button">清除保存</button></div>
 <div class="mindmap-meta" id="mindmapSavedText">心智圖尚未保存。</div>
 <div class="mindmap-legend" id="mindmapDepthText">心智圖會依正式報告生成；可切換第 1、2、3 層或全開後再下載。</div>
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.11 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.12 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:20px"><span>🧭 API Key 供應商與推薦組合</span></h3>
@@ -598,7 +615,7 @@ VoxAura AI Engine
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.11 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.12 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -666,8 +683,8 @@ VoxAura AI Engine
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.11';
-  const CACHE_BUST = '5.9.11';
+  const APP_VERSION = 'V5.9.12';
+  const CACHE_BUST = '5.9.12';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
     worker: 'abrakai_voice_worker_url',
@@ -679,7 +696,8 @@ VoxAura AI Engine
     trialUsage: 'abrakai_voice_trial_usage',
     ui: 'abrakai_voice_ui_preferences',
     prep: 'abrakai_voice_meeting_prep',
-    mindmap: 'abrakai_voice_last_mindmap'
+    mindmap: 'abrakai_voice_last_mindmap',
+    lastPipeline: 'abrakai_voice_last_pipeline'
   };
   const LEGACY_STORAGE_KEYS = {
     worker:['abrakai_voice_worker_url_v58','abrakai_voice_worker_url_v57','abrakai_voice_worker_url_v56'],
@@ -719,6 +737,11 @@ VoxAura AI Engine
   let currentMindmapCode = '';
   let currentMindmapTree = null;
   let currentMindmapDepth = 'all';
+  let currentPipelineInfo = null;
+  let ttsChunks = [];
+  let ttsIndex = 0;
+  let ttsLoop = false;
+  let ttsPlaying = false;
 
   const $ = (id) => document.getElementById(id);
   function safeParse(json, fallback){ try { const v = JSON.parse(json); return v ?? fallback; } catch { return fallback; } }
@@ -785,7 +808,7 @@ VoxAura AI Engine
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.11 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.12 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -915,6 +938,38 @@ VoxAura AI Engine
       return {...base, provider:route.node.provider, model:route.node.model, apiKey:route.node.key};
     }
     return base;
+  }
+
+
+  function maskApiKey(key){ const k=String(key||''); return k ? k.slice(0,5) + '••••' + k.slice(-4) : ''; }
+  function attachPostProcessRoute(payload){
+    if(!payload || payload.taskType !== 'audio' || payload.routeMode !== 'user') return payload;
+    const node = getBestUserApiNode('text');
+    if(!node || !node.key) return payload;
+    recordApiNodeUsage(node);
+    payload.postProcess = {provider:node.provider, model:node.model, apiKey:node.key, keyMask:maskApiKey(node.key), task:'transcript-correction-report-mindmap'};
+    payload.pipelineHint = {
+      requestedAt:new Date().toISOString(),
+      audio:{provider:payload.provider, model:payload.model, routeMode:payload.routeMode, keyMask:maskApiKey(payload.apiKey), task:'speech-to-text'},
+      postProcess:{provider:node.provider, model:node.model, routeMode:'user', keyMask:maskApiKey(node.key), task:'corrected-transcript-report-mindmap'}
+    };
+    return payload;
+  }
+  function normalizePipeline(data, payload){
+    const pipe = data?.pipeline || payload?.pipelineHint || null;
+    if(pipe) return pipe;
+    return {requestedAt:new Date().toISOString(), audio:{provider:data?.provider||payload?.provider||'-', model:data?.model||payload?.model||'-', routeMode:data?.routeMode||payload?.routeMode||'-', keyMask:maskApiKey(payload?.apiKey), task:payload?.taskType||'analyze'}};
+  }
+  function renderPipelineInfo(info){
+    currentPipelineInfo = info || currentPipelineInfo;
+    if(!currentPipelineInfo || !$('aiPipelineContent')) return;
+    localStorage.setItem(STORAGE.lastPipeline, JSON.stringify(currentPipelineInfo));
+    const rows=[];
+    const add=(title, x)=>{ if(!x) return; rows.push(`<div class="pipeline-step"><strong>${escapeHtml(title)}</strong><br>供應商：${escapeHtml(x.provider||'-')}｜模型：${escapeHtml(x.model||'-')}<br>路由：${escapeHtml(x.routeMode||'-')}｜Key：${escapeHtml(x.keyMask||'官方/未顯示')}<br>任務：${escapeHtml(x.task||'-')}</div>`); };
+    add('① 語音轉文字 / 初步辨識', currentPipelineInfo.audio || currentPipelineInfo.stage1);
+    add('② 逐字稿專業校正 / 報告 / 心智圖', currentPipelineInfo.postProcess || currentPipelineInfo.report || currentPipelineInfo.stage2);
+    if(currentPipelineInfo.fallback) add('備援處理', currentPipelineInfo.fallback);
+    $('aiPipelineContent').innerHTML = `<div class="pipeline-grid">${rows.join('') || '<div class="pipeline-step">尚無細節</div>'}</div><div class="pipeline-note">安全提示：系統只顯示遮罩 Key，不顯示完整 API Key；Worker 不保存使用者 BYOK。</div>`;
   }
 
 
@@ -1301,6 +1356,7 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
   }
   function guessMimeFromName(name){ const n=String(name).toLowerCase(); if(n.endsWith('.m4a')||n.endsWith('.mp4')) return 'audio/mp4'; if(n.endsWith('.mp3')) return 'audio/mpeg'; if(n.endsWith('.wav')) return 'audio/wav'; if(n.endsWith('.webm')) return 'audio/webm'; return 'application/octet-stream'; }
   function downloadAudio(){ if(!currentAudioBlob) return showModal('沒有音檔','目前沒有可儲存的錄音或匯入音檔。'); const a=document.createElement('a'); a.href=URL.createObjectURL(currentAudioBlob); a.download=currentAudioName || `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`; a.click(); log('已下載音檔備份', 'INFO'); }
+  async function shareAudio(){ if(!currentAudioBlob) return showModal('沒有音檔','目前沒有可分享的錄音或匯入音檔。'); const name=currentAudioName || `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`; const file=new File([currentAudioBlob], name, {type:currentAudioMime || currentAudioBlob.type || 'audio/webm'}); if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){ try{ await navigator.share({title:'AbraKai 聲曜音檔', text:'AbraKai 聲曜音檔分享', files:[file]}); return; }catch(e){ if(String(e?.name)==='AbortError') return; } } showModal('分享限制','此瀏覽器無法直接分享音檔檔案。請先按「另存音檔」，再從手機檔案或相簿分享至 LINE / Email。'); }
 
   async function analyzeAudio(){
     if(!currentAudioBlob) return showModal('沒有音檔','請先錄音，或按「匯入舊錄音檔」選擇上一次儲存的音檔。');
@@ -1309,12 +1365,13 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
       showModal('開始解析','正在將音檔送往 AI 服務處理。時間長短取決於音檔大小與模型速度，請不要關閉頁面。');
       const base64Data = await blobToBase64(currentAudioBlob);
       const promptText = buildMeetingPromptContext();
-      const aiPayload = buildAiPayload('audio', {base64Data,mimeType:currentAudioMime || currentAudioBlob.type || 'application/octet-stream',filename:currentAudioName,promptText});
+      let aiPayload = buildAiPayload('audio', {base64Data,mimeType:currentAudioMime || currentAudioBlob.type || 'application/octet-stream',filename:currentAudioName,promptText});
+      aiPayload = attachPostProcessRoute(aiPayload);
       log('AI 路由：' + (aiPayload.routeMode === 'user' ? '使用者自帶 API Key' : '官方試用 Key'), aiPayload.routeMode === 'user' ? 'SUCCESS' : 'WARNING');
       const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json', ...buildAccountHeaders()},body:JSON.stringify(aiPayload)});
       const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || (data.details||[]).join('\n') || 'AI 解析失敗');
       if(aiPayload.routeMode === 'trial') markTrialUsedToday();
-      closeModal(); renderResult(data, currentAudioName || 'audio'); log(`音檔解析完成：${data.provider || '-'} / ${data.model || '-'}｜${data.routeMode || aiPayload.routeMode}`, 'SUCCESS');
+      closeModal(); data.pipeline = normalizePipeline(data, aiPayload); renderResult(data, currentAudioName || 'audio'); renderPipelineInfo(data.pipeline); log(`音檔解析完成：${data.provider || '-'} / ${data.model || '-'}｜${data.routeMode || aiPayload.routeMode}`, 'SUCCESS');
     }catch(err){
       closeModal();
       const msg = String(err.message || err);
@@ -1334,12 +1391,12 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
       showModal('文件提純中','正在送往 AI 服務處理文件。');
       const base64Data = await blobToBase64(file);
       const promptText = '請讀取這份文件，所有中文輸出一律使用繁體中文、台灣常用語，嚴禁簡體中文。請萃取可供語音播報的摘要，刪除頁碼、雜訊、重複標題，保留重點、章節與行動事項。';
-      const aiPayload = buildAiPayload('document', {base64Data,mimeType:mime,filename:name,promptText});
+      let aiPayload = buildAiPayload('document', {base64Data,mimeType:mime,filename:name,promptText});
       log('AI 路由：' + (aiPayload.routeMode === 'user' ? '使用者自帶 API Key' : '官方試用 Key'), aiPayload.routeMode === 'user' ? 'SUCCESS' : 'WARNING');
       const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json', ...buildAccountHeaders()},body:JSON.stringify(aiPayload)});
       const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || '文件解析失敗');
       if(aiPayload.routeMode === 'trial') markTrialUsedToday();
-      closeModal(); const text = data.text || ''; $('ttsInput').value = text; renderResult(data, name); log('文件提純完成：' + name, 'SUCCESS');
+      closeModal(); data.pipeline = normalizePipeline(data, aiPayload); const text = data.text || ''; $('ttsInput').value = text; renderResult(data, name); renderPipelineInfo(data.pipeline); log('文件提純完成：' + name, 'SUCCESS');
     }catch(err){ closeModal(); showModal('文件提純失敗', String(err.message || err)); log('文件提純失敗：' + (err.message || err), 'ERROR'); }
   }
   function guessDocMime(name){ const n=String(name).toLowerCase(); if(n.endsWith('.pdf')) return 'application/pdf'; if(n.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'; if(n.endsWith('.doc')) return 'application/msword'; return 'application/octet-stream'; }
@@ -1402,11 +1459,12 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
   }
   function renderResult(data, source){
     const text = data.text || data.report || ''; currentReportText = stripMindmapBlock(text); setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, currentReportText); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = currentReportText || '無文字結果'; $('ttsInput').value = currentReportText || $('ttsInput').value;
-    $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source; const tree = extractMindmapJson(text) || buildFallbackMindmap(currentReportText); renderMindmapTree(tree, {persist:true}); scrollToTarget($('resultArea'), {delay:80});
+    $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source; renderPipelineInfo(data.pipeline || null); const tree = extractMindmapJson(text) || buildFallbackMindmap(currentReportText); renderMindmapTree(tree, {persist:true}); scrollToTarget($('resultArea'), {delay:80});
   }
   function saveMindmapState(tree){ if(!tree) return; currentMindmapTree = tree; localStorage.setItem(STORAGE.mindmap, JSON.stringify({tree, depth:currentMindmapDepth, savedAt:new Date().toISOString()})); if($('mindmapSavedText')) $('mindmapSavedText').textContent = '心智圖已保存於本機裝置。'; }
   async function restoreLastResult(){
-    const report = localStorage.getItem(STORAGE.lastReport) || ''; const savedMindmap = safeParse(localStorage.getItem(STORAGE.mindmap), null); if(!report && !(savedMindmap && (savedMindmap.tree || savedMindmap.code))) return; $('resultArea')?.classList.remove('hidden'); if(report){ currentReportText = report; $('outputContent').textContent = report; if($('ttsInput')) $('ttsInput').value = report; } else { $('outputContent').textContent = '已載入上次保存的心智圖。'; }
+    const report = localStorage.getItem(STORAGE.lastReport) || ''; const savedMindmap = safeParse(localStorage.getItem(STORAGE.mindmap), null); const savedPipeline = safeParse(localStorage.getItem(STORAGE.lastPipeline), null); if(!report && !(savedMindmap && (savedMindmap.tree || savedMindmap.code))) return; $('resultArea')?.classList.remove('hidden'); if(report){ currentReportText = report; $('outputContent').textContent = report; if($('ttsInput')) $('ttsInput').value = report; } else { $('outputContent').textContent = '已載入上次保存的心智圖。'; }
+    if(savedPipeline) renderPipelineInfo(savedPipeline);
     if(savedMindmap && savedMindmap.tree){ currentMindmapDepth=savedMindmap.depth || 'all'; await renderMindmapTree(savedMindmap.tree, {persist:false}); if($('mindmapSavedText')) $('mindmapSavedText').textContent='已載入上次保存的心智圖。'; } else { await renderMindmapTree(buildFallbackMindmap(report), {persist:false}); }
   }
   function saveCurrentMindmap(){ if(!currentMindmapTree) return showModal('沒有可保存的心智圖','目前沒有可展開心智圖內容，請先產生報告。'); saveMindmapState(currentMindmapTree); showModal('已保存','心智圖已保存於這台裝置。下次開啟系統時會自動載入。'); }
@@ -1416,41 +1474,98 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
     img.onload = () => { const canvas=document.createElement('canvas'); canvas.width=img.width; canvas.height=img.height; const ctx=canvas.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0); URL.revokeObjectURL(url); canvas.toBlob(blob=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`abrakai-mindmap-${currentMindmapDepth}.${type}`; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 500); }, type==='jpg'?'image/jpeg':'image/png', .94); };
     img.onerror=()=>{ URL.revokeObjectURL(url); showModal('圖片輸出失敗','目前瀏覽器無法將 SVG 轉成圖片，請先下載 SVG。'); }; img.src=url;
   }
+  function mindmapRasterBlob(type='png'){
+    return new Promise((resolve,reject)=>{
+      if(!currentMindmapTree) return reject(new Error('尚無心智圖'));
+      const svg = buildMindmapSvg(currentMindmapTree, currentMindmapDepth); const img = new Image(); const svgBlob = new Blob([svg], {type:'image/svg+xml;charset=utf-8'}); const url = URL.createObjectURL(svgBlob);
+      img.onload = () => { const canvas=document.createElement('canvas'); canvas.width=img.width; canvas.height=img.height; const ctx=canvas.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0); URL.revokeObjectURL(url); canvas.toBlob(blob=> blob ? resolve(blob) : reject(new Error('canvas blob failed')), type==='jpg'?'image/jpeg':'image/png', .94); };
+      img.onerror=()=>{ URL.revokeObjectURL(url); reject(new Error('圖片輸出失敗')); }; img.src=url;
+    });
+  }
+  async function shareMindmapImage(){
+    if(!currentMindmapTree) return showModal('尚無心智圖','目前沒有可分享的心智圖。');
+    try{ const blob=await mindmapRasterBlob('png'); const file=new File([blob], `abrakai-mindmap-${currentMindmapDepth}.png`, {type:'image/png'}); if(navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){ await navigator.share({title:'AbraKai 聲曜心智圖', text:'AbraKai 聲曜心智圖', files:[file]}); return; } }
+    catch(e){ console.warn(e); }
+    showModal('分享限制','此瀏覽器無法直接分享圖片檔。請先下載 PNG/JPG，再從手機相簿或檔案分享到 LINE / Email。');
+  }
   function clearSavedMindmap(){ localStorage.removeItem(STORAGE.mindmap); currentMindmapCode=''; currentMindmapTree=null; if($('mermaidCode')) $('mermaidCode').textContent='尚未產生心智圖'; if($('mindmapSavedText')) $('mindmapSavedText').textContent='已清除本機保存的心智圖。'; updateMindmapToolbar(); showModal('已清除','已清除本機保存的心智圖；目前報告內容不會被刪除。'); }
   function getUiPrefs(){ try{return JSON.parse(localStorage.getItem(STORAGE.ui)||'{}')}catch{return {}} }
   function saveUiPrefs(partial){ const prev=getUiPrefs(); localStorage.setItem(STORAGE.ui, JSON.stringify({...prev, ...partial})); }
-  function loadTtsPrefs(){ const ui=getUiPrefs(); if(ui.ttsVoiceStyle && $('ttsVoiceStyle')) $('ttsVoiceStyle').value=ui.ttsVoiceStyle; if(ui.ttsRate && $('ttsRate')) $('ttsRate').value=String(ui.ttsRate); if(ui.ttsPitch && $('ttsPitch')) $('ttsPitch').value=String(ui.ttsPitch); }
-  function saveTtsPrefs(){ saveUiPrefs({ttsVoiceStyle:$('ttsVoiceStyle')?.value||'auto', ttsRate:$('ttsRate')?.value||'1', ttsPitch:$('ttsPitch')?.value||'1'}); }
+  function loadTtsPrefs(){ const ui=getUiPrefs(); if(ui.ttsVoiceURI && $('ttsVoiceSelect')) $('ttsVoiceSelect').value=ui.ttsVoiceURI; if(ui.ttsRate && $('ttsRate')) $('ttsRate').value=String(ui.ttsRate); if(ui.ttsPitch && $('ttsPitch')) $('ttsPitch').value=String(ui.ttsPitch); ttsLoop=Boolean(ui.ttsLoop); updateTtsUi(); }
+  function saveTtsPrefs(){ saveUiPrefs({ttsVoiceURI:$('ttsVoiceSelect')?.value||'', ttsRate:$('ttsRate')?.value||'1', ttsPitch:$('ttsPitch')?.value||'1', ttsLoop}); }
   function setTtsStatus(msg){ if($('ttsStatusText')) $('ttsStatusText').textContent='語音播報：' + msg; }
   function getVoicesSafe(){ return ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : []; }
-  function chooseTtsVoice(style){
-    const voices=getVoicesSafe(); if(!voices.length) return null;
+  function populateTtsVoices(){
+    const sel=$('ttsVoiceSelect'); if(!sel || !('speechSynthesis' in window)) return;
+    const current=sel.value || getUiPrefs().ttsVoiceURI || ''; const voices=getVoicesSafe();
     const zh=voices.filter(v=>/zh|Chinese|Taiwan|Mandarin|國語|中文/i.test((v.lang||'')+' '+(v.name||'')));
-    const pool=zh.length?zh:voices;
-    const female=/female|woman|mei|yating|ting|xiaoxiao|hanhan|huihui|jenny|susan|aria|zira|tracy|samantha|美|婷|雅婷/i;
-    const male=/male|man|kangkang|yunxi|david|paul|daniel|george|mark|康康|大衛/i;
-    if(style==='female') return pool.find(v=>female.test(v.name||'')) || pool[0];
-    if(style==='male') return pool.find(v=>male.test(v.name||'')) || pool[0];
-    return pool[0];
+    const list=zh.length?zh:voices;
+    sel.innerHTML = list.length ? list.map(v=>`<option value="${escapeHtml(v.voiceURI)}">${escapeHtml(v.name)}｜${escapeHtml(v.lang||'')}</option>`).join('') : '<option value="">此裝置尚未回傳語音清單</option>';
+    if(current && [...sel.options].some(o=>o.value===current)) sel.value=current;
+  }
+  function chooseTtsVoice(){
+    const voices=getVoicesSafe(); if(!voices.length) return null;
+    const uri=$('ttsVoiceSelect')?.value || getUiPrefs().ttsVoiceURI || '';
+    return voices.find(v=>v.voiceURI===uri) || voices.find(v=>/zh-TW|zh_Hant|Taiwan/i.test(v.lang||'')) || voices[0];
+  }
+  function normalizeTtsText(text){ return String(text||'').replace(/\[ABRAKAI_MINDMAP_JSON\][\s\S]*?\[\/ABRAKAI_MINDMAP_JSON\]/gi,'').replace(/[\/_*#`>\[\](){}|]/g,' ').replace(/\n{3,}/g,'\n\n').trim(); }
+  function splitTtsChunks(text){
+    const clean=normalizeTtsText(text); if(!clean) return [];
+    return clean.split(/(?<=[。！？!?；;])\s*|\n+/).map(x=>x.trim()).filter(Boolean).flatMap(x=>{
+      if(x.length<=130) return [x]; const arr=[]; for(let i=0;i<x.length;i+=110) arr.push(x.slice(i,i+110)); return arr;
+    });
+  }
+  function prepareTtsChunks(reset=true){ ttsChunks=splitTtsChunks($('ttsInput')?.value||''); if(reset) ttsIndex=0; if(ttsIndex>=ttsChunks.length) ttsIndex=Math.max(0,ttsChunks.length-1); updateTtsUi(); return ttsChunks.length; }
+  function updateTtsUi(){
+    const total=ttsChunks.length || splitTtsChunks($('ttsInput')?.value||'').length; const idx=total?Math.min(ttsIndex,total-1):0;
+    if($('ttsSeekRange')){ $('ttsSeekRange').max=String(Math.max(0,total-1)); $('ttsSeekRange').value=String(idx); }
+    if($('ttsProgressStart')) $('ttsProgressStart').textContent=total?String(idx+1):'0';
+    if($('ttsProgressEnd')) $('ttsProgressEnd').textContent=String(total);
+    if($('ttsNowPlaying')) $('ttsNowPlaying').textContent = total ? `第 ${idx+1}/${total} 段：${ttsChunks[idx] || splitTtsChunks($('ttsInput')?.value||'')[idx] || ''}` : '待命：請先貼上文字或產生報告。';
+    if($('ttsLoopBtn')) $('ttsLoopBtn').className = ttsLoop ? 'btn-blue' : 'btn-outline';
   }
   function buildUtterance(text){
-    const u = new SpeechSynthesisUtterance(text.replace(/[\/_*#`>\[\](){}]/g,' '));
-    u.lang='zh-TW';
-    u.rate=Number($('ttsRate')?.value || 1);
-    u.pitch=Number($('ttsPitch')?.value || 1);
-    const voice=chooseTtsVoice($('ttsVoiceStyle')?.value || 'auto'); if(voice) u.voice=voice;
-    u.onstart=()=>setTtsStatus('播放中'); u.onpause=()=>setTtsStatus('已暫停'); u.onresume=()=>setTtsStatus('播放中'); u.onend=()=>setTtsStatus('已完成'); u.onerror=e=>setTtsStatus('播放失敗：' + (e.error||'unknown'));
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='zh-TW'; u.rate=Number($('ttsRate')?.value || 1); u.pitch=Number($('ttsPitch')?.value || 1);
+    const voice=chooseTtsVoice(); if(voice) u.voice=voice;
+    u.onstart=()=>{ ttsPlaying=true; setTtsStatus('播放中'); updateTtsUi(); };
+    u.onpause=()=>setTtsStatus('已暫停'); u.onresume=()=>setTtsStatus('播放中');
+    u.onend=()=>{ if(!ttsPlaying) return; if(ttsIndex < ttsChunks.length-1){ ttsIndex++; playTtsAt(ttsIndex); } else if(ttsLoop && ttsChunks.length){ ttsIndex=0; playTtsAt(0); } else { ttsPlaying=false; setTtsStatus('已完成'); updateTtsUi(); } };
+    u.onerror=e=>{ ttsPlaying=false; setTtsStatus('播放失敗：' + (e.error||'unknown')); };
     return u;
   }
-  function speakText(){ const text = $('ttsInput').value.trim(); if(!text) return showModal('沒有文字','請先貼上文字、匯入 TXT，或產生 AI 報告。'); if(!('speechSynthesis' in window)) return showModal('不支援','此瀏覽器不支援語音播報。'); saveTtsPrefs(); speechSynthesis.cancel(); const u = buildUtterance(text); speechSynthesis.speak(u); log('開始語音播報：語速 ' + u.rate + '，音調 ' + u.pitch, 'INFO'); }
-  function pauseTts(){ if(!('speechSynthesis' in window)) return; if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); log('語音播報已暫停','INFO'); } else setTtsStatus('沒有正在播放的內容'); }
-  function resumeTts(){ if(!('speechSynthesis' in window)) return; if(speechSynthesis.paused){ speechSynthesis.resume(); log('語音播報已繼續','INFO'); } else setTtsStatus('目前沒有暫停中的內容'); }
-  function stopTts(){ if(!('speechSynthesis' in window)) return; speechSynthesis.cancel(); setTtsStatus('已停止'); log('語音播報已停止','INFO'); }
-  function downloadTtsText(){ const text=$('ttsInput').value.trim(); if(!text) return showModal('沒有文字','目前沒有可儲存的播報文字。'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})); a.download=`AbraKai_TTS_Text_${Date.now()}.txt`; a.click(); log('已下載播報文字','INFO'); }
-  async function shareTtsText(){ const text=$('ttsInput').value.trim(); if(!text) return showModal('沒有文字','目前沒有可分享的播報文字。'); if(navigator.share) await navigator.share({title:'AbraKai 聲曜播報文字', text}); else { await navigator.clipboard.writeText(text); showModal('已複製','播報文字已複製到剪貼簿。'); } }
-  function explainTtsFileExport(){ showModal('MP3 / MP4 語音檔輸出規劃','目前此頁的「現場播報」是使用瀏覽器內建 SpeechSynthesis，瀏覽器通常不允許直接把內建播報聲音存成 MP3 / MP4。\n\n正式版要做到「轉 MP3 / MP4、存檔、LINE / Email 分享」，需要在後端新增 TTS 供應商路由，例如 OpenAI TTS、Gemini TTS、Agnes 語音或其他語音服務。\n\n本版先把播放、暫停、繼續、停止、語速、音調與播報文字存檔整理好；下一階段再接真正可輸出音檔的後端 TTS。'); }
-  function downloadReport(){ if(!currentReportText) currentReportText = $('outputContent').textContent || ''; if(!currentReportText) return showModal('沒有報告','目前沒有可匯出的報告。'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([currentReportText],{type:'text/markdown;charset=utf-8'})); a.download=`AbraKai_Report_${Date.now()}.md`; a.click(); }
-  async function shareReport(){ const text=currentReportText || $('outputContent').textContent || ''; if(!text) return showModal('沒有報告','目前沒有可分享內容。'); if(navigator.share) await navigator.share({title:'AbraKai 聲曜報告', text}); else { await navigator.clipboard.writeText(text); showModal('已複製','報告已複製到剪貼簿。'); } }
+  function playTtsAt(index=ttsIndex){
+    if(!('speechSynthesis' in window)) return showModal('不支援','此瀏覽器不支援語音播報。');
+    if(!ttsChunks.length && !prepareTtsChunks(true)) return showModal('沒有文字','請先貼上文字、匯入 TXT，或產生 AI 報告。');
+    ttsIndex=Math.max(0, Math.min(Number(index)||0, ttsChunks.length-1)); saveTtsPrefs(); speechSynthesis.cancel(); const u=buildUtterance(ttsChunks[ttsIndex]); speechSynthesis.speak(u); log(`語音播報第 ${ttsIndex+1}/${ttsChunks.length} 段`, 'INFO'); updateTtsUi();
+  }
+  function speakText(){ prepareTtsChunks(false); if(speechSynthesis?.paused){ resumeTts(); return; } playTtsAt(ttsIndex || 0); }
+  function pauseTts(){ if(!('speechSynthesis' in window)) return; if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); setTtsStatus('已暫停'); log('語音播報已暫停','INFO'); } else setTtsStatus('沒有正在播放的內容'); }
+  function resumeTts(){ if(!('speechSynthesis' in window)) return; if(speechSynthesis.paused){ speechSynthesis.resume(); setTtsStatus('播放中'); log('語音播報已繼續','INFO'); } else setTtsStatus('目前沒有暫停中的內容'); }
+  function stopTts(){ if(!('speechSynthesis' in window)) return; ttsPlaying=false; speechSynthesis.cancel(); setTtsStatus('已停止'); log('語音播報已停止','INFO'); updateTtsUi(); }
+  function restartTts(){ stopTts(); prepareTtsChunks(true); playTtsAt(0); }
+  function nextTts(){ prepareTtsChunks(false); if(!ttsChunks.length) return; playTtsAt(Math.min(ttsIndex+1, ttsChunks.length-1)); }
+  function prevTts(){ prepareTtsChunks(false); if(!ttsChunks.length) return; playTtsAt(Math.max(ttsIndex-1, 0)); }
+  function toggleLoopTts(){ ttsLoop=!ttsLoop; saveTtsPrefs(); updateTtsUi(); setTtsStatus(ttsLoop?'已開啟重複播放':'已關閉重複播放'); }
+  function seekTts(idx){ prepareTtsChunks(false); if(!ttsChunks.length) return; ttsIndex=Number(idx)||0; updateTtsUi(); if(ttsPlaying || speechSynthesis.speaking) playTtsAt(ttsIndex); }
+  function downloadBlobText(text, filename, type='text/plain;charset=utf-8'){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=filename; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500); }
+  function downloadTtsText(){ const text=$('ttsInput').value.trim(); if(!text) return showModal('沒有文字','目前沒有可儲存的播報文字。'); downloadBlobText(text, `AbraKai_TTS_Text_${Date.now()}.txt`); log('已下載播報文字','INFO'); }
+  async function shareTextGeneric(title, text){
+    if(!text) return showModal('沒有內容','目前沒有可分享內容。');
+    if(navigator.share) { try{ await navigator.share({title, text}); return; } catch(e){ if(String(e?.name)!=='AbortError') console.warn(e); } }
+    try{ await navigator.clipboard.writeText(text); showModal('已複製','內容已複製到剪貼簿，可貼到 LINE 或 Email。'); } catch{ showModal('分享限制','此瀏覽器不支援系統分享或剪貼簿，請手動複製內容。'); }
+  }
+  async function shareTtsText(){ const text=$('ttsInput').value.trim(); return shareTextGeneric('AbraKai 聲曜播報文字', text); }
+  function explainTtsFileExport(){ showModal('MP3 / MP4 語音檔輸出規劃','目前此頁的「現場播報」使用瀏覽器內建 SpeechSynthesis，已支援類 CD Player 控制，但瀏覽器通常不允許直接把內建播報聲音存成 MP3 / MP4。\n\n正式版若要自然人聲、語音檔下載、LINE / Email 分享音檔，需要在 Cloudflare Worker 後端新增 TTS 供應商路由，例如 OpenAI TTS、Gemini TTS、Agnes 語音或其他語音服務。'); }
+  function getCurrentOutputText(){ return (currentReportText || $('outputContent')?.textContent || '').trim(); }
+  function extractSection(text, title){ const re=new RegExp(`#\\s*${title}[\\s\\S]*?(?=\\n#\\s|$)`); const m=String(text||'').match(re); return m ? m[0].trim() : ''; }
+  function downloadReport(){ const text=getCurrentOutputText(); if(!text) return showModal('沒有報告','目前沒有可匯出的報告。'); downloadBlobText(text, `AbraKai_Report_${Date.now()}.md`, 'text/markdown;charset=utf-8'); }
+  function downloadReportTxt(){ const text=getCurrentOutputText(); if(!text) return showModal('沒有報告','目前沒有可匯出的報告。'); downloadBlobText(text, `AbraKai_Report_${Date.now()}.txt`); }
+  function downloadTranscript(){ const text=getCurrentOutputText(); const transcript = extractSection(text,'校正版逐字稿') || extractSection(text,'原始逐字稿') || text; downloadBlobText(transcript, `AbraKai_Transcript_${Date.now()}.txt`); }
+  async function shareReport(){ return shareTextGeneric('AbraKai 聲曜報告', getCurrentOutputText()); }
+  function lineShareReport(){ const text=getCurrentOutputText(); if(!text) return showModal('沒有報告','目前沒有可分享內容。'); const clipped=text.length>1800 ? text.slice(0,1800)+'\n...（內容較長，請另附下載檔）' : text; window.open('https://line.me/R/msg/text/?' + encodeURIComponent('AbraKai 聲曜報告\n\n' + clipped), '_blank'); }
+  function emailShareReport(){ const text=getCurrentOutputText(); if(!text) return showModal('沒有報告','目前沒有可分享內容。'); const subject=encodeURIComponent('AbraKai 聲曜報告'); const body=encodeURIComponent(text.length>6000 ? text.slice(0,6000)+'\n\n...（內容較長，請另附下載檔）' : text); location.href=`mailto:?subject=${subject}&body=${body}`; }
+  async function copyReport(){ const text=getCurrentOutputText(); if(!text) return showModal('沒有報告','目前沒有可複製內容。'); try{ await navigator.clipboard.writeText(text); showModal('已複製','報告已複製到剪貼簿。'); }catch{ showModal('複製失敗','瀏覽器不允許剪貼簿操作，請手動選取複製。'); } }
 
   function setCheck(idDot,idText,state,msg){ const d=$(idDot), t=$(idText); d.className='check-dot'+(state===true?' ok':state===false?' err':' warn'); t.textContent=msg; }
   async function runCheck(){
@@ -1574,7 +1689,7 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
     document.querySelectorAll('.prep-focus').forEach(ch=>ch.addEventListener('change',()=>buildPrepStrategy(false)));
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
-    $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
+    $('downloadAudioBtn').addEventListener('click', downloadAudio); $('shareAudioBtn')?.addEventListener('click', shareAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
     $('quickRecordBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { createAccount(); } if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); });
     $('scenarioSettingsBtn')?.addEventListener('click',()=>{ $('meetingPrepSection')?.classList.remove('hidden'); scrollToTarget($('meetingPrepSection'), {delay:20}); setTimeout(()=>buildPrepStrategy(false), 260); });
     $('registerQuickBtn')?.addEventListener('click',()=>{ createAccount(); setHomeStatus(); renderAccountPanel(); });
@@ -1582,16 +1697,16 @@ JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、�
     $('quickImportDocBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { createAccount(); } scrollToTarget($('readerSection'), {delay:20}); setTimeout(()=>$('docFileInput').click(), 260); });
     $('quickReaderBtn')?.addEventListener('click',()=>{ scrollToTarget($('readerSection'), {delay:20}); setTtsStatus('已開啟播報器，請貼上文字或匯入文件'); });
     $('pickDocBtn').addEventListener('click',()=> $('docFileInput').click()); $('docFileInput').addEventListener('change', e=> importDocument(e.target.files[0]));
-    $('speakBtn').addEventListener('click', speakText); $('pauseTtsBtn').addEventListener('click', pauseTts); $('resumeTtsBtn').addEventListener('click', resumeTts); $('stopTtsBtn').addEventListener('click', stopTts);
-    $('ttsVoiceStyle').addEventListener('change', saveTtsPrefs); $('ttsRate').addEventListener('change', saveTtsPrefs); $('ttsPitch').addEventListener('change', saveTtsPrefs);
+    $('speakBtn').addEventListener('click', speakText); $('pauseTtsBtn').addEventListener('click', pauseTts); $('resumeTtsBtn').addEventListener('click', resumeTts); $('stopTtsBtn').addEventListener('click', stopTts); $('ttsPlayPauseBtn')?.addEventListener('click',()=>{ if(window.speechSynthesis?.speaking && !speechSynthesis.paused) pauseTts(); else speakText(); }); $('ttsRestartBtn')?.addEventListener('click', restartTts); $('ttsPrevBtn')?.addEventListener('click', prevTts); $('ttsNextBtn')?.addEventListener('click', nextTts); $('ttsLoopBtn')?.addEventListener('click', toggleLoopTts); $('ttsSeekRange')?.addEventListener('input',e=>seekTts(e.target.value));
+    $('ttsVoiceSelect')?.addEventListener('change', saveTtsPrefs); $('ttsRate').addEventListener('change',()=>{ saveTtsPrefs(); updateTtsUi(); }); $('ttsPitch').addEventListener('change', saveTtsPrefs);
     $('downloadTtsTextBtn').addEventListener('click', downloadTtsText); $('shareTtsTextBtn').addEventListener('click', shareTtsText); $('ttsFileRoadmapBtn').addEventListener('click', explainTtsFileExport);
-    $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
-    $('saveMindmapBtn')?.addEventListener('click', saveCurrentMindmap); $('downloadMindmapSvgBtn')?.addEventListener('click', downloadMindmapSvg); $('downloadMindmapPngBtn')?.addEventListener('click',()=>downloadMindmapRaster('png')); $('downloadMindmapJpgBtn')?.addEventListener('click',()=>downloadMindmapRaster('jpg')); $('clearMindmapBtn')?.addEventListener('click', clearSavedMindmap); document.querySelectorAll('#mindmapDepthToolbar [data-depth]').forEach(btn=>btn.addEventListener('click',()=>{ currentMindmapDepth=btn.dataset.depth; renderMindmapTree(currentMindmapTree,{persist:false}); }));
+    $('readReportBtn').addEventListener('click',()=>{ if(currentReportText) $('ttsInput').value=currentReportText; prepareTtsChunks(true); speakText(); }); $('downloadReportBtn').addEventListener('click', downloadReport); $('downloadTxtBtn')?.addEventListener('click', downloadReportTxt); $('downloadTranscriptBtn')?.addEventListener('click', downloadTranscript); $('shareReportBtn').addEventListener('click', shareReport); $('lineShareBtn')?.addEventListener('click', lineShareReport); $('emailShareBtn')?.addEventListener('click', emailShareReport); $('copyReportBtn')?.addEventListener('click', copyReport);
+    $('saveMindmapBtn')?.addEventListener('click', saveCurrentMindmap); $('downloadMindmapSvgBtn')?.addEventListener('click', downloadMindmapSvg); $('downloadMindmapPngBtn')?.addEventListener('click',()=>downloadMindmapRaster('png')); $('downloadMindmapJpgBtn')?.addEventListener('click',()=>downloadMindmapRaster('jpg')); $('shareMindmapImageBtn')?.addEventListener('click', shareMindmapImage); $('clearMindmapBtn')?.addEventListener('click', clearSavedMindmap); document.querySelectorAll('#mindmapDepthToolbar [data-depth]').forEach(btn=>btn.addEventListener('click',()=>{ currentMindmapDepth=btn.dataset.depth; renderMindmapTree(currentMindmapTree,{persist:false}); }));
   }
   async function init(){
-    bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); updatePrepScenarioUI(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); restoreLastResult(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.11 初始化完成', 'SYSTEM'); log('本版新增：逐字稿人名校正、繁體中文固定輸出、校正版報告與自訂可展開心智圖', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.11'); log('PWA Service Worker 已註冊 V5.9.11', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); updatePrepScenarioUI(); if('speechSynthesis' in window){ populateTtsVoices(); speechSynthesis.onvoiceschanged=()=>{ populateTtsVoices(); loadTtsPrefs(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); restoreLastResult(); autoSyncCatalogOnceDaily();
+    log('AbraKai 聲曜 V5.9.12 初始化完成', 'SYSTEM'); log('本版新增：專業逐字稿去口語贅詞、AI處理紀錄、CD Player讀稿器、LINE/Email分享與下載強化', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.12'); log('PWA Service Worker 已註冊 V5.9.12', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();
