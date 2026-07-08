@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.13",
+  "name": "思錄 AI｜SoundNoteAI V5.9.14",
   "short_name": "思錄AI",
-  "description": "首頁品牌重整、A/B 同層音檔入口、錄音分段規劃、處理狀態列、繁中報告、Word/PDF/HTML 輸出與分享強化版。",
-  "start_url": "./index.html?v=5.9.13",
+  "description": "操作導向文案、文字對比強化、關於我們、版權與免責集中頁。",
+  "start_url": "./index.html?v=5.9.14",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
