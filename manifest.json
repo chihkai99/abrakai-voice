@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.8.3",
+  "name": "AbraKai 聲曜 V5.9.9",
   "short_name": "聲曜",
-  "description": "全功能 API Key 組合推薦與智慧派工版：五家供應商清單、方案 A/B/C/D 推薦、Gemini 語音核心、Agnes 文字整理、系統自動依任務派工。",
-  "start_url": "./index.html?v=5.9.8.3",
+  "description": "直覺選單、設定中心與心智圖保存版：主功能選單預設收合、設定中心整合使用者 Profile/API Key/管理工具，並保存 Mermaid 心智圖。",
+  "start_url": "./index.html?v=5.9.9",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
