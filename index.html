@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.6｜長輩友善與功能分類簡化版</title>
+<title>AbraKai 聲曜 V5.9.8｜全功能 API Key 組合推薦與智慧派工版</title>
 <link href="./manifest.json?v=5.9.6" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
-/* V5.9.6 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
+/* V5.9.8 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
 
     :root {
       --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
@@ -48,7 +48,7 @@
     @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
 
 
-/* V5.9.6 sticky-header navigation fix */
+/* V5.9.8 sticky-header navigation fix */
 html{scroll-behavior:smooth}
 #workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
   scroll-margin-top:180px;
@@ -182,12 +182,32 @@ html{scroll-behavior:smooth}
   .demo-tools{margin-top:10px;padding:12px;border-radius:16px;border:1px dashed rgba(11,26,58,.25);background:rgba(11,26,58,.04)}
   @media (max-width:760px){.provider-guide-grid{grid-template-columns:1fr}}
 
+  .api-recommend-hero{background:linear-gradient(135deg,rgba(255,138,30,.16),rgba(30,136,229,.12));border:1px solid rgba(255,138,30,.28);border-radius:22px;padding:16px;margin:12px 0;color:#0B1A3A}
+  .api-recommend-hero b{font-size:18px;color:#7a3b00}
+  .provider-table{display:grid;gap:10px;margin-top:12px}
+  .provider-row{display:grid;grid-template-columns:1.1fr 1.6fr auto;gap:10px;align-items:center;background:rgba(255,255,255,.82);border:1px solid rgba(11,26,58,.12);border-radius:18px;padding:12px;color:#0B1A3A}
+  .provider-row h4{margin:0 0 4px;font-size:17px;color:#0B1A3A}
+  .provider-row p{margin:0;font-size:14px;line-height:1.55;color:#334155}
+  .provider-actions a{display:inline-block;text-decoration:none;font-weight:900;border-radius:999px;padding:8px 11px;margin:3px;color:#0f6ea8;border:1px solid rgba(15,110,168,.28);background:#f8fbff}
+  .combo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+  .combo-card{position:relative;background:linear-gradient(180deg,#ffffff,#f8fbff);border:1px solid rgba(11,26,58,.13);border-radius:22px;padding:15px;color:#0B1A3A;box-shadow:0 10px 20px rgba(11,26,58,.07)}
+  .combo-card.recommended{border:2px solid rgba(255,138,30,.55);box-shadow:0 14px 26px rgba(255,138,30,.14)}
+  .combo-badge{display:inline-block;background:#ffead4;color:#8a3e00;border-radius:999px;padding:5px 10px;font-weight:900;font-size:13px;margin-bottom:8px}
+  .combo-card h4{font-size:18px;margin:0 0 6px;color:#0B1A3A}
+  .combo-card p{font-size:14px;line-height:1.65;color:#334155;margin:0 0 10px}
+  .combo-card ul{margin:8px 0 0 18px;padding:0;color:#334155;font-size:14px;line-height:1.75}
+  .routing-table{display:grid;gap:8px;margin-top:12px}
+  .routing-row{display:grid;grid-template-columns:1.1fr 1.3fr 1.4fr;gap:8px;background:rgba(255,255,255,.76);border:1px solid rgba(11,26,58,.1);border-radius:16px;padding:10px;color:#0B1A3A;font-size:14px;line-height:1.5}
+  .routing-row.head{background:#0B1A3A;color:#fff;font-weight:900}
+  @media (max-width:760px){.provider-row{grid-template-columns:1fr}.combo-grid{grid-template-columns:1fr}.routing-row{grid-template-columns:1fr}.routing-row.head{display:none}.api-recommend-hero b{font-size:20px}.provider-row h4,.combo-card h4{font-size:20px}.provider-row p,.combo-card p,.combo-card ul,.routing-row{font-size:16px}}
 
 
-/* ---- V5.9.6 mobile workspace refinements ---- */
 
 
-/* V5.9.6 mobile-first workspace: keep daily-use features first, move settings into menu */
+/* ---- V5.9.8 mobile workspace refinements ---- */
+
+
+/* V5.9.8 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -209,7 +229,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.6 final polish ---- */
+/* ---- V5.9.8 final polish ---- */
 .app-header{background:rgba(11,26,58,.96)!important;}
 .user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
 .workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
@@ -225,7 +245,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.6 compact scenario-based prep ---- */
+/* ---- V5.9.8 compact scenario-based prep ---- */
 .compact-prep-card{padding:16px!important}
 .compact-note{padding:10px 12px!important;margin:8px 0 10px!important;line-height:1.55!important}
 .scenario-shell{background:rgba(255,255,255,.60);border:1px solid rgba(11,26,58,.13);border-radius:18px;padding:12px;margin:10px 0;color:#0F172A}
@@ -239,7 +259,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.6 elder-friendly simplified UI overrides ---- */
+/* ---- V5.9.8 elder-friendly simplified UI overrides ---- */
 .elder-note{font-size:18px!important;color:#0f223d!important;background:rgba(255,255,255,.92)!important;border-color:rgba(30,136,229,.26)!important}
 .quick-start-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
 .big-action{min-height:86px!important;border-radius:20px!important;padding:16px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;gap:14px!important;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(225,243,255,.94))!important;border:2px solid rgba(30,136,229,.36)!important;color:#08213f!important;box-shadow:0 10px 24px rgba(11,26,58,.14)!important}
@@ -251,6 +271,20 @@ html{scroll-behavior:smooth}
   body{font-size:18px!important}.wrap{padding:10px 10px 28px!important}.header-inner{padding:14px 12px!important;gap:12px!important}.product-logo{width:72px!important;height:72px!important;border-radius:20px!important}.logo-svg{width:48px!important;height:48px!important}.title{font-size:34px!important;line-height:1.08!important}.version{font-size:14px!important}.sub{font-size:18px!important}.desc{font-size:16px!important}.status-pill{font-size:16px!important;line-height:1.45!important;border-radius:22px!important;max-width:none!important;padding:10px 12px!important}.user-workspace-menu{top:112px!important;grid-template-columns:repeat(2,1fr)!important;gap:10px!important;padding:12px 0!important}.user-workspace-menu .menu-btn{font-size:18px!important;min-height:62px!important;border-radius:18px!important}.workspace-hero{border-radius:28px!important}.card{padding:20px 16px!important;border-radius:26px!important}.card-title{font-size:24px!important;line-height:1.25!important}.section-note{font-size:19px!important;line-height:1.8!important;padding:16px!important}.compact-status span{font-size:16px!important;padding:9px 12px!important}.quick-start-panel{grid-template-columns:1fr!important;gap:14px!important}.big-action{min-height:92px!important;padding:18px!important}.big-action b{font-size:24px!important}.big-action small{font-size:16px!important}.big-ico{font-size:36px!important}.first-use-box{display:block!important;font-size:18px!important;line-height:1.65!important}.first-use-box button{width:100%!important;margin-top:12px!important;min-height:58px!important;font-size:19px!important}.scenario-topline select,.compact-prep-grid input,.compact-prep-grid select,input,select,textarea{font-size:20px!important;min-height:58px!important;border-radius:16px!important;color:#0B1A3A!important;background:#fff!important}.prep-card label,.card-flow label{font-size:19px!important;color:#e5f6ff!important}.scenario-shell{padding:16px!important;border-radius:24px!important;background:rgba(255,255,255,.93)!important}.scenario-shell label{color:#075985!important}.scenario-hint{font-size:17px!important;line-height:1.7!important}.prep-action-row{grid-template-columns:1fr!important}.prep-action-row button,.btn-row button,button{min-height:58px!important;font-size:19px!important}.tts-control-grid{display:none!important}.tts-helper-note{display:none!important}.modal-box{max-width:92vw!important;padding:24px 20px!important}.modal-title{font-size:28px!important}.modal-msg{font-size:20px!important;line-height:1.8!important}.modal button{font-size:20px!important;min-height:60px!important}.card-flow-doc .btn-row{grid-template-columns:1fr!important}.card-flow-doc textarea{font-size:19px!important;line-height:1.7!important;min-height:220px!important}
 }
 
+
+@media (max-width: 760px){
+  body{font-size:18px;}
+  .brand-title{font-size:42px; line-height:1.08;}
+  .brand-sub{font-size:24px;}
+  .tagline{font-size:19px; line-height:1.55;}
+  .status-pill{font-size:18px; line-height:1.45;}
+  .tab-btn,.big-action,.btn-primary,.btn-blue,.btn-outline{font-size:22px; min-height:64px;}
+  label{font-size:19px; font-weight:900;}
+  input,select,textarea{font-size:21px; min-height:58px;}
+  .section-note,.safe-note{font-size:19px; line-height:1.6;}
+  .modal-card{font-size:20px;}
+  .modal-card h3{font-size:28px;}
+}
 </style>
 </head>
 <body>
@@ -303,7 +337,7 @@ html{scroll-behavior:smooth}
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.6 簡易上手版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.8 API 組合推薦版</div></div>
 <div class="sub">VoxAura AI Engine</div>
 <div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
@@ -328,7 +362,7 @@ html{scroll-behavior:smooth}
   <button class="big-action" id="quickImportDocBtn" type="button"><span class="big-ico">📄</span><span><b>匯入文件</b><small>PDF / Word / TXT 讀報</small></span></button>
   <button class="big-action" id="quickReaderBtn" type="button"><span class="big-ico">🔊</span><span><b>文字播報</b><small>貼上文字直接朗讀</small></span></button>
 </div>
-<div class="first-use-box" id="firstUseBox"><div><b>第一次使用？</b><br/><span>請先建立本機試用帳號，才能使用官方 7 天每日 1 次 AI 體驗。</span></div><button class="btn-primary" id="registerQuickBtn" type="button">一鍵建立試用帳號</button></div>
+<div class="first-use-box" id="firstUseBox"><div><b>第一次使用？</b><br/><span>按一下即可建立試用帳號；不用填表。錄音、匯入音檔與文件前會自動建立。</span></div><button class="btn-primary" id="registerQuickBtn" type="button">立即建立試用帳號</button></div>
 </section><section class="card prep-card compact-prep-card hidden" id="meetingPrepSection">
 <h2 class="card-title"><span>🎛️ 錄音情境設定</span><button class="btn-small btn-outline" id="collapsePrepBtn" type="button">關閉設定</button></h2>
 <div class="section-note compact-note"><b>這裡是進階設定。</b><br/>一般錄音不用填；只有正式會議、課程、訪談，需要更精準報告時再設定。</div>
@@ -415,25 +449,43 @@ html{scroll-behavior:smooth}
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.6 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.8 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
-<h3 class="card-title" style="font-size:16px"><span>🧭 API Key 申請引導與模型策略</span></h3>
-<div class="section-note">系統會每日嘗試從後端更新各供應商可用模型清單；若供應商暫時無法回應，會先使用內建推薦清單。使用者可依用途建立多組 API Key 節點，系統會優先使用「實測通過」且符合用途的節點。</div>
-<div class="provider-guide-grid" id="providerGuideList">
-<div class="provider-guide-card"><h4>Agnes AI</h4><p>適合文字、一般內容生成與官方 7 天每日 1 次體驗。正式用戶可自行申請 Agnes Key 後加入節點。</p><a href="https://agnes-ai.com/" rel="noopener" target="_blank">前往官方網站</a></div>
-<div class="provider-guide-card"><h4>Google Gemini</h4><p>適合音檔、PDF / 文件理解與多模態任務。申請後把 API Key 加入自己的節點。</p><a href="https://ai.google.dev/gemini-api/docs/api-key" rel="noopener" target="_blank">申請教學</a><a href="https://aistudio.google.com/app/apikey" rel="noopener" target="_blank">建立 Key</a></div>
-<div class="provider-guide-card"><h4>OpenAI</h4><p>適合語音轉文字、文字整理、摘要與通用任務。可依不同用途建立多組節點。</p><a href="https://platform.openai.com/settings/organization/api-keys" rel="noopener" target="_blank">API Keys</a></div>
-<div class="provider-guide-card"><h4>Claude / xAI Grok</h4><p>適合文字、推理、文件摘要或備援節點。實際可用模型以後端同步與正式實測為準。</p><a href="https://platform.claude.com/" rel="noopener" target="_blank">Claude Console</a><a href="https://x.ai/api" rel="noopener" target="_blank">xAI API</a></div>
+<h3 class="card-title" style="font-size:20px"><span>🧭 API Key 供應商與推薦組合</span></h3>
+<div class="api-recommend-hero"><b>建議先看這裡：</b><br/>AbraKai 聲曜是全功能系統，不要求使用者自己拆模型。請先選一組 API Key 組合；設定完成後，系統會依任務自動派工，盡量用適合且具成本效益的供應商處理。</div>
+<h3 class="card-title" style="font-size:18px"><span>① 五家推薦供應商</span></h3>
+<div class="provider-table">
+  <div class="provider-row"><div><h4>Google Gemini</h4><p>語音核心首選</p></div><p>適合錄音轉文字、長會議音檔、多語言、文字轉語音，也可先單獨啟用完整流程。</p><div class="provider-actions"><a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">申請教學</a><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">建立 Key</a></div></div>
+  <div class="provider-row"><div><h4>Agnes AI</h4><p>文字整理與報告</p></div><p>適合文字整理、文件摘要、報告生成、心智圖內容與官方試用額度；不建議作為錄音轉文字主力。</p><div class="provider-actions"><a href="https://agnes-ai.com/" target="_blank" rel="noopener">前往官方</a></div></div>
+  <div class="provider-row"><div><h4>OpenAI</h4><p>進階高品質</p></div><p>適合語音、文字、TTS、圖片與進階備援。若重視品質與穩定，可與 Gemini 或 Agnes 搭配。</p><div class="provider-actions"><a href="https://platform.openai.com/" target="_blank" rel="noopener">平台入口</a><a href="https://platform.openai.com/settings/organization/api-keys" target="_blank" rel="noopener">API Keys</a></div></div>
+  <div class="provider-row"><div><h4>Claude</h4><p>長文與深度報告</p></div><p>適合長文理解、專業報告、文件分析與備援整理。可放在進階組合中。</p><div class="provider-actions"><a href="https://platform.claude.com/" target="_blank" rel="noopener">Claude Console</a></div></div>
+  <div class="provider-row"><div><h4>xAI Grok</h4><p>創作與視覺備援</p></div><p>適合未來圖片、創作、視覺任務與備援。一般使用者可先不用急著申請。</p><div class="provider-actions"><a href="https://x.ai/api" target="_blank" rel="noopener">xAI API</a><a href="https://console.x.ai/" target="_blank" rel="noopener">Console</a></div></div>
 </div>
-<div class="rotation-policy">🔁 輪替策略：同一用途若有多組「實測通過」的 API Key，系統會依供應商適性、使用次數與最近使用時間做選擇，避免一直打同一支 Key。這是穩定性與降溫設計，不是用來規避供應商規範或無限制用量。</div>
+<h3 class="card-title" style="font-size:18px;margin-top:18px"><span>② 全功能 API Key 組合建議</span></h3>
+<div class="combo-grid">
+  <div class="combo-card recommended"><span class="combo-badge">系統最推薦</span><h4>方案 A：Gemini + Agnes</h4><p>適合想完整使用，又希望系統自動把文字整理交給更適合的供應商處理。</p><ul><li>Gemini：錄音轉文字、長會議、多語言、TTS</li><li>Agnes：文字整理、報告生成、心智圖內容</li></ul></div>
+  <div class="combo-card"><span class="combo-badge">最快啟用</span><h4>方案 B：只用 Gemini</h4><p>適合不想研究太多，只想先讓錄音、文字、報告流程都能跑起來。</p><ul><li>優點：最簡單，一支 Key 先跑全功能</li><li>提醒：文字整理任務也會消耗 Gemini 額度</li></ul></div>
+  <div class="combo-card"><span class="combo-badge">品質優先</span><h4>方案 C：Gemini + OpenAI</h4><p>適合重視語音、文字、TTS、進階生成品質與備援穩定度的使用者。</p><ul><li>Gemini / OpenAI：語音與文字互為備援</li><li>適合重要會議與高品質輸出</li></ul></div>
+  <div class="combo-card"><span class="combo-badge">進階報告</span><h4>方案 D：Gemini + Agnes + Claude</h4><p>適合長會議、長文件、深度報告與專業文字分析需求。</p><ul><li>Gemini：語音核心</li><li>Agnes / Claude：報告整理與深度分析</li></ul></div>
+</div>
+<h3 class="card-title" style="font-size:18px;margin-top:18px"><span>③ 系統自動派工規則</span></h3>
+<div class="routing-table">
+  <div class="routing-row head"><div>任務</div><div>優先使用</div><div>備援 / 補充</div></div>
+  <div class="routing-row"><div>錄音轉文字、音檔逐字稿</div><div>Gemini</div><div>OpenAI 備援；不使用 Agnes 當主力</div></div>
+  <div class="routing-row"><div>文字整理、文件摘要</div><div>Agnes</div><div>沒有 Agnes 時才用 Gemini / OpenAI</div></div>
+  <div class="routing-row"><div>會議報告、決議、待辦</div><div>Agnes</div><div>Claude / OpenAI 可作進階報告備援</div></div>
+  <div class="routing-row"><div>心智圖內容 / Mermaid</div><div>Agnes</div><div>Gemini / Claude 可作備援</div></div>
+  <div class="routing-row"><div>文字轉語音</div><div>Gemini</div><div>OpenAI TTS 可作備援</div></div>
+</div>
+<div class="rotation-policy">✅ 用詞原則：這些不是高低等級，而是不同需求的搭配建議。使用者設定完成後，系統會依任務自動選擇適合的 API Key；一般使用者不需要每天手動切換。</div>
 </div>
 <div class="subcard api-key-card">
 <h3 class="card-title" style="font-size:16px"><span>🔑 我的 API Key 管理</span></h3>
-<div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。測試分成「本機格式檢查」與「正式後端實測」：本機通過代表格式與本裝置儲存正常；正式實測代表 Worker 已用這把 Key 向供應商完成連線驗證。若有多組同用途 Key，系統會輪替選用，避免單一 Key 過度集中。</div>
+<div class="section-note">可在此新增、修改、刪除、複製、顯示或隱藏自己的 API Key。建議先依上方方案設定，例如 Gemini + Agnes。系統會依任務自動派工；一般使用者不需要每次手動選模型。</div>
 <input id="editingKeyIndex" type="hidden" value=""/>
 <div class="grid3">
-<div><label for="newProvider">供應商</label><select id="newProvider"><option value="Agnes">Agnes AI</option><option value="Gemini">Google Gemini</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
+<div><label for="newProvider">供應商</label><select id="newProvider"><option value="Gemini">Google Gemini</option><option value="Agnes">Agnes AI</option><option value="OpenAI">OpenAI</option><option value="Claude">Anthropic Claude</option><option value="Grok">xAI Grok</option></select></div>
 <div><label for="newModel">模型</label><select id="newModel"></select></div>
 <div><label for="newTask">用途</label><select id="newTask"><option value="all">通用</option><option value="audio">語音 / 音檔</option><option value="document">PDF / 文件</option><option value="text">文字 / 讀報</option><option value="fallback">備援</option></select></div>
 </div>
@@ -461,7 +513,7 @@ html{scroll-behavior:smooth}
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.6 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.8 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -529,7 +581,7 @@ html{scroll-behavior:smooth}
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.6';
+  const APP_VERSION = 'V5.9.8';
   const CACHE_BUST = '5.9.6';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
@@ -644,7 +696,7 @@ html{scroll-behavior:smooth}
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.6 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.8 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -652,14 +704,35 @@ html{scroll-behavior:smooth}
   function getTrialUsedToday(){ const u = loadTrialUsage(); return Number(u[todayKey()] || 0); }
   function getVerifiedKeyCount(){ return loadKeys().filter(k => k.enabled !== false && (k.testStatus === '實測通過' || k.testStatus === '通過')).length; }
   function taskMatches(k, taskType){ const t = k.task || 'all'; return t === 'all' || t === taskType || t === 'fallback'; }
+  function apiNodeIsVerified(k){
+    return k && (k.testStatus === '實測通過' || k.testStatus === '通過');
+  }
+  function apiNodeIsLocallyUsable(k){
+    return k && k.key && k.enabled !== false && (
+      apiNodeIsVerified(k) ||
+      k.testStatus === '本機通過' ||
+      k.testStatus === '本機格式通過' ||
+      k.testStatus === '待後端' ||
+      !k.testStatus
+    );
+  }
   function getBestUserApiNode(taskType){
-    const order = taskType === 'audio' ? ['Gemini','OpenAI','Agnes','Claude','Grok'] : taskType === 'document' ? ['Gemini','Agnes','OpenAI','Claude','Grok'] : ['Agnes','Gemini','OpenAI','Claude','Grok'];
-    const nodes = loadKeys()
-      .map((k, index) => ({...k, __index:index}))
-      .filter(k => k.enabled !== false && (k.testStatus === '實測通過' || k.testStatus === '通過') && taskMatches(k, taskType));
+    const order = taskType === 'audio' ? ['Gemini','OpenAI','Agnes','Claude','Grok'] : taskType === 'document' ? ['Agnes','Gemini','OpenAI','Claude','Grok'] : ['Agnes','Claude','Gemini','OpenAI','Grok'];
+    const allowProviderForTask = (k) => {
+      if(taskType === 'audio') return ['Gemini','OpenAI'].includes(k.provider);
+      if(taskType === 'document') return ['Agnes','Gemini','OpenAI','Claude'].includes(k.provider);
+      return true;
+    };
+    const all = loadKeys().map((k, index) => ({...k, __index:index})).filter(k => k.enabled !== false && k.key && taskMatches(k, taskType) && allowProviderForTask(k));
+    let nodes = all.filter(k => apiNodeIsVerified(k));
+    // 音檔轉文字不能走官方 Agnes 試用 Key；若使用者已填 Gemini/OpenAI 但尚未實測，先用使用者 Key 嘗試，錯誤再回傳明確原因。
+    if(!nodes.length && taskType === 'audio') nodes = all.filter(k => apiNodeIsLocallyUsable(k));
+    if(!nodes.length && taskType !== 'audio') nodes = all.filter(k => apiNodeIsLocallyUsable(k));
     return nodes.sort((a,b)=>{
       const pa = order.indexOf(a.provider); const pb = order.indexOf(b.provider);
       if(pa !== pb) return pa - pb;
+      const va = apiNodeIsVerified(a) ? 0 : 1; const vb = apiNodeIsVerified(b) ? 0 : 1;
+      if(va !== vb) return va - vb;
       const ua = Number(a.usageCount || 0); const ub = Number(b.usageCount || 0);
       if(ua !== ub) return ua - ub;
       return Number(a.lastUsedAt || 0) - Number(b.lastUsedAt || 0);
@@ -701,7 +774,8 @@ html{scroll-behavior:smooth}
     if(!s.systemOpen) return {ok:false, mode:'blocked', reason:'帳號目前已停止使用。請續約或聯絡管理員重新啟用。', state:s};
     const userNode = getBestUserApiNode(taskType);
     if(userNode) return {ok:true, mode:'user', node:userNode, reason:`將使用使用者自帶 API Key：${userNode.provider} / ${userNode.model}`, state:s};
-    if(s.trialApiAvailable) return {ok:true, mode:'trial', reason:'將使用官方 官方試用 AI 額度：註冊後 7 天內今日第 1 次。', state:s};
+    if(taskType === 'audio') return {ok:false, mode:'blocked', reason:'音檔轉文字需要先設定 Gemini 或 OpenAI API Key。官方 Agnes 試用額度目前只適合文字與文件任務，不能直接處理錄音音檔。請到「API Key」新增 Gemini 或 OpenAI Key，再回來按「錄音轉文字」。', state:s};
+    if(s.trialApiAvailable) return {ok:true, mode:'trial', reason:'將使用官方試用 AI 額度：註冊後 7 天內今日第 1 次。', state:s};
     if(s.withinApiTrial) return {ok:false, mode:'blocked', reason:'今日官方免費 API 額度已用完。明日可再用 1 次，或立即設定自己的 API Key。', state:s};
     return {ok:false, mode:'blocked', reason:'註冊後 7 天官方 API 試用額度已結束。請申請並設定自己的 API Key，才能繼續使用 AI 功能。', state:s};
   }
@@ -1114,7 +1188,15 @@ ${strategy ? '\n' + strategy : ''}
       const data = await res.json(); if(!res.ok || !data.ok) throw new Error(data.error || (data.details||[]).join('\n') || 'AI 解析失敗');
       if(aiPayload.routeMode === 'trial') markTrialUsedToday();
       closeModal(); renderResult(data, currentAudioName || 'audio'); log(`音檔解析完成：${data.provider || '-'} / ${data.model || '-'}｜${data.routeMode || aiPayload.routeMode}`, 'SUCCESS');
-    }catch(err){ closeModal(); showModal('AI 解析失敗', String(err.message || err)); log('音檔解析失敗：' + (err.message || err), 'ERROR'); }
+    }catch(err){
+      closeModal();
+      const msg = String(err.message || err);
+      if(msg.includes('音檔轉文字需要') || msg.includes('音檔轉文字路徑')) showModal('錄音轉文字需要 API Key', msg + '
+
+簡單說：錄音音檔請先設定 Gemini 或 OpenAI API Key；設定後不需要重錄，直接回來按「錄音轉文字並產生報告」即可。');
+      else showModal('AI 解析失敗', msg);
+      log('音檔解析失敗：' + msg, 'ERROR');
+    }
   }
 
   async function importDocument(file){
@@ -1300,11 +1382,11 @@ ${strategy ? '\n' + strategy : ''}
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
     $('downloadAudioBtn').addEventListener('click', downloadAudio); $('analyzeAudioBtn').addEventListener('click', analyzeAudio);
-    $('quickRecordBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { showModal('先建立試用帳號','第一次使用請先按首頁的「一鍵建立試用帳號」。建立後即可錄音、匯入音檔或使用官方 7 天每日 1 次 AI 體驗。'); return; } if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); });
+    $('quickRecordBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { createAccount(); } if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); });
     $('scenarioSettingsBtn')?.addEventListener('click',()=>{ $('meetingPrepSection')?.classList.remove('hidden'); scrollToTarget($('meetingPrepSection'), {delay:20}); setTimeout(()=>buildPrepStrategy(false), 260); });
     $('registerQuickBtn')?.addEventListener('click',()=>{ createAccount(); setHomeStatus(); renderAccountPanel(); });
-    $('quickImportAudioBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { showModal('先建立試用帳號','第一次使用請先按首頁的「一鍵建立試用帳號」。建立後即可匯入音檔。'); return; } scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>$('audioFileInput').click(), 260); });
-    $('quickImportDocBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { showModal('先建立試用帳號','第一次使用請先按首頁的「一鍵建立試用帳號」。建立後即可匯入文件。'); return; } scrollToTarget($('readerSection'), {delay:20}); setTimeout(()=>$('docFileInput').click(), 260); });
+    $('quickImportAudioBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { createAccount(); } scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>$('audioFileInput').click(), 260); });
+    $('quickImportDocBtn')?.addEventListener('click',()=>{ if(!loadAccount()) { createAccount(); } scrollToTarget($('readerSection'), {delay:20}); setTimeout(()=>$('docFileInput').click(), 260); });
     $('quickReaderBtn')?.addEventListener('click',()=>{ scrollToTarget($('readerSection'), {delay:20}); setTtsStatus('已開啟播報器，請貼上文字或匯入文件'); });
     $('pickDocBtn').addEventListener('click',()=> $('docFileInput').click()); $('docFileInput').addEventListener('change', e=> importDocument(e.target.files[0]));
     $('speakBtn').addEventListener('click', speakText); $('pauseTtsBtn').addEventListener('click', pauseTts); $('resumeTtsBtn').addEventListener('click', resumeTts); $('stopTtsBtn').addEventListener('click', stopTts);
@@ -1314,8 +1396,8 @@ ${strategy ? '\n' + strategy : ''}
   }
   async function init(){
     bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); updatePrepScenarioUI(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.6 初始化完成', 'SYSTEM'); log('本版修正：長輩友善首頁、功能大分類、字體加大、錄音設定預設收合、註冊入口前置', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.6'); log('PWA Service Worker 已註冊 V5.9.6', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.9.8 初始化完成', 'SYSTEM'); log('本版修正：全功能 API Key 組合推薦、五家供應商清單、任務自動派工、官方試用依任務節省 API 額度', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.8'); log('PWA Service Worker 已註冊 V5.9.8', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();

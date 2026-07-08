@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.6",
+  "name": "AbraKai 聲曜 V5.9.8",
   "short_name": "聲曜",
-  "description": "會議錄音、舊音檔匯入、AI 逐字稿、文件讀報；V5.9.6 修復情境下拉分類、精準設定收合、錄音流程精簡、導覽定位、行動首頁優先與設定持久化。",
-  "start_url": "./index.html?v=5.9.6",
+  "description": "全功能 API Key 組合推薦與智慧派工版：五家供應商清單、方案 A/B/C/D 推薦、Gemini 語音核心、Agnes 文字整理、系統自動依任務派工。",
+  "start_url": "./index.html?v=5.9.8",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
