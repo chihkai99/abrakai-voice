@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="#0B1A3A" name="theme-color"/>
-<title>AbraKai 聲曜 V5.9.10｜常駐浮動功能選單修正版</title>
-<link href="./manifest.json?v=5.9.10" rel="manifest"/>
+<title>AbraKai 聲曜 V5.9.11｜逐字稿校正、繁中報告與可展開心智圖版</title>
+<link href="./manifest.json?v=5.9.11" rel="manifest"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&amp;family=Fira+Code:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
-/* V5.9.10 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
+/* V5.9.11 meeting-prep mode: keep V5.8 premium dark-blue brand system, V5.9 mobile workspace, V5.9.2+ anchored navigation, and make primary hero actions executable. */
 
     :root {
       --brand-navy:#0B1A3A; --brand-blue:#1E88E5; --brand-orange:#FF8A1E;
@@ -48,7 +48,7 @@
     @media (prefers-reduced-motion: reduce){.wave-bar,.text-row{animation:none!important}}
 
 
-/* V5.9.10 sticky-header navigation fix */
+/* V5.9.11 sticky-header navigation fix */
 html{scroll-behavior:smooth}
 #workspaceHome,#audioSection,#readerSection,#resultArea,#apiKeyPanel,#accountPanel,#monitorPanel,#noticePanel,#serviceCenterPanel,#previewArea{
   scroll-margin-top:180px;
@@ -204,10 +204,10 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.10 mobile workspace refinements ---- */
+/* ---- V5.9.11 mobile workspace refinements ---- */
 
 
-/* V5.9.10 mobile-first workspace: keep daily-use features first, move settings into menu */
+/* V5.9.11 mobile-first workspace: keep daily-use features first, move settings into menu */
 .user-workspace-menu{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .user-workspace-menu .menu-btn{border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 8px;background:rgba(15,36,74,.72);color:#EAF4FF;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
 .user-workspace-menu .menu-btn.active{background:linear-gradient(135deg,#0284c7,#22c55e);color:#fff}
@@ -229,7 +229,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.10 final polish ---- */
+/* ---- V5.9.11 final polish ---- */
 .app-header{background:rgba(11,26,58,.96)!important;}
 .user-workspace-menu{position:sticky;top:88px;z-index:45;background:rgba(11,26,58,.76);backdrop-filter:blur(12px);padding:10px 0;border-bottom:1px solid rgba(30,136,229,.22)}
 .workspace-hero{border-radius:24px;box-shadow:0 16px 45px rgba(0,0,0,.26);overflow:hidden}
@@ -245,7 +245,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.10 compact scenario-based prep ---- */
+/* ---- V5.9.11 compact scenario-based prep ---- */
 .compact-prep-card{padding:16px!important}
 .compact-note{padding:10px 12px!important;margin:8px 0 10px!important;line-height:1.55!important}
 .scenario-shell{background:rgba(255,255,255,.60);border:1px solid rgba(11,26,58,.13);border-radius:18px;padding:12px;margin:10px 0;color:#0F172A}
@@ -259,7 +259,7 @@ html{scroll-behavior:smooth}
 
 
 
-/* ---- V5.9.10 elder-friendly simplified UI overrides ---- */
+/* ---- V5.9.11 elder-friendly simplified UI overrides ---- */
 .elder-note{font-size:18px!important;color:#0f223d!important;background:rgba(255,255,255,.92)!important;border-color:rgba(30,136,229,.26)!important}
 .quick-start-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
 .big-action{min-height:86px!important;border-radius:20px!important;padding:16px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;gap:14px!important;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(225,243,255,.94))!important;border:2px solid rgba(30,136,229,.36)!important;color:#08213f!important;box-shadow:0 10px 24px rgba(11,26,58,.14)!important}
@@ -287,7 +287,7 @@ html{scroll-behavior:smooth}
 }
 
 
-/* ---- V5.9.10 checkbox / option readability fix ----
+/* ---- V5.9.11 checkbox / option readability fix ----
    Fixes mobile issue where report tracking options appeared blank because
    global mobile input sizing and label colors affected checkbox rows. */
 .prep-focus-grid{display:grid!important;gap:12px!important;}
@@ -326,14 +326,19 @@ html{scroll-behavior:smooth}
 }
 
 
-/* V5.9.10 compact navigation + settings center */
-/* V5.9.10 floating menu: always reachable, tiny footprint */
+/* V5.9.11 compact navigation + settings center */
+/* V5.9.11 floating menu: always reachable, tiny footprint */
 .main-menu-toggle{position:fixed!important;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:1001;margin:0!important;width:58px!important;height:58px!important;min-height:58px!important;border-radius:999px!important;background:linear-gradient(135deg,#FF8A1E,#22c55e);color:#06142b!important;border:2px solid rgba(255,255,255,.55)!important;font-size:28px!important;font-weight:1000!important;line-height:1!important;box-shadow:0 14px 36px rgba(0,0,0,.46),0 0 0 5px rgba(30,136,229,.14)!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
 .main-menu-toggle:active{transform:scale(.96)}
 .user-workspace-menu{display:none!important}
 .user-workspace-menu.menu-open{display:grid!important;position:fixed!important;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:1000;width:min(320px,calc(100vw - 32px))!important;grid-template-columns:1fr!important;gap:8px!important;margin:0!important;padding:12px!important;border-radius:22px!important;background:rgba(11,26,58,.96)!important;border:1px solid rgba(30,136,229,.45)!important;box-shadow:0 20px 50px rgba(0,0,0,.58)!important;backdrop-filter:blur(14px)!important}
 .user-workspace-menu.menu-open .menu-btn{min-height:52px!important;border-radius:16px!important;font-size:17px!important;padding:10px 12px!important;text-align:center!important}
 .settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.setting-card{background:rgba(255,255,255,.08);border:1px solid rgba(30,136,229,.36);border-radius:18px;padding:16px;cursor:pointer;color:#eaf4ff;text-align:left;box-shadow:0 8px 20px rgba(0,0,0,.18)}.setting-card b{display:block;color:#fff;font-size:18px;margin-bottom:6px}.setting-card span{display:block;color:#bdd8ff;line-height:1.5;font-size:14px}.setting-card.primary{border-color:rgba(255,138,30,.7);background:linear-gradient(135deg,rgba(255,138,30,.18),rgba(30,136,229,.12))}.mindmap-actions{margin-top:10px}.mindmap-meta{font-size:13px;color:#bdd8ff;margin-top:8px;line-height:1.6}.profile-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.profile-mini{background:#f8fafc;color:#0B1A3A;border-radius:14px;padding:12px;border:1px solid rgba(30,136,229,.25)}.profile-mini b{color:#075985}
+
+/* ---- V5.9.11 corrected transcript + expandable mindmap ---- */
+.workflow-pillbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}.workflow-pill{font-size:13px;font-weight:900;color:#07315c;background:#e0f2fe;border:1px solid rgba(30,136,229,.35);border-radius:999px;padding:7px 10px}.prep-mini-hint{font-size:13px;color:#0f172a;background:#fff7ed;border:1px solid rgba(255,138,30,.35);border-radius:14px;padding:10px;line-height:1.6;margin-top:8px}.mindmap-toolbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}.mindmap-toolbar button{min-height:44px!important;font-size:15px!important;border-radius:14px!important}.mindmap-canvas{background:#fff;color:#0B1A3A;border-radius:16px;border:2px solid rgba(30,136,229,.7);padding:10px;overflow:auto;min-height:220px;max-height:62vh}.mindmap-canvas svg{max-width:none;height:auto;display:block}.mindmap-legend{font-size:13px;line-height:1.7;color:#dbeafe;margin-top:8px}.raw-corrected-note{font-size:13px;color:#bfdbfe;line-height:1.7;margin:6px 0 10px}.mobile-drawer-card{max-height:70vh;overflow:auto}
+@media(max-width:720px){.workflow-pillbar{display:grid;grid-template-columns:1fr 1fr}.workflow-pill{font-size:12px;text-align:center;padding:7px 6px}.mindmap-toolbar{grid-template-columns:1fr 1fr}.mindmap-actions{grid-template-columns:1fr!important}.mindmap-canvas{max-height:58vh;padding:8px}.secondary-panel:not(.panel-open){display:none!important}.accordion-body:not(.hidden){max-height:68vh;overflow:auto}.main-menu-toggle{z-index:2002!important}.user-workspace-menu.menu-open{z-index:2001!important}}
+
 @media(max-width:720px){.main-menu-toggle{right:14px!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;width:56px!important;height:56px!important;min-height:56px!important;font-size:27px!important}.user-workspace-menu.menu-open{right:14px!important;bottom:calc(78px + env(safe-area-inset-bottom))!important;width:calc(100vw - 28px)!important;max-width:330px!important;grid-template-columns:1fr!important}.settings-grid{grid-template-columns:1fr}.setting-card{padding:18px}.setting-card b{font-size:23px}.setting-card span{font-size:17px}.profile-mini-grid{grid-template-columns:1fr}.mindmap-actions{display:grid!important;grid-template-columns:1fr!important}.mindmap-actions button{font-size:18px!important;min-height:56px!important}}
 
 body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
@@ -389,9 +394,9 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </svg>
 </div>
 <div class="titlebox">
-<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.10 浮動選單修正版</div></div>
+<div class="titleline"><div class="title">AbraKai 聲曜</div><div class="version" id="versionBadge">V5.9.11 校正心智圖版</div></div>
 <div class="sub">VoxAura AI Engine</div>
-<div class="desc">會議錄音、舊音檔匯入、AI 逐字稿、文件讀報與成果匯出</div>
+<div class="desc">AI 會議紀錄、校正版逐字稿、繁中報告與可展開心智圖</div>
 <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">系統初始化中</span></div>
 </div>
 </div>
@@ -402,13 +407,14 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 <button class="menu-btn" data-panel="status" type="button">🛰️ 系統狀態</button>
 <button class="menu-btn" data-panel="notice" type="button">📢 公告說明</button>
 </nav><section class="card workspace-hero" id="workspaceHome">
-<h2 class="card-title"><span>🚀 開始使用 AbraKai 聲曜</span></h2>
-<div class="section-note elder-note"><b>先選你要做什麼。</b><br/>一般使用者只要按「馬上錄音」或「匯入音檔」即可；正式會議才需要打開「錄音情境設定」。</div>
+<h2 class="card-title"><span>🚀 建立 AI 會議紀錄</span></h2>
+<div class="section-note elder-note"><b>先選你要做什麼。</b><br/>先選來源：現在錄音或匯入舊音檔。兩種來源都可以先補填會議資料、與會者姓名、職稱與專有名詞，讓後面的逐字稿與報告更精準。</div>
 <div class="compact-status"><span id="homeServiceStatus">AI 服務：檢查中</span><span id="homeAccountStatus">帳號：尚未註冊</span><span id="homeApiStatus">API Key：尚未設定</span></div>
+<div class="workflow-pillbar"><span class="workflow-pill">1 選來源</span><span class="workflow-pill">2 補會議資料</span><span class="workflow-pill">3 校正逐字稿</span><span class="workflow-pill">4 報告＋心智圖</span></div>
 <div class="quick-start-panel" id="quickStartPanel">
-  <button class="big-action primary-action" id="quickRecordBtn" type="button"><span class="big-ico">🎙️</span><span><b>馬上錄音</b><small>一般錄音最快用這個</small></span></button>
+  <button class="big-action primary-action" id="quickRecordBtn" type="button"><span class="big-ico">🎙️</span><span><b>現在錄音</b><small>先錄音，再用會議設定校正</small></span></button>
   <button class="big-action" id="scenarioSettingsBtn" type="button"><span class="big-ico">🎛️</span><span><b>錄音情境設定</b><small>正式會議、課程、訪談再打開</small></span></button>
-  <button class="big-action" id="quickImportAudioBtn" type="button"><span class="big-ico">📂</span><span><b>匯入音檔</b><small>上傳舊錄音做整理</small></span></button>
+  <button class="big-action" id="quickImportAudioBtn" type="button"><span class="big-ico">📂</span><span><b>匯入舊音檔</b><small>舊錄音也可補填會議設定</small></span></button>
   <button class="big-action" id="quickImportDocBtn" type="button"><span class="big-ico">📄</span><span><b>匯入文件</b><small>PDF / Word / TXT 讀報</small></span></button>
   <button class="big-action" id="quickReaderBtn" type="button"><span class="big-ico">🔊</span><span><b>文字播報</b><small>貼上文字直接朗讀</small></span></button>
 </div>
@@ -429,7 +435,7 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </div>
 </section><section class="card prep-card compact-prep-card hidden" id="meetingPrepSection">
 <h2 class="card-title"><span>🎛️ 錄音情境設定</span><button class="btn-small btn-outline" id="collapsePrepBtn" type="button">關閉設定</button></h2>
-<div class="section-note compact-note"><b>這裡是進階設定。</b><br/>一般錄音不用填；只有正式會議、課程、訪談，需要更精準報告時再設定。</div>
+<div class="section-note compact-note"><b>這裡會套用到「現在錄音」與「匯入舊音檔」。若要修正人名、職稱、同音字與專有名詞，請在產生報告前先補填。</div>
 <div class="scenario-shell">
   <div class="scenario-topline">
     <div><label for="prepScenario">錄音情境</label><select id="prepScenario"><option value="一般錄音 / 備忘">一般錄音 / 備忘</option><option value="一般對話">一般對話</option><option value="正式會議">正式會議</option><option value="課程 / 教學">課程 / 教學</option><option value="客戶訪談">客戶訪談</option><option value="檢討會議">檢討會議</option><option value="業務會議">業務會議</option><option value="報告 / 簡報">報告 / 簡報</option><option value="其他">其他</option></select></div>
@@ -440,7 +446,8 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 </div>
 <div class="prep-grid compact-prep-grid" id="prepCoreFields">
   <div><label for="prepTitle">標題</label><input id="prepTitle" placeholder="例如：臨時紀錄、7月專案會議" type="text"/></div>
-  <div><label for="prepOutputLanguage">輸出語言</label><select id="prepOutputLanguage"><option selected value="繁體中文">繁體中文</option><option value="英文">英文</option><option value="中英雙語">中英雙語</option><option value="保留原語言">保留原語言</option></select></div>
+  <div><label for="prepOutputLanguage">輸出語言</label><select id="prepOutputLanguage"><option selected value="繁體中文（台灣用語）">繁體中文（固定）</option></select><div class="prep-mini-hint">所有中文輸出一律使用繁體中文，不輸出簡體中文。</div></div>
+  <div><label for="prepReportStyle">報告風格</label><select id="prepReportStyle"><option selected value="正式版">正式版｜少量圖示、商務會議</option><option value="親和版">親和版｜適度 Emoji、易讀活潑</option></select></div>
   <div class="context-field meeting-field"><label for="prepCompany">公司 / 團隊</label><input id="prepCompany" placeholder="例如：阿布拉.凱工作室" type="text"/></div>
   <div class="context-field language-field"><label for="prepLanguages">語言 / 口音</label><input id="prepLanguages" placeholder="例如：中文、英文、日文、台語可能出現" type="text"/></div>
 </div>
@@ -451,9 +458,14 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
       <div><label for="prepParticipantsCount">與會者人數</label><input id="prepParticipantsCount" min="1" placeholder="例如：6" type="number"/></div>
       <div><label for="prepAutoSegment">長會議分段</label><select id="prepAutoSegment"><option selected value="suggest">建議每 30 分鐘分段</option><option value="off">暫不提醒</option><option value="strict">強提醒分段</option></select></div>
       <div class="wide"><label for="prepParticipants">與會者名單 / 職稱</label><textarea id="prepParticipants" placeholder="一行一位，例如：
-尤致凱｜主持人
-王經理｜業務窗口
-林小姐｜行政紀錄"></textarea></div>
+尤致凱｜業務經理
+吳宥忠｜學院院長
+王經理｜業務窗口"></textarea></div>
+      <div class="wide"><label for="prepGlossary">專有名詞 / 正確寫法</label><textarea id="prepGlossary" placeholder="一行一個，例如：
+AbraKai 聲曜
+家睦團隊
+VoxAura AI Engine
+尤致凱，不是游志凱"></textarea></div>
       <div class="wide"><label for="prepNotes">補充情境 / 目的</label><textarea id="prepNotes" placeholder="例如：這場會議要確認專案進度、待辦負責人、風險與下次會議事項。也可用語音補充。"></textarea></div>
     </div>
     <div class="subcard compact-subcard"><b>本次報告要追蹤什麼？</b>
@@ -465,7 +477,7 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
         <label><input class="prep-focus" checked type="checkbox" value="風險與提醒"/> 風險</label>
         <label><input class="prep-focus" type="checkbox" value="講者標記"/> 講者</label>
         <label><input class="prep-focus" type="checkbox" value="多語言翻譯整理"/> 翻譯</label>
-        <label><input class="prep-focus" type="checkbox" value="Mermaid 心智圖"/> 心智圖</label>
+        <label><input class="prep-focus" type="checkbox" value="可展開心智圖"/> 心智圖</label>
         <label><input class="prep-focus" type="checkbox" value="課程學習筆記"/> 課程筆記</label>
       </div>
     </div>
@@ -508,14 +520,21 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 <h3 style="color:var(--brand-orange)">📝 逐字稿 / 結構化報告</h3>
 <pre class="output" id="outputContent">等待資料產出...</pre>
 <div class="btn-row"><button class="btn-blue" id="readReportBtn">🔊 播報報告</button><button class="btn-outline" id="downloadReportBtn">📥 匯出 Markdown</button><button class="btn-outline" id="shareReportBtn">📤 分享</button></div>
-<h3 style="color:var(--brand-orange)">🧠 互動心智圖</h3>
-<div class="mindmap" id="mindmapView"><div id="mermaidCode">尚未產生心智圖</div></div>
-<div class="btn-row mindmap-actions"><button class="btn-blue" id="saveMindmapBtn" type="button">💾 保存心智圖</button><button class="btn-outline" id="downloadMindmapSvgBtn" type="button">📥 下載 SVG</button><button class="btn-gray" id="clearMindmapBtn" type="button">清除保存</button></div>
+<h3 style="color:var(--brand-orange)">🧠 可展開心智圖</h3>
+<div class="mindmap-toolbar" id="mindmapDepthToolbar">
+  <button class="btn-outline" data-depth="1" type="button">第 1 層</button>
+  <button class="btn-outline" data-depth="2" type="button">第 2 層</button>
+  <button class="btn-outline" data-depth="3" type="button">第 3 層</button>
+  <button class="btn-blue" data-depth="all" type="button">全開</button>
+</div>
+<div class="mindmap mindmap-canvas" id="mindmapView"><div id="mermaidCode">尚未產生心智圖</div></div>
+<div class="btn-row mindmap-actions"><button class="btn-blue" id="saveMindmapBtn" type="button">💾 保存心智圖</button><button class="btn-outline" id="downloadMindmapSvgBtn" type="button">📥 SVG</button><button class="btn-outline" id="downloadMindmapPngBtn" type="button">📷 PNG</button><button class="btn-outline" id="downloadMindmapJpgBtn" type="button">🖼️ JPG</button><button class="btn-gray" id="clearMindmapBtn" type="button">清除保存</button></div>
 <div class="mindmap-meta" id="mindmapSavedText">心智圖尚未保存。</div>
+<div class="mindmap-legend" id="mindmapDepthText">心智圖會依正式報告生成；可切換第 1、2、3 層或全開後再下載。</div>
 </section><section class="card card-settings secondary-panel" id="apiKeyPanel">
 <h2 class="card-title"><span>⚙️ API Key 呈列管理</span><button class="btn-small btn-blue" id="toggleApiPanelBtn">展開 / 收合</button></h2>
 <div class="section-note">這裡只管理「使用者自帶 API Key」。AI 服務連線、模型清單更新與管理員服務網址已移到上方「AI 服務與模型更新中心」。</div>
-<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.10 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
+<div class="safe-note"><span class="privacy-badge">🔑 API Key 安全原則</span> V5.9.11 測試版會把使用者自己的 Key 儲存在目前瀏覽器；正式商業版應改為會員登入後，由後端加密保存或讓使用者每台裝置自行管理。畫面永遠只顯示遮罩，不顯示完整 Key。</div>
 <div class="hidden" id="apiPanel">
 <div class="subcard api-guide-card">
 <h3 class="card-title" style="font-size:20px"><span>🧭 API Key 供應商與推薦組合</span></h3>
@@ -541,7 +560,7 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
   <div class="routing-row"><div>錄音轉文字、音檔逐字稿</div><div>Gemini</div><div>OpenAI 備援；不使用 Agnes 當主力</div></div>
   <div class="routing-row"><div>文字整理、文件摘要</div><div>Agnes</div><div>沒有 Agnes 時才用 Gemini / OpenAI</div></div>
   <div class="routing-row"><div>會議報告、決議、待辦</div><div>Agnes</div><div>Claude / OpenAI 可作進階報告備援</div></div>
-  <div class="routing-row"><div>心智圖內容 / Mermaid</div><div>Agnes</div><div>Gemini / Claude 可作備援</div></div>
+  <div class="routing-row"><div>心智圖內容 / 可展開 JSON</div><div>Agnes</div><div>Gemini / Claude 可作備援</div></div>
   <div class="routing-row"><div>文字轉語音</div><div>Gemini</div><div>OpenAI TTS 可作備援</div></div>
 </div>
 <div class="rotation-policy">✅ 用詞原則：這些不是高低等級，而是不同需求的搭配建議。使用者設定完成後，系統會依任務自動選擇適合的 API Key；一般使用者不需要每天手動切換。</div>
@@ -579,7 +598,7 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 <button class="btn-outline" id="toggleDemoToolsBtn">🧰 開發測試工具</button>
 </div>
 <div class="demo-tools hidden" id="demoToolsPanel">
-<div class="section-note">此區僅為 V5.9.10 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
+<div class="section-note">此區僅為 V5.9.11 測試授權流程使用；正式產品會改成登入、付款、授權伺服器自動控制。</div>
 <div class="btn-row" style="margin-top:10px">
 <button class="btn-blue" id="mockSubscribeBtn">✅ 模擬啟用正式授權</button>
 <button class="btn-outline" id="mockGraceBtn">⏳ 模擬進入寬限期</button>
@@ -647,8 +666,8 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
 <script>
 (function(){
   'use strict';
-  const APP_VERSION = 'V5.9.10';
-  const CACHE_BUST = '5.9.10';
+  const APP_VERSION = 'V5.9.11';
+  const CACHE_BUST = '5.9.11';
   const DEFAULT_WORKER_API_URL = 'https://abrakai-voice-api.chihkaiyu-pic.workers.dev';
   const STORAGE = {
     worker: 'abrakai_voice_worker_url',
@@ -698,6 +717,8 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
   let currentAudioMime = '';
   let currentReportText = '';
   let currentMindmapCode = '';
+  let currentMindmapTree = null;
+  let currentMindmapDepth = 'all';
 
   const $ = (id) => document.getElementById(id);
   function safeParse(json, fallback){ try { const v = JSON.parse(json); return v ?? fallback; } catch { return fallback; } }
@@ -764,7 +785,7 @@ body{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
     const existing = loadAccount();
     if(existing){ showModal('已載入註冊帳號', `帳號代碼：${existing.accountId}\n註冊時間：${new Date(existing.registeredAt).toLocaleString('zh-TW')}`); renderAccountPanel(); return existing; }
     const a = {accountId:newAccountId(), registeredAt:new Date().toISOString(), subscriptionEndsAt:null, graceEndsAt:null, stopped:false, createdAt:new Date().toISOString()};
-    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.10 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
+    saveAccount(a); log('已建立本機註冊帳號：' + a.accountId, 'SUCCESS'); renderAccountPanel(); showModal('註冊帳號已建立','此為 V5.9.11 前端規則落地版的本機帳號狀態。正式產品會改由會員系統與後端資料庫控管。'); return a;
   }
   function loadTrialUsage(){ return safeParse(localStorage.getItem(STORAGE.trialUsage), {}); }
   function saveTrialUsage(u){ localStorage.setItem(STORAGE.trialUsage, JSON.stringify(u || {})); }
@@ -1114,9 +1135,11 @@ ${local.message}`);
       autoSegment: $('prepAutoSegment')?.value || 'suggest',
       duration: Number($('prepDuration')?.value || 120),
       participantsCount: $('prepParticipantsCount')?.value || '',
-      outputLanguage: $('prepOutputLanguage')?.value || '繁體中文',
+      outputLanguage: '繁體中文（台灣用語）',
+      reportStyle: $('prepReportStyle')?.value || '正式版',
       languages: $('prepLanguages')?.value?.trim() || '',
       participants: $('prepParticipants')?.value?.trim() || '',
+      glossary: $('prepGlossary')?.value?.trim() || '',
       notes: $('prepNotes')?.value?.trim() || '',
       focus: getPrepFocus(),
       updatedAt: new Date().toISOString()
@@ -1137,9 +1160,11 @@ ${local.message}`);
     if($('prepAutoSegment')) $('prepAutoSegment').value = p.autoSegment || 'suggest';
     if($('prepDuration')) $('prepDuration').value = String(p.duration || 120);
     if($('prepParticipantsCount')) $('prepParticipantsCount').value = p.participantsCount || '';
-    if($('prepOutputLanguage')) $('prepOutputLanguage').value = p.outputLanguage || '繁體中文';
+    if($('prepOutputLanguage')) $('prepOutputLanguage').value = '繁體中文（台灣用語）';
+    if($('prepReportStyle')) $('prepReportStyle').value = p.reportStyle || '正式版';
     if($('prepLanguages')) $('prepLanguages').value = p.languages || '';
     if($('prepParticipants')) $('prepParticipants').value = p.participants || '';
+    if($('prepGlossary')) $('prepGlossary').value = p.glossary || '';
     if($('prepNotes')) $('prepNotes').value = p.notes || '';
     if(Array.isArray(p.focus)) document.querySelectorAll('.prep-focus').forEach(ch=>{ ch.checked = p.focus.includes(ch.value); });
     buildPrepStrategy(false);
@@ -1152,14 +1177,14 @@ ${local.message}`);
     const overlap = 60;
     const focus = p.focus?.length ? p.focus.join('、') : '逐字稿、摘要、決議、待辦';
     const speakerHint = p.participants ? '已提供與會者名單；建議會議開始時仍請每位與會者依序自我介紹，AI 才更容易把講者 A/B/C 對應到姓名。' : '尚未提供與會者名單；建議正式錄音開始時請大家依序自我介紹，例如「大家好，我是王小明，負責業務窗口」。';
-    const languageHint = p.languages ? `偵測語言重點：${p.languages}。輸出統一為「${p.outputLanguage}」。台語、方言或重口音內容需人工複核。` : `未指定多語言；輸出統一為「${p.outputLanguage}」。若現場有外國人或台語，建議先補充語言資訊。`;
+    const languageHint = p.languages ? `偵測語言重點：${p.languages}。輸出固定為繁體中文（台灣用語），不得輸出簡體中文。台語、方言或重口音內容需人工複核。` : `未指定多語言；輸出固定為繁體中文（台灣用語），不得輸出簡體中文。若現場有外國人或台語，建議先補充語言資訊。`;
     const strategy = `【本次錄音策略】
 情境：${p.scenario}${p.mode==='guided' ? '｜精準報告設定' : '｜快速錄音'}${p.title ? '｜' + p.title : ''}${p.company ? '｜' + p.company : ''}
 預估時長：約 ${mins} 分鐘；建議每 ${segMin} 分鐘分段，預估 ${expectedSegments} 段，可提前結束或略超過。
 長會議提醒：每段交接建議保留約 ${overlap} 秒重疊緩衝，避免重要句子被切斷；本版先提供提醒與報告策略，正式自動切段會在後續版本加入。
 講者策略：${speakerHint}
 語言策略：${languageHint}
-報告重點：${focus}。
+報告重點：${focus}。報告風格：${p.reportStyle || '正式版'}。
 正式開始前：請確認麥克風、電量、網路與儲存空間；若本段錄音超過 30 分鐘，系統會提醒音檔可能過大。`;
     if($('prepStrategyOutput')) $('prepStrategyOutput').textContent = strategy;
     log('已產生錄音前 AI 準備策略', 'SUCCESS');
@@ -1167,26 +1192,56 @@ ${local.message}`);
     return strategy;
   }
   function buildMeetingPromptContext(){
-    const p = loadMeetingPrep() || getMeetingPrep();
+    const p = saveMeetingPrep(false);
     const strategy = $('prepStrategyOutput')?.textContent || '';
+    const styleGuide = (p.reportStyle || '正式版') === '親和版'
+      ? '報告可適度使用 Emoji / ICON，例如 📌、✅、📝、⚠️、💡，但仍須專業清楚。'
+      : '報告以正式商務格式為主，可少量使用必要圖示，但不可花俏。';
     return `
-【錄音前準備資訊】
+【系統硬規則】
+1. 所有中文輸出一律使用繁體中文、台灣常用語，嚴禁輸出簡體中文。
+2. 不得虛構音檔沒有出現的內容；不確定請標示「待確認」。
+3. 與會者姓名、職稱、公司名、系統名、專有名詞，必須優先依使用者提供的正式寫法校正。
+4. 若原始逐字稿出現同音或近音錯字，請依正式名單修正。例如「游志凱 / 尤志凱」若符合上下文，校正為「尤致凱」。
+5. 若無法確定講者身份，不要硬套姓名，請保留「講者 A / 講者 B」並註記可能對應。
+6. 必須先產生「原始逐字稿」，再產生「校正版逐字稿」，最後才產生正式報告與心智圖資料。
+
+【會議/錄音資訊】
 會議/錄音名稱：${p.title || '未提供'}
 公司/團隊：${p.company || '未提供'}
 錄音情境：${p.scenario || '未提供'}
 準備深度：${p.mode==='guided' ? '精準報告設定' : '快速錄音'}
 預估時長：${p.duration || '未提供'} 分鐘
 與會者人數：${p.participantsCount || '未提供'}
-與會者名單/職稱：
+與會者正式姓名 / 職稱：
 ${p.participants || '未提供'}
-會議語言/口音：${p.languages || '未提供'}
-報告輸出語言：${p.outputLanguage || '繁體中文'}
-補充情境/目的：
+專有名詞 / 正確寫法：
+${p.glossary || '未提供'}
+會議語言 / 口音：${p.languages || '未提供'}
+報告輸出語言：繁體中文（台灣用語，固定）
+報告風格：${p.reportStyle || '正式版'}｜${styleGuide}
+補充情境 / 目的：
 ${p.notes || '未提供'}
-本次報告追蹤項目：${(p.focus||[]).join('、') || '逐字稿、摘要、決議、待辦、風險'}
+本次報告追蹤項目：${(p.focus||[]).join('、') || '逐字稿、摘要、決議、待辦、風險、心智圖'}
 ${strategy ? '\n' + strategy : ''}
 
-請依上述情境分析音檔；若無法確認真實講者姓名，不要硬猜，請標為「講者A/B/C」，並在可推測時標示信心程度。若有多語言，請保留必要原文並依使用者設定輸出。`;
+【請輸出以下格式】
+# 原始逐字稿
+保留語音轉文字第一版內容，可整理基本標點，但不要在此過度改寫。
+
+# 校正版逐字稿
+請參考上下文、與會者正式姓名、職稱與專有名詞，修正同音錯字、斷句、標點、口語贅詞與明顯語意不順；不可改變原意。
+
+# 正式會議報告
+請用繁體中文整理：會議摘要、重要結論、決議事項、待辦事項（含負責人/期限若有）、風險提醒、後續建議。
+
+# 心智圖資料
+請根據「校正版逐字稿 + 正式會議報告」產生精準心智圖，不要根據原始錯字稿產生。
+請務必在最後輸出一段純 JSON，並用以下標記包住：
+[ABRAKAI_MINDMAP_JSON]
+{"title":"會議主題","children":[{"title":"第一層重點","children":[{"title":"第二層細節","children":[{"title":"第三層補充"}]}]}]}
+[/ABRAKAI_MINDMAP_JSON]
+JSON 只能使用 title 與 children 欄位，最多 4 層，文字要精簡、準確、繁體中文。`;
   }
   function startPrepVoiceInput(){
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1240,6 +1295,9 @@ ${strategy ? '\n' + strategy : ''}
   }
   async function importAudioFile(file){
     if(!file) return; currentAudioBlob=file; currentAudioName=file.name; currentAudioMime=file.type || guessMimeFromName(file.name); setAudioPreview(file, file.name, currentAudioMime); log('已匯入舊錄音檔：' + file.name, 'SUCCESS');
+    if($('meetingPrepSection')) $('meetingPrepSection').classList.remove('hidden');
+    buildPrepStrategy(false);
+    showModal('已匯入舊音檔','已載入舊錄音檔。若要修正人名、職稱或專有名詞，請先在「會議資料與校正設定」補填後，再按「錄音轉文字並產生報告」。');
   }
   function guessMimeFromName(name){ const n=String(name).toLowerCase(); if(n.endsWith('.m4a')||n.endsWith('.mp4')) return 'audio/mp4'; if(n.endsWith('.mp3')) return 'audio/mpeg'; if(n.endsWith('.wav')) return 'audio/wav'; if(n.endsWith('.webm')) return 'audio/webm'; return 'application/octet-stream'; }
   function downloadAudio(){ if(!currentAudioBlob) return showModal('沒有音檔','目前沒有可儲存的錄音或匯入音檔。'); const a=document.createElement('a'); a.href=URL.createObjectURL(currentAudioBlob); a.download=currentAudioName || `AbraKai_Audio_${Date.now()}.${getExtForMime(currentAudioMime)}`; a.click(); log('已下載音檔備份', 'INFO'); }
@@ -1250,7 +1308,7 @@ ${strategy ? '\n' + strategy : ''}
     try{
       showModal('開始解析','正在將音檔送往 AI 服務處理。時間長短取決於音檔大小與模型速度，請不要關閉頁面。');
       const base64Data = await blobToBase64(currentAudioBlob);
-      const promptText = `請將這段會議錄音轉成繁體中文逐字稿，並輸出：\n1. 逐字稿\n2. 會議摘要\n3. 決議事項\n4. 待辦清單\n5. 風險與提醒\n6. Mermaid mindmap。\n請使用清楚標題，避免虛構錄音中沒有說的內容。`;
+      const promptText = buildMeetingPromptContext();
       const aiPayload = buildAiPayload('audio', {base64Data,mimeType:currentAudioMime || currentAudioBlob.type || 'application/octet-stream',filename:currentAudioName,promptText});
       log('AI 路由：' + (aiPayload.routeMode === 'user' ? '使用者自帶 API Key' : '官方試用 Key'), aiPayload.routeMode === 'user' ? 'SUCCESS' : 'WARNING');
       const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json', ...buildAccountHeaders()},body:JSON.stringify(aiPayload)});
@@ -1275,7 +1333,7 @@ ${strategy ? '\n' + strategy : ''}
     try{
       showModal('文件提純中','正在送往 AI 服務處理文件。');
       const base64Data = await blobToBase64(file);
-      const promptText = '請讀取這份文件，萃取可供語音播報的繁體中文摘要，刪除頁碼、雜訊、重複標題，保留重點、章節與行動事項。';
+      const promptText = '請讀取這份文件，所有中文輸出一律使用繁體中文、台灣常用語，嚴禁簡體中文。請萃取可供語音播報的摘要，刪除頁碼、雜訊、重複標題，保留重點、章節與行動事項。';
       const aiPayload = buildAiPayload('document', {base64Data,mimeType:mime,filename:name,promptText});
       log('AI 路由：' + (aiPayload.routeMode === 'user' ? '使用者自帶 API Key' : '官方試用 Key'), aiPayload.routeMode === 'user' ? 'SUCCESS' : 'WARNING');
       const res = await fetch(worker + '/api/analyze', {method:'POST',headers:{'Content-Type':'application/json', ...buildAccountHeaders()},body:JSON.stringify(aiPayload)});
@@ -1285,46 +1343,80 @@ ${strategy ? '\n' + strategy : ''}
     }catch(err){ closeModal(); showModal('文件提純失敗', String(err.message || err)); log('文件提純失敗：' + (err.message || err), 'ERROR'); }
   }
   function guessDocMime(name){ const n=String(name).toLowerCase(); if(n.endsWith('.pdf')) return 'application/pdf'; if(n.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'; if(n.endsWith('.doc')) return 'application/msword'; return 'application/octet-stream'; }
+  function stripMindmapBlock(text){
+    return String(text || '').replace(/\[ABRAKAI_MINDMAP_JSON\][\s\S]*?\[\/ABRAKAI_MINDMAP_JSON\]/gi,'').replace(/```json\s*\{[\s\S]*?\}\s*```/gi, m => m.includes('children') ? '' : m).trim();
+  }
+  function extractMindmapJson(text){
+    const s=String(text||'');
+    let raw='';
+    const tagged=s.match(/\[ABRAKAI_MINDMAP_JSON\]([\s\S]*?)\[\/ABRAKAI_MINDMAP_JSON\]/i);
+    if(tagged) raw=tagged[1].trim();
+    if(!raw){ const fenced=s.match(/```json\s*([\s\S]*?"children"[\s\S]*?)```/i); if(fenced) raw=fenced[1].trim(); }
+    if(!raw){ const idx=s.indexOf('{"title"'); if(idx>=0){ const end=s.lastIndexOf('}'); if(end>idx) raw=s.slice(idx,end+1); } }
+    if(!raw) return null;
+    try{return normalizeMindmapTree(JSON.parse(raw));}catch(e){ log('心智圖 JSON 解析失敗：'+(e.message||e),'WARNING'); return null; }
+  }
+  function normalizeMindmapTree(node, depth=0){
+    if(!node || typeof node!=='object') return null;
+    const title=String(node.title || node.name || node.label || '未命名').replace(/[\n\r\t]+/g,' ').trim().slice(0,48) || '未命名';
+    const rawChildren=Array.isArray(node.children) ? node.children : [];
+    const children = depth>=4 ? [] : rawChildren.map(x=>normalizeMindmapTree(x, depth+1)).filter(Boolean).slice(0,10);
+    return {title, children};
+  }
+  function buildFallbackMindmap(text){
+    const clean=stripMindmapBlock(text).split('\n').map(x=>x.trim()).filter(Boolean);
+    const title = ($('prepTitle')?.value || 'AI 會議紀錄').trim() || 'AI 會議紀錄';
+    const sections=[]; let current=null;
+    clean.forEach(line=>{ const m=line.match(/^#{1,3}\s*(.+)|^([一二三四五六七八九十]+、.+)|^(📌|✅|📝|⚠️|💡)\s*(.+)/); if(m){ current={title:(m[1]||m[2]||m[4]||line).replace(/[:：]$/,'').slice(0,36), children:[]}; sections.push(current); } else if(current && (/^[-*]\s+|^\d+[\.、]/.test(line))){ current.children.push({title:line.replace(/^[-*]\s+|^\d+[\.、]\s*/,'').slice(0,42), children:[]}); } });
+    return {title, children:(sections.length?sections:clean.slice(0,6).map(x=>({title:x.slice(0,36),children:[]}))).slice(0,8)};
+  }
+  function getMindmapMaxDepth(node){ if(!node) return 0; const childDepth=(node.children||[]).map(getMindmapMaxDepth); return 1 + (childDepth.length ? Math.max(...childDepth) : 0); }
+  function visibleChildren(node, depth, level=1){ if(depth !== 'all' && level >= Number(depth)) return []; return (node.children||[]).map(ch=>({...ch, children:visibleChildren(ch, depth, level+1)})); }
+  function cloneDepth(node, depth){ return node ? {...node, children:visibleChildren(node, depth, 1)} : null; }
+  function layoutMindmap(node, depth){
+    const root=cloneDepth(node, depth); const levels=[];
+    function walk(n,l){ if(!levels[l]) levels[l]=[]; levels[l].push(n); (n.children||[]).forEach(c=>walk(c,l+1)); }
+    walk(root,0); const w=Math.max(720, levels.length*230 + 80); const maxRows=Math.max(...levels.map(x=>x.length)); const h=Math.max(360, maxRows*92 + 80); const positions=new Map();
+    levels.forEach((arr,l)=>{ const gap=h/(arr.length+1); arr.forEach((n,i)=>positions.set(n,{x:50+l*230,y:gap*(i+1)})); }); return {root, levels, positions, w, h};
+  }
+  function escSvg(s){ return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function wrapSvgText(text, max=12){ const s=String(text||''); const out=[]; for(let i=0;i<s.length;i+=max) out.push(s.slice(i,i+max)); return out.slice(0,4); }
+  function buildMindmapSvg(tree, depth='all'){
+    if(!tree) return '';
+    const {root, positions, w, h}=layoutMindmap(tree, depth);
+    let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`;
+    svg += `<defs><linearGradient id="akNode" x1="0" x2="1"><stop stop-color="#0B1A3A"/><stop offset="1" stop-color="#1E88E5"/></linearGradient><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0B1A3A" flood-opacity=".22"/></filter></defs><rect width="100%" height="100%" rx="18" fill="#ffffff"/>`;
+    function lines(n){ const p=positions.get(n); (n.children||[]).forEach(c=>{ const q=positions.get(c); svg += `<path d="M ${p.x+170} ${p.y} C ${p.x+205} ${p.y}, ${q.x-35} ${q.y}, ${q.x} ${q.y}" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>`; lines(c); }); }
+    function nodes(n,l=0){ const p=positions.get(n); const width=l===0?180:170; const height=64; const fill=l===0?'url(#akNode)':(l===1?'#e0f2fe':'#f8fafc'); const stroke=l===0?'#FF8A1E':'#1E88E5'; svg += `<g filter="url(#shadow)"><rect x="${p.x}" y="${p.y-height/2}" width="${width}" height="${height}" rx="18" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`; const color=l===0?'#fff':'#0B1A3A'; wrapSvgText(n.title, l===0?11:12).forEach((line,i)=>{ svg += `<text x="${p.x+width/2}" y="${p.y-12+(i*17)}" text-anchor="middle" font-family="Arial, Noto Sans TC, sans-serif" font-size="14" font-weight="800" fill="${color}">${escSvg(line)}</text>`; }); svg += `</g>`; (n.children||[]).forEach(c=>nodes(c,l+1)); }
+    lines(root); nodes(root); svg += `</svg>`; return svg;
+  }
+  function updateMindmapToolbar(){
+    const max=getMindmapMaxDepth(currentMindmapTree);
+    document.querySelectorAll('#mindmapDepthToolbar [data-depth]').forEach(btn=>{ const d=btn.dataset.depth; btn.style.display=(d==='all'||Number(d)<=max)?'block':'none'; btn.classList.toggle('btn-blue', String(currentMindmapDepth)===d); btn.classList.toggle('btn-outline', String(currentMindmapDepth)!==d); });
+    if($('mindmapDepthText')) $('mindmapDepthText').textContent = currentMindmapTree ? `目前心智圖最大約 ${max} 層；可選擇顯示層數後再匯出 SVG / PNG / JPG。` : '心智圖會依校正版逐字稿與正式報告生成。';
+  }
+  async function renderMindmapTree(tree, opts={}){
+    currentMindmapTree = tree || null;
+    if(!tree){ $('mermaidCode').textContent='尚未產生可展開心智圖。'; if($('mindmapSavedText')) $('mindmapSavedText').textContent='心智圖尚未保存。'; updateMindmapToolbar(); return; }
+    const max=getMindmapMaxDepth(tree); if(currentMindmapDepth!=='all' && Number(currentMindmapDepth)>max) currentMindmapDepth='all'; $('mermaidCode').innerHTML = buildMindmapSvg(tree, currentMindmapDepth); updateMindmapToolbar(); if(opts.persist!==false) saveMindmapState(tree);
+  }
   function renderResult(data, source){
-    const text = data.text || data.report || ''; currentReportText = text; setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, text); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = text || '無文字結果'; $('ttsInput').value = text || $('ttsInput').value;
-    $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source;
-    const mindCode = extractMermaid(text); renderMindmap(mindCode, {persist: !!mindCode}); scrollToTarget($('resultArea'), {delay:80});
+    const text = data.text || data.report || ''; currentReportText = stripMindmapBlock(text); setMonitor('monReport','報告已產生','ok'); localStorage.setItem(STORAGE.lastReport, currentReportText); $('resultArea').classList.remove('hidden'); $('outputContent').textContent = currentReportText || '無文字結果'; $('ttsInput').value = currentReportText || $('ttsInput').value;
+    $('providerPill').textContent = '服務：' + (data.provider || '-'); $('modelPill').textContent = '模型：' + (data.model || '-'); $('sourcePill').textContent = '來源：' + source; const tree = extractMindmapJson(text) || buildFallbackMindmap(currentReportText); renderMindmapTree(tree, {persist:true}); scrollToTarget($('resultArea'), {delay:80});
   }
-  function extractMermaid(text){ const m=String(text||'').match(/```mermaid\s*([\s\S]*?)```/i); if(m) return m[1].trim(); const idx=String(text||'').indexOf('mindmap'); return idx>=0 ? String(text).slice(idx).trim() : ''; }
-  function saveMindmapState(code){
-    if(!code) return;
-    currentMindmapCode = code;
-    localStorage.setItem(STORAGE.mindmap, JSON.stringify({code, savedAt:new Date().toISOString()}));
-    if($('mindmapSavedText')) $('mindmapSavedText').textContent = '心智圖已保存於本機裝置。';
-  }
-  async function renderMindmap(code, opts={}){
-    currentMindmapCode = code || '';
-    if(!code){ $('mermaidCode').textContent='此報告未包含 Mermaid 心智圖。'; if($('mindmapSavedText')) $('mindmapSavedText').textContent='心智圖尚未保存。'; return; }
-    try{ mermaid.initialize({startOnLoad:false,theme:'default'}); const id='m'+Date.now(); const {svg}= await mermaid.render(id, code); $('mermaidCode').innerHTML=svg; if(opts.persist!==false) saveMindmapState(code); }
-    catch(err){ $('mermaidCode').textContent='心智圖渲染失敗：' + (err.message || err); }
-  }
+  function saveMindmapState(tree){ if(!tree) return; currentMindmapTree = tree; localStorage.setItem(STORAGE.mindmap, JSON.stringify({tree, depth:currentMindmapDepth, savedAt:new Date().toISOString()})); if($('mindmapSavedText')) $('mindmapSavedText').textContent = '心智圖已保存於本機裝置。'; }
   async function restoreLastResult(){
-    const report = localStorage.getItem(STORAGE.lastReport) || '';
-    const savedMindmap = safeParse(localStorage.getItem(STORAGE.mindmap), null);
-    if(!report && !(savedMindmap && savedMindmap.code)) return;
-    $('resultArea')?.classList.remove('hidden');
-    if(report){ currentReportText = report; $('outputContent').textContent = report; if($('ttsInput')) $('ttsInput').value = report; }
-    else { $('outputContent').textContent = '已載入上次保存的心智圖。'; }
-    if(savedMindmap && savedMindmap.code){ await renderMindmap(savedMindmap.code, {persist:false}); if($('mindmapSavedText')) $('mindmapSavedText').textContent='已載入上次保存的心智圖。'; }
-    else { await renderMindmap(extractMermaid(report), {persist:false}); }
+    const report = localStorage.getItem(STORAGE.lastReport) || ''; const savedMindmap = safeParse(localStorage.getItem(STORAGE.mindmap), null); if(!report && !(savedMindmap && (savedMindmap.tree || savedMindmap.code))) return; $('resultArea')?.classList.remove('hidden'); if(report){ currentReportText = report; $('outputContent').textContent = report; if($('ttsInput')) $('ttsInput').value = report; } else { $('outputContent').textContent = '已載入上次保存的心智圖。'; }
+    if(savedMindmap && savedMindmap.tree){ currentMindmapDepth=savedMindmap.depth || 'all'; await renderMindmapTree(savedMindmap.tree, {persist:false}); if($('mindmapSavedText')) $('mindmapSavedText').textContent='已載入上次保存的心智圖。'; } else { await renderMindmapTree(buildFallbackMindmap(report), {persist:false}); }
   }
-  function saveCurrentMindmap(){
-    const code = currentMindmapCode || extractMermaid(currentReportText);
-    if(!code) return showModal('沒有可保存的心智圖','目前報告沒有 Mermaid 心智圖內容，無法保存。');
-    saveMindmapState(code); showModal('已保存','心智圖已保存於這台裝置。下次開啟系統時會自動載入。');
+  function saveCurrentMindmap(){ if(!currentMindmapTree) return showModal('沒有可保存的心智圖','目前沒有可展開心智圖內容，請先產生報告。'); saveMindmapState(currentMindmapTree); showModal('已保存','心智圖已保存於這台裝置。下次開啟系統時會自動載入。'); }
+  function downloadMindmapSvg(){ if(!currentMindmapTree) return showModal('尚無心智圖','目前沒有可下載的心智圖。'); const svg = buildMindmapSvg(currentMindmapTree, currentMindmapDepth); const blob = new Blob([svg], {type:'image/svg+xml;charset=utf-8'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`abrakai-mindmap-${currentMindmapDepth}.svg`; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 500); }
+  function downloadMindmapRaster(type='png'){
+    if(!currentMindmapTree) return showModal('尚無心智圖','目前沒有可下載的心智圖。'); const svg = buildMindmapSvg(currentMindmapTree, currentMindmapDepth); const img = new Image(); const svgBlob = new Blob([svg], {type:'image/svg+xml;charset=utf-8'}); const url = URL.createObjectURL(svgBlob);
+    img.onload = () => { const canvas=document.createElement('canvas'); canvas.width=img.width; canvas.height=img.height; const ctx=canvas.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0); URL.revokeObjectURL(url); canvas.toBlob(blob=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`abrakai-mindmap-${currentMindmapDepth}.${type}`; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 500); }, type==='jpg'?'image/jpeg':'image/png', .94); };
+    img.onerror=()=>{ URL.revokeObjectURL(url); showModal('圖片輸出失敗','目前瀏覽器無法將 SVG 轉成圖片，請先下載 SVG。'); }; img.src=url;
   }
-  function downloadMindmapSvg(){
-    const svg = $('mermaidCode')?.querySelector('svg');
-    if(!svg) return showModal('尚無 SVG','目前沒有已渲染的心智圖 SVG 可下載。');
-    const blob = new Blob([svg.outerHTML], {type:'image/svg+xml;charset=utf-8'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='abrakai-mindmap.svg'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();}, 500);
-  }
-  function clearSavedMindmap(){ localStorage.removeItem(STORAGE.mindmap); currentMindmapCode=''; if($('mindmapSavedText')) $('mindmapSavedText').textContent='已清除本機保存的心智圖。'; showModal('已清除','已清除本機保存的心智圖；目前報告內容不會被刪除。'); }
+  function clearSavedMindmap(){ localStorage.removeItem(STORAGE.mindmap); currentMindmapCode=''; currentMindmapTree=null; if($('mermaidCode')) $('mermaidCode').textContent='尚未產生心智圖'; if($('mindmapSavedText')) $('mindmapSavedText').textContent='已清除本機保存的心智圖。'; updateMindmapToolbar(); showModal('已清除','已清除本機保存的心智圖；目前報告內容不會被刪除。'); }
   function getUiPrefs(){ try{return JSON.parse(localStorage.getItem(STORAGE.ui)||'{}')}catch{return {}} }
   function saveUiPrefs(partial){ const prev=getUiPrefs(); localStorage.setItem(STORAGE.ui, JSON.stringify({...prev, ...partial})); }
   function loadTtsPrefs(){ const ui=getUiPrefs(); if(ui.ttsVoiceStyle && $('ttsVoiceStyle')) $('ttsVoiceStyle').value=ui.ttsVoiceStyle; if(ui.ttsRate && $('ttsRate')) $('ttsRate').value=String(ui.ttsRate); if(ui.ttsPitch && $('ttsPitch')) $('ttsPitch').value=String(ui.ttsPitch); }
@@ -1478,7 +1570,7 @@ ${strategy ? '\n' + strategy : ''}
     $('voicePrepBtn')?.addEventListener('click', startPrepVoiceInput);
     $('startPreparedRecordBtn')?.addEventListener('click',()=>{ buildPrepStrategy(false); scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>{ if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); }, 300); });
     $('skipPrepRecordBtn')?.addEventListener('click',()=>{ scrollToTarget($('audioSection'), {delay:20}); setTimeout(()=>{ if(!(mediaRecorder && mediaRecorder.state==='recording')) startRecording(); }, 300); log('使用者選擇跳過 AI 準備直接錄音', 'WARNING'); });
-    ['prepTitle','prepCompany','prepScenario','prepMode','prepDuration','prepParticipantsCount','prepOutputLanguage','prepLanguages','prepParticipants','prepNotes','prepAutoSegment'].forEach(id=>$(id)?.addEventListener('change',()=>{ updatePrepScenarioUI(); buildPrepStrategy(false); }));
+    ['prepTitle','prepCompany','prepScenario','prepMode','prepDuration','prepParticipantsCount','prepOutputLanguage','prepReportStyle','prepLanguages','prepParticipants','prepGlossary','prepNotes','prepAutoSegment'].forEach(id=>$(id)?.addEventListener('change',()=>{ updatePrepScenarioUI(); buildPrepStrategy(false); }));
     document.querySelectorAll('.prep-focus').forEach(ch=>ch.addEventListener('change',()=>buildPrepStrategy(false)));
     $('recordBtn').addEventListener('click',()=>{ if(mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); });
     $('pickAudioBtn').addEventListener('click',()=> $('audioFileInput').click()); $('audioFileInput').addEventListener('change', e=> importAudioFile(e.target.files[0]));
@@ -1494,12 +1586,12 @@ ${strategy ? '\n' + strategy : ''}
     $('ttsVoiceStyle').addEventListener('change', saveTtsPrefs); $('ttsRate').addEventListener('change', saveTtsPrefs); $('ttsPitch').addEventListener('change', saveTtsPrefs);
     $('downloadTtsTextBtn').addEventListener('click', downloadTtsText); $('shareTtsTextBtn').addEventListener('click', shareTtsText); $('ttsFileRoadmapBtn').addEventListener('click', explainTtsFileExport);
     $('readReportBtn').addEventListener('click', speakText); $('downloadReportBtn').addEventListener('click', downloadReport); $('shareReportBtn').addEventListener('click', shareReport);
-    $('saveMindmapBtn')?.addEventListener('click', saveCurrentMindmap); $('downloadMindmapSvgBtn')?.addEventListener('click', downloadMindmapSvg); $('clearMindmapBtn')?.addEventListener('click', clearSavedMindmap);
+    $('saveMindmapBtn')?.addEventListener('click', saveCurrentMindmap); $('downloadMindmapSvgBtn')?.addEventListener('click', downloadMindmapSvg); $('downloadMindmapPngBtn')?.addEventListener('click',()=>downloadMindmapRaster('png')); $('downloadMindmapJpgBtn')?.addEventListener('click',()=>downloadMindmapRaster('jpg')); $('clearMindmapBtn')?.addEventListener('click', clearSavedMindmap); document.querySelectorAll('#mindmapDepthToolbar [data-depth]').forEach(btn=>btn.addEventListener('click',()=>{ currentMindmapDepth=btn.dataset.depth; renderMindmapTree(currentMindmapTree,{persist:false}); }));
   }
   async function init(){
     bind(); migrateLegacyStorage(); loadTtsPrefs(); restoreMeetingPrep(); updatePrepScenarioUI(); if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=()=>{ getVoicesSafe(); }; } loadCatalogFromStorage(); updateModelDropdown(); renderProviderCatalog(); $('workerUrlInput').value = (localStorage.getItem(STORAGE.worker)||''); renderKeys(); renderAccountPanel(); updateStatus(); setHomeStatus(); restoreLastResult(); autoSyncCatalogOnceDaily();
-    log('AbraKai 聲曜 V5.9.10 初始化完成', 'SYSTEM'); log('本版修正：主功能選單改為常駐浮動小圖示，展開後快速切換功能頁', 'SUCCESS'); refreshMonitorSummary();
-    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.10'); log('PWA Service Worker 已註冊 V5.9.10', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
+    log('AbraKai 聲曜 V5.9.11 初始化完成', 'SYSTEM'); log('本版新增：逐字稿人名校正、繁體中文固定輸出、校正版報告與自訂可展開心智圖', 'SUCCESS'); refreshMonitorSummary();
+    if('serviceWorker' in navigator){ try{ await navigator.serviceWorker.register('./service-worker.js?v=5.9.11'); log('PWA Service Worker 已註冊 V5.9.11', 'SUCCESS'); } catch(e){ log('Service Worker 註冊失敗：' + e.message, 'WARNING'); } }
   }
   document.addEventListener('DOMContentLoaded', init);
 })();

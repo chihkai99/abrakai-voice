@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.10",
+  "name": "AbraKai 聲曜 V5.9.11",
   "short_name": "聲曜",
-  "description": "常駐浮動功能選單修正版：功能選單縮小成固定浮動圖示，任何畫面都可快速展開切換，不佔首頁版面。",
-  "start_url": "./index.html?v=5.9.10",
+  "description": "逐字稿校正、繁體中文固定輸出、正式/親和報告與自訂可展開心智圖本機保存版。",
+  "start_url": "./index.html?v=5.9.11",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
