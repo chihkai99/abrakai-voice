@@ -1,8 +1,8 @@
 {
-  "name": "AbraKai 聲曜 V5.9.12",
-  "short_name": "聲曜",
-  "description": "專業逐字稿去口語贅詞、AI處理紀錄、CD Player讀稿器、LINE/Email分享與心智圖輸出強化版。",
-  "start_url": "./index.html?v=5.9.12",
+  "name": "思錄 AI｜SoundNoteAI V5.9.13",
+  "short_name": "思錄AI",
+  "description": "首頁品牌重整、A/B 同層音檔入口、錄音分段規劃、處理狀態列、繁中報告、Word/PDF/HTML 輸出與分享強化版。",
+  "start_url": "./index.html?v=5.9.13",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
