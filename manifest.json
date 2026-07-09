@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.14.2",
+  "name": "思錄 AI｜SoundNoteAI V5.9.14.3",
   "short_name": "思錄AI",
   "description": "註冊入口、API費用提醒、按鈕辨識與操作導向修正。",
-  "start_url": "./index.html?v=5.9.14.2",
+  "start_url": "./index.html?v=5.9.14.3",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
