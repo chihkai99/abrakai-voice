@@ -1,4 +1,4 @@
-const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta1';
+const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta2';
 const urlsToCache = ['./index.html?v=6.0.0-beta1','./manifest.json?v=6.0.0-beta1'];
 
 self.addEventListener('install', event => {
