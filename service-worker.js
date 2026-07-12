@@ -1,5 +1,5 @@
-const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta5';
-const urlsToCache = ['./index.html?v=6.0.0-beta4','./manifest.json?v=6.0.0-beta4'];
+const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta6';
+const urlsToCache = ['./index.html?v=6.0.0-beta6','./manifest.json?v=6.0.0-beta6'];
 
 self.addEventListener('install', event => {
   self.skipWaiting();
