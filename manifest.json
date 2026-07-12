@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta6",
-  "short_name": "思錄 AI beta6",
+  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta7",
+  "short_name": "思錄 AI beta7",
   "description": "帳號資訊可讀性與多 API Key 智慧派工修正版：完整顯示所有 Key，依語音轉文字、逐字稿校正／報告與備援任務自動分工。",
-  "start_url": "./index.html?v=6.0.0-beta6",
+  "start_url": "./index.html?v=6.0.0-beta7",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
