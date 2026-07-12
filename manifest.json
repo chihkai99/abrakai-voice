@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.15",
+  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta1",
   "short_name": "思錄AI",
-  "description": "情境欄位提示、報告項目分層與即時監控刷新。",
-  "start_url": "./index.html?v=5.9.15",
+  "description": "上市前流程穩定版：單一流程鎖定、情境動態欄位、角色識別、成果頁修正與即時監控。",
+  "start_url": "./index.html?v=6.0.0-beta1",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",

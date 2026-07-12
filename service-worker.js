@@ -1,5 +1,5 @@
-const CACHE_NAME = 'abrakai-cache-v5.9.15';
-const urlsToCache = ['./index.html?v=5.9.15','./manifest.json?v=5.9.15'];
+const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta1';
+const urlsToCache = ['./index.html?v=6.0.0-beta1','./manifest.json?v=6.0.0-beta1'];
 
 self.addEventListener('install', event => {
   self.skipWaiting();
@@ -9,7 +9,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(names => Promise.all(names.filter(n => n !== CACHE_NAME && n.startsWith('abrakai-cache-')).map(n => caches.delete(n))))
+      .then(names => Promise.all(names.filter(n => n !== CACHE_NAME && (n.startsWith('abrakai-cache-') || n.startsWith('soundnoteai-cache-'))).map(n => caches.delete(n))))
       .then(() => self.clients.claim())
   );
 });
@@ -32,7 +32,7 @@ self.addEventListener('fetch', event => {
         const clone = res.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(req, clone)).catch(() => undefined);
         return res;
-      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html?v=5.9.15')))
+      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html?v=6.0.0-beta1')))
     );
     return;
   }
