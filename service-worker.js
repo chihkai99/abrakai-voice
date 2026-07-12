@@ -1,5 +1,5 @@
-const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta2';
-const urlsToCache = ['./index.html?v=6.0.0-beta1','./manifest.json?v=6.0.0-beta1'];
+const CACHE_NAME = 'soundnoteai-cache-v6.0.0-beta3';
+const urlsToCache = ['./index.html?v=6.0.0-beta3','./manifest.json?v=6.0.0-beta3'];
 
 self.addEventListener('install', event => {
   self.skipWaiting();
@@ -32,7 +32,7 @@ self.addEventListener('fetch', event => {
         const clone = res.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(req, clone)).catch(() => undefined);
         return res;
-      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html?v=6.0.0-beta1')))
+      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html?v=6.0.0-beta3')))
     );
     return;
   }
