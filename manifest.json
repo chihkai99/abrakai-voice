@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta4",
+  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta5",
   "short_name": "思錄AI",
-  "description": "流程與功能稽核修正版：修復服務假性失敗、移除公開測試入口、統一流程與按鈕狀態、修正情境 Prompt 與深淺色文字對比。",
-  "start_url": "./index.html?v=6.0.0-beta4",
+  "description": "版面閱讀與獨立監控修正版：修正輸出與分析勾選排版、簡化情境確認操作、條列化設定摘要，並提供獨立系統監控視窗。",
+  "start_url": "./index.html?v=6.0.0-beta5",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
