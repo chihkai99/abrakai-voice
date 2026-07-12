@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.14.5",
+  "name": "思錄 AI｜SoundNoteAI V5.9.14.6",
   "short_name": "思錄AI",
   "description": "步驟式頁面切換、進度條與百分比提示。",
-  "start_url": "./index.html?v=5.9.14.5",
+  "start_url": "./index.html?v=5.9.14.6",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
