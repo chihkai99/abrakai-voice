@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.14.9",
+  "name": "思錄 AI｜SoundNoteAI V5.9.15",
   "short_name": "思錄AI",
-  "description": "設定中心功能標示、可用/開發中明確分流。",
-  "start_url": "./index.html?v=5.9.14.9",
+  "description": "情境欄位提示、報告項目分層與即時監控刷新。",
+  "start_url": "./index.html?v=5.9.15",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
