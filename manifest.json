@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V5.9.14.7",
+  "name": "思錄 AI｜SoundNoteAI V5.9.14.8",
   "short_name": "思錄AI",
-  "description": "手機操作版面壓縮、帳號中心與流程進度改善。",
-  "start_url": "./index.html?v=5.9.14.7",
+  "description": "單一流程視窗、唯一進度列與功能狀態標示。",
+  "start_url": "./index.html?v=5.9.14.8",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
