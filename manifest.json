@@ -1,8 +1,8 @@
 {
-  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta3",
+  "name": "思錄 AI｜SoundNoteAI V6.0.0-beta4",
   "short_name": "思錄AI",
-  "description": "情境欄位合併與對比修正版：深色區塊採淺色文字，角色人數與人物名單改為單一設定來源。",
-  "start_url": "./index.html?v=6.0.0-beta3",
+  "description": "流程與功能稽核修正版：修復服務假性失敗、移除公開測試入口、統一流程與按鈕狀態、修正情境 Prompt 與深淺色文字對比。",
+  "start_url": "./index.html?v=6.0.0-beta4",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0B1A3A",
